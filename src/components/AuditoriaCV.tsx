@@ -9,6 +9,7 @@ export default function AuditoriaCV() {
   const [analyzed, setAnalyzed] = useState(false);
   const [copied, setCopied] = useState(false);
 
+
   // Score states
   const [score, setScore] = useState(0);
   const [positives, setPositives] = useState<string[]>([]);
@@ -227,7 +228,7 @@ ${missingKeywords.length > 0 ? missingKeywords.join(', ') : 'Ninguna, ¡tu perfi
                 <span className="text-[10px] font-mono uppercase text-brand-gold tracking-widest bg-brand-gold/10 px-2.5 py-1 rounded border border-brand-gold/25 inline-block mb-3">
                   Score de Compatibilidad ATS
                 </span>
-                
+
                 <div className="flex justify-center items-baseline gap-1 mt-1">
                   <span className="text-5xl font-black text-brand-heading tracking-tighter transition-colors">{score}</span>
                   <span className="text-brand-subtext text-xl font-mono transition-colors">/100</span>
