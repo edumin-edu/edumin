@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-copper: #d97707;
+  --color-brand-gold: #ffb77d;
+  --color-brand-dark: #0e0e10;
+  --color-brand-surface: #1c1b1d;
+  --color-brand-card: #131315;
+  --color-brand-border: #353437;
+  --color-brand-text: #e5e1e4;
+  --color-brand-subtext: #9ca3af;
+  --color-brand-heading: #ffffff;
+}
+
+/* Light theme overrides */
+.light {
+  --color-brand-dark: #f8fafc;
+  --color-brand-surface: #ffffff;
+  --color-brand-card: #f1f5f9;
+  --color-brand-border: #cbd5e1;
+  --color-brand-text: #334155;
+  --color-brand-subtext: #64748b;
+  --color-brand-heading: #0f172a;
+  
+  --color-brand-gold: #c2410c;     /* Deep rust-orange for optimal contrast and legibility */
+  --color-brand-copper: #9a3412;   /* Rich copper-orange for primary accents and buttons */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-dark);
+    color: var(--color-brand-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+}
+
+.transition-theme {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+}
+
+/* Custom scrollbar for an engineering aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0e0e10;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2c;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d97707;
+}
+

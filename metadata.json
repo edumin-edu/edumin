@@ -1,0 +1,6 @@
+{
+  "name": "Zona Minera",
+  "description": "Plataforma de Ingeniería y Capacitación de Alto Impacto para la Industria Minera Hispana.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
