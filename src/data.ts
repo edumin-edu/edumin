@@ -18,7 +18,7 @@ export const COURSES: Course[] = [
       'Optimización de planes de minado según recuperaciones por bloque',
       'Conciliación modelo geometalúrgico vs rendimiento real en planta'
     ],
-    image: '/geometalurgia.jpeg'
+    image: 'geometalurgia.jpeg'
   },
   {
     id: 'geo-2',
@@ -37,7 +37,7 @@ export const COURSES: Course[] = [
       'Estabilidad de taludes en tajos y análisis cinemático de fallas estructurales',
       'Monitoreo geotécnico avanzado: instrumentación y microsismicidad'
     ],
-    image: '/geomecania.jpeg'
+    image: 'geomecania.jpeg'
   },
   {
     id: 'geo-3',
@@ -56,7 +56,7 @@ export const COURSES: Course[] = [
       'Radares, prismas y sistemas automatizados de monitoreo geotécnico',
       'Planes de gestión de riesgos y análisis de modo de fallas (FMEA)'
     ],
-    image: '/geotecnia.jpeg'
+    image: 'geotecnia.jpeg'
   },
   {
     id: 'geo-4',
@@ -75,7 +75,7 @@ export const COURSES: Course[] = [
       'Identificación y control de la dilución operativa en minado',
       'Manejo de bases de datos geológicas de producción e integridad de datos'
     ],
-    image: '/geologia.jpeg'
+    image: 'geologia.jpeg'
   }
 ];
 
