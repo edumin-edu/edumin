@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seguimiento académico EDUMIN</title>
+  
+  <!-- Favicon vectorial estilo Phosphor Graduation Cap -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='%234f46e5' rx='60'/%3E%3Cpath d='M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216s78.84-24.47,91.94-39.06A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,41.49l102.21,54.51L128,150.51,25.79,96ZM208,166.29c-11.57,12.87-37.49,33.71-80,33.71s-68.43-20.84-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L208,126.4Z' fill='%23ffffff'/%3E%3C/svg%3E">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Phosphor Icons (Regular, Bold, Fill) -->
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"/>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"/>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #e2e8f0;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 8px;
+    }
+    .active-nav-tab {
+      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px -1px rgba(79, 70, 229, 0.45);
+    }
+    .active-time-pill {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.35);
+      border-color: transparent !important;
+    }
+    .active-time-pill i {
+      color: #ffffff !important;
+    }
+    .text-balance {
+      text-wrap: balance;
+    }
+  </style>
+</head>
+<body class="bg-slate-100/90 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 shadow-xs">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 space-y-3">
+      
+      <!-- Fila Superior: Logo y Títulos a la izquierda, Selector de Producto destacado a la derecha -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+        
+        <!-- Identidad Institucional: Logo, Título y Subtítulo -->
+        <div class="flex items-center gap-3.5 text-center md:text-left w-full md:w-auto justify-center md:justify-start">
+          <div class="h-11 px-3 py-1.5 rounded-2xl bg-slate-900 border border-slate-800 shadow-md shadow-slate-900/20 flex items-center justify-center shrink-0">
+            <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="Logo EDUMIN" class="h-6 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/130x35/0f172a/ffffff?text=EDUMIN';">
+          </div>
+          <div class="min-w-0">
+            <h1 class="font-extrabold text-slate-900 text-base sm:text-lg leading-tight tracking-tight text-balance">Seguimiento académico EDUMIN</h1>
+            <p class="text-xs text-slate-500 font-medium leading-normal mt-0.5">Herramienta interactiva para la gestión integral académica</p>
+          </div>
+        </div>
+
+        <!-- Contenedor de Acciones del Encabezado (Selector de Producto + Botón Descarga) -->
+        <div class="w-full md:w-auto flex items-center justify-center md:justify-end gap-2 shrink-0">
+          
+          <!-- Selector de Producto -->
+          <div class="flex items-center gap-2.5 bg-slate-50 border border-slate-200/90 p-1.5 pl-3 rounded-2xl shadow-2xs">
+            <div class="flex items-center gap-1.5 text-slate-500 font-bold text-xs shrink-0">
+              <i class="ph-bold ph-package text-indigo-600 text-sm"></i>
+              <span>Producto:</span>
+            </div>
+
+            <!-- Selector interactivo desplegable -->
+            <div class="relative inline-block text-left" id="product-dropdown-wrapper">
+              <button onclick="toggleProductDropdown()" id="product-badge-btn" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl shadow-xs flex items-center gap-2 transition-all cursor-pointer ring-2 ring-emerald-400/25" title="Haz clic para seleccionar el producto">
+                <span id="current-product-badge-icon"><i class="ph-bold ph-graduation-cap text-sm"></i></span>
+                <span id="current-product-label">Diplomados asincrónicos</span>
+                <i class="ph-bold ph-caret-down text-xs opacity-90"></i>
+              </button>
+
+              <!-- Menú desplegable para seleccionar producto -->
+              <div id="product-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-1.5 z-50 transition-all">
+                <div class="px-2.5 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between">
+                  <span>Seleccionar producto:</span>
+                  <i class="ph-bold ph-cursor-click text-indigo-500"></i>
+                </div>
+                <div class="py-1 space-y-0.5">
+                  <button onclick="changeProduct('diplomados')" id="opt-diplomados" class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-800 hover:bg-emerald-50 hover:text-emerald-800 flex items-center justify-between transition-colors">
+                    <span class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      Diplomados asincrónicos
+                    </span>
+                    <i id="check-diplomados" class="ph-bold ph-check text-emerald-600 text-sm"></i>
+                  </button>
+                  <button onclick="changeProduct('curso_ia')" id="opt-curso_ia" class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-800 hover:bg-purple-50 hover:text-purple-800 flex items-center justify-between transition-colors">
+                    <span class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                      Curso de IA de 0 a 100
+                    </span>
+                    <i id="check-curso_ia" class="ph-bold ph-check text-purple-600 text-sm hidden"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón para Descargar el HTML Actual (Solo Icono) -->
+          <button onclick="downloadCurrentHTML()" id="btn-download-html" class="w-10 h-10 flex items-center justify-center bg-white hover:bg-slate-50 border border-slate-200/90 hover:border-indigo-300 text-slate-700 hover:text-indigo-600 rounded-2xl transition-all shadow-2xs cursor-pointer shrink-0" title="Descargar este archivo HTML completo" aria-label="Descargar HTML">
+            <i class="ph-bold ph-download-simple text-lg text-indigo-600"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Fila Inferior: Selector de Paneles Centrado -->
+      <div class="pt-1.5 border-t border-slate-100 flex justify-center">
+        <nav class="flex items-center justify-center gap-1.5 p-1 bg-slate-200/70 rounded-2xl border border-slate-300/60 w-full sm:w-auto max-w-3xl overflow-x-auto custom-scrollbar">
+          <button onclick="switchTab('time')" id="nav-time" class="active-nav-tab px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 whitespace-nowrap transition-all duration-200 flex-1 sm:flex-initial">
+            <i class="ph-bold ph-clock text-sm"></i>
+            <span>1. Según el tiempo</span>
+          </button>
+          <button onclick="switchTab('stages')" id="nav-stages" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-indigo-700 flex items-center justify-center gap-2 whitespace-nowrap transition-all duration-200 flex-1 sm:flex-initial">
+            <i class="ph-bold ph-stack text-sm"></i>
+            <span>2. Etapas del estudiante</span>
+          </button>
+          <button onclick="switchTab('process')" id="nav-process" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-indigo-700 flex items-center justify-center gap-2 whitespace-nowrap transition-all duration-200 flex-1 sm:flex-initial">
+            <i class="ph-bold ph-tree-structure text-sm"></i>
+            <span>3. Flujos por proceso</span>
+          </button>
+          <button onclick="switchTab('calls')" id="nav-calls" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-indigo-700 flex items-center justify-center gap-2 whitespace-nowrap transition-all duration-200 flex-1 sm:flex-initial">
+            <i class="ph-bold ph-phone-call text-sm"></i>
+            <span>4. Gestión de llamadas</span>
+          </button>
+        </nav>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto w-full px-4 py-4 flex-1">
+
+    <!-- PANEL 1: SEGÚN EL TIEMPO -->
+    <section id="tab-time-content" class="space-y-4">
+      <div class="bg-white p-5 sm:p-6 rounded-3xl border-2 border-slate-200/90 shadow-md">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 text-balance">
+              <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-base shrink-0">
+                <i class="ph-bold ph-calendar-check"></i>
+              </span>
+              <span id="time-panel-heading">Línea de tiempo del estudiante (días y meses)</span>
+            </h2>
+            <p class="text-xs text-slate-500 font-medium text-balance">Haz clic en cualquier momento temporal para consultar exactamente qué se envía y qué condiciones aplican:</p>
+          </div>
+          <span class="text-[11px] font-semibold bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full border border-indigo-200 self-start sm:self-auto flex items-center gap-1">
+            <i class="ph-bold ph-cursor-click"></i> Elige un momento
+          </span>
+        </div>
+
+        <div id="time-pills-bar" class="flex flex-wrap gap-2 pb-2">
+          <!-- Injected via JavaScript based on current product -->
+        </div>
+
+        <div id="time-detail-container" class="mt-4 transition-all duration-200">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 2: ETAPAS DEL ESTUDIANTE -->
+    <section id="tab-stages-content" class="hidden space-y-4">
+      <div class="bg-white p-5 sm:p-6 rounded-3xl border-2 border-slate-200/90 shadow-md">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-5">
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 text-balance">
+              <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-base shrink-0">
+                <i class="ph-bold ph-path"></i>
+              </span>
+              <span id="stages-panel-heading">Ciclo de vida del estudiante</span>
+            </h2>
+            <p class="text-xs text-slate-500 font-medium">Selecciona una de las fases para explorar su estado administrativo, objetivo y actividades:</p>
+          </div>
+          <span class="text-[11px] font-semibold bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full border border-indigo-200 self-start sm:self-auto flex items-center gap-1">
+            <i class="ph-bold ph-cursor-click"></i> Elige una etapa
+          </span>
+        </div>
+
+        <div id="stages-grid-container" class="grid grid-cols-1 sm:grid-cols-5 gap-2.5 mb-5">
+          <!-- Injected via JavaScript based on current product -->
+        </div>
+
+        <div id="stage-detail-container" class="transition-all">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 3: SELECTOR DE PROCESOS ESPECÍFICOS -->
+    <section id="tab-process-content" class="hidden space-y-4">
+      <div class="bg-white p-5 sm:p-6 rounded-3xl border-2 border-slate-200/90 shadow-md">
+        
+        <!-- Encabezado con divisor inferior uniforme -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 text-balance">
+              <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-base shrink-0">
+                <i class="ph-bold ph-git-fork"></i>
+              </span>
+              Flujos paso a paso por proceso específico
+            </h2>
+            <p class="text-xs text-slate-500 font-medium">Visualiza el recorrido exacto, condiciones y medios de envío para cada trámite:</p>
+          </div>
+          <span class="text-[11px] font-semibold bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full border border-indigo-200 self-start sm:self-auto flex items-center gap-1">
+            <i class="ph-bold ph-cursor-click"></i> Elige un proceso
+          </span>
+        </div>
+
+        <!-- Barra de selección de proceso situada debajo del divisor -->
+        <div class="mb-4 bg-slate-50/80 p-3 rounded-2xl border border-slate-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <label for="process-dropdown" class="flex items-center gap-2 text-xs font-extrabold text-slate-700 shrink-0">
+            <i class="ph-bold ph-tree-structure text-indigo-600 text-sm"></i>
+            <span>Seleccionar proceso:</span>
+          </label>
+          <div class="relative w-full sm:max-w-md">
+            <select id="process-dropdown" onchange="renderSelectedProcess(this.value)" class="appearance-none w-full bg-white hover:bg-slate-50/70 border border-slate-200/90 hover:border-indigo-300 text-slate-800 text-xs font-bold rounded-xl px-4 py-2.5 pr-10 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none cursor-pointer shadow-2xs transition-all">
+              <!-- Injected via JavaScript based on current product -->
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-indigo-600">
+              <i class="ph-bold ph-caret-down text-sm"></i>
+            </div>
+          </div>
+        </div>
+
+        <div id="process-diagram-container">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 4: GESTIÓN DE LLAMADAS TELEFÓNICAS -->
+    <section id="tab-calls-content" class="hidden space-y-4">
+      <div class="bg-white p-5 sm:p-6 rounded-3xl border-2 border-slate-200/90 shadow-md">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3 mb-5">
+          <div>
+            <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 text-balance">
+              <span class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-base shrink-0">
+                <i class="ph-bold ph-phone-call"></i>
+              </span>
+              Gestión y protocolo de llamadas telefónicas
+            </h2>
+            <p class="text-xs text-slate-500 font-medium">Seguimiento por voz, detección de problemas y reglas de respaldo por WhatsApp:</p>
+          </div>
+
+          <div id="calls-badge-header">
+            <!-- Injected via JavaScript depending on product -->
+          </div>
+        </div>
+
+        <div id="calls-container">
+          <!-- Injected via JavaScript based on current product -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-3.5 px-4 text-center text-xs text-slate-500 mt-auto font-medium">
+    Plataforma de Control Académico &bull; EDUMIN &bull; Gestión integral y seguimiento de trayectorias formativas
+  </footer>
+
+  <script>
+    // Paletas de color temáticas para las píldoras de tiempo y tarjetas de etapas
+    const pillColorClasses = {
+      emerald: "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100",
+      indigo: "bg-indigo-50 text-indigo-800 border-indigo-300 hover:bg-indigo-100",
+      sky: "bg-sky-50 text-sky-800 border-sky-300 hover:bg-sky-100",
+      blue: "bg-blue-50 text-blue-800 border-blue-300 hover:bg-blue-100",
+      amber: "bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100",
+      purple: "bg-purple-50 text-purple-800 border-purple-300 hover:bg-purple-100",
+      rose: "bg-rose-50 text-rose-800 border-rose-300 hover:bg-rose-100",
+      slate: "bg-slate-100 text-slate-800 border-slate-300 hover:bg-slate-200"
+    };
+
+    const stageColorStyles = {
+      indigo: {
+        idle: "border-indigo-200/90 bg-gradient-to-b from-indigo-50/60 to-white hover:border-indigo-400 hover:bg-indigo-50/80",
+        active: "border-indigo-600 bg-gradient-to-b from-indigo-100/70 to-white ring-2 ring-indigo-500/25 shadow-md shadow-indigo-100",
+        badge: "bg-indigo-600 text-white shadow-xs",
+        tag: "text-indigo-600 font-extrabold uppercase tracking-wider"
+      },
+      amber: {
+        idle: "border-amber-200/90 bg-gradient-to-b from-amber-50/60 to-white hover:border-amber-400 hover:bg-amber-50/80",
+        active: "border-amber-500 bg-gradient-to-b from-amber-100/70 to-white ring-2 ring-amber-500/25 shadow-md shadow-amber-100",
+        badge: "bg-amber-500 text-white shadow-xs",
+        tag: "text-amber-700 font-extrabold uppercase tracking-wider"
+      },
+      purple: {
+        idle: "border-purple-200/90 bg-gradient-to-b from-purple-50/60 to-white hover:border-purple-400 hover:bg-purple-50/80",
+        active: "border-purple-600 bg-gradient-to-b from-purple-100/70 to-white ring-2 ring-purple-500/25 shadow-md shadow-purple-100",
+        badge: "bg-purple-600 text-white shadow-xs",
+        tag: "text-purple-700 font-extrabold uppercase tracking-wider"
+      },
+      emerald: {
+        idle: "border-emerald-200/90 bg-gradient-to-b from-emerald-50/60 to-white hover:border-emerald-400 hover:bg-emerald-50/80",
+        active: "border-emerald-600 bg-gradient-to-b from-emerald-100/70 to-white ring-2 ring-emerald-500/25 shadow-md shadow-emerald-100",
+        badge: "bg-emerald-600 text-white shadow-xs",
+        tag: "text-emerald-700 font-extrabold uppercase tracking-wider"
+      },
+      rose: {
+        idle: "border-rose-200/90 bg-gradient-to-b from-rose-50/60 to-white hover:border-rose-400 hover:bg-rose-50/80",
+        active: "border-rose-600 bg-gradient-to-b from-rose-100/70 to-white ring-2 ring-rose-500/25 shadow-md shadow-rose-100",
+        badge: "bg-rose-600 text-white shadow-xs",
+        tag: "text-rose-700 font-extrabold uppercase tracking-wider"
+      }
+    };
+
+    // Current Active Product: 'diplomados' or 'curso_ia'
+    let currentProduct = 'diplomados';
+
+    // Products Database Configuration
+    const productsDB = {
+      diplomados: {
+        label: "Diplomados asincrónicos",
+        badgeStyle: "bg-gradient-to-r from-emerald-500 to-teal-600 text-white ring-2 ring-emerald-400/25",
+        badgeIcon: "ph-bold ph-graduation-cap text-sm",
+        activeTimeKey: "d0",
+        activeStageKey: 1,
+        calls: {
+          hasCalls: false,
+          title: "Sin llamadas telefónicas programadas",
+          desc: "Actualmente en el producto de <b>Diplomados asincrónicos</b> no se realizan llamadas telefónicas a los estudiantes. Toda la trazabilidad, soporte y seguimiento académico se gestiona de forma exclusiva mediante correos electrónicos programados y mensajes directos manuales por WhatsApp."
+        },
+        timePills: [
+          { key: 'd0', label: 'Día 0 (inscripción)', icon: 'ph-bold ph-sparkle', color: 'emerald' },
+          { key: 'd1', label: 'Día 1 (día hábil)', icon: 'ph-bold ph-clock', color: 'indigo' },
+          { key: 'd3', label: 'Día 3', icon: 'ph-bold ph-calendar', color: 'sky' },
+          { key: 'd5', label: 'Día 5', icon: 'ph-bold ph-calendar', color: 'sky' },
+          { key: 'd7', label: 'Día 7 (semana 1)', icon: 'ph-bold ph-calendar', color: 'blue' },
+          { key: 'd14', label: 'Día 14', icon: 'ph-bold ph-calendar', color: 'blue' },
+          { key: 'd21', label: 'Día 21', icon: 'ph-bold ph-warning', color: 'amber' },
+          { key: 'm1', label: 'Al mes (día 30)', icon: 'ph-bold ph-certificate', color: 'purple' },
+          { key: 'm3', label: 'A los 3 meses', icon: 'ph-bold ph-warning-octagon', color: 'rose' },
+          { key: 'fijo', label: 'Fijo y mensual', icon: 'ph-bold ph-arrows-clockwise', color: 'sky' },
+          { key: 'especiales', label: 'Casos especiales', icon: 'ph-bold ph-star', color: 'purple' },
+          { key: 'certificados', label: 'Certificados', icon: 'ph-bold ph-seal-check', color: 'emerald' }
+        ],
+        timeData: {
+          d0: {
+            title: "Día 0: día de la inscripción",
+            subtitle: "Se registran los datos en el sistema y se envían 2 correos programados y 1 WhatsApp de bienvenida.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de accesos",
+                title: "Credenciales y accesos a la plataforma",
+                detail: "Envío de usuario, contraseña y enlace directo para ingresar a la plataforma educativa institucional desde el momento de registro.",
+                rule: "Registrado en la base de datos por el área comercial para su inscripción y envío del correo de accesos."
+              },
+              {
+                channel: "email",
+                badge: "Correo académico",
+                title: "Malla curricular + Ficha de matrícula",
+                detail: "Se adjunta la estructura académica del diplomado y el enlace oficial para completar la ficha digital de matrícula.",
+                rule: "Se debe seleccionar de la lista de diplomados y siempre y cuando ya tenga la cuenta creada."
+              },
+              {
+                channel: "whatsapp",
+                badge: "WhatsApp",
+                title: "Afiche de bienvenida y cuenta creada",
+                detail: "Envío manual de afiche gráfico con mensaje confirmando que su cuenta fue creada con éxito y el contacto de soporte.",
+                rule: "Asegura el contacto inicial y directo con el estudiante."
+              }
+            ]
+          },
+          d1: {
+            title: "Día 1: primer día hábil luego de la inscripción",
+            subtitle: "Impulso en siguiente día hábil para que el estudiante revise sus clases y defina sus cursos gratis si aplica.",
+            actions: [
+              {
+                channel: "whatsapp",
+                badge: "WhatsApp",
+                title: "Módulos y examen 1 habilitados",
+                detail: "Aviso informándole que todos los módulos de su diplomado están cargados y que su primer examen se encuentra listo para cuando decida rendirlo.",
+                rule: "Gestión manual al cumplirse el primer día hábil posterior a la inscripción."
+              },
+              {
+                channel: "email",
+                badge: "Correo condicional",
+                title: "Selección de cursos gratis",
+                detail: "Notificación formal solicitando que elija sus cursos gratis si su programa académico incluye asignaturas gratuitas.",
+                rule: "Aplica solo si el programa contratado por el estudiante incluye cursos gratis."
+              }
+            ]
+          },
+          d3: {
+            title: "Día 3: primer control de pendientes",
+            subtitle: "Revisión programada de compromisos no completados en los primeros días.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de ficha",
+                title: "Recordatorio 1: Ficha de matrícula",
+                detail: "Si aún no ha llenado la ficha digital, se le envía el primer recordatorio por correo con el enlace directo.",
+                rule: "Ficha de matrícula pendiente de registro en el sistema."
+              },
+              {
+                channel: "email",
+                badge: "Correo de cursos",
+                title: "Recordatorio 2: Elección de cursos gratis",
+                detail: "Si tiene cursos gratis pendientes de seleccionar y aún no lo hace, se le recuerda con el catálogo disponible.",
+                rule: "Cursos gratis aún no elegidos por el estudiante."
+              }
+            ]
+          },
+          d5: {
+            title: "Día 5: segundo control de cursos gratis",
+            subtitle: "Último recordatorio de la primera semana para definir la elección de cursos gratis.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de cursos",
+                title: "Recordatorio 3: Elección de cursos gratis",
+                detail: "Último recordatorio formal de la primera semana para que defina sus cursos gratis.",
+                rule: "Cursos gratis aún no confirmados por el estudiante."
+              }
+            ]
+          },
+          d7: {
+            title: "Día 7: hito semanal de matrícula",
+            subtitle: "A una semana exacta de la matrícula del estudiante.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de ficha",
+                title: "Recordatorio 2: Ficha de matrícula",
+                detail: "Segundo recordatorio formal por correo destacando la necesidad de registrar sus datos oficiales para la certificación.",
+                rule: "Ficha de matrícula aún no completada por el estudiante."
+              }
+            ]
+          },
+          d14: {
+            title: "Día 14: seguimiento a medio mes",
+            subtitle: "Alerta de documentación rezagada a las 2 semanas del ingreso.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de ficha",
+                title: "Recordatorio 3: Ficha de matrícula",
+                detail: "Tercer correo preventivo informándole que lleva 2 semanas sin registrar sus datos oficiales.",
+                rule: "Ficha de matrícula aún pendiente de registro."
+              }
+            ]
+          },
+          d21: {
+            title: "Día 21: recordatorio final de ficha de matrícula",
+            subtitle: "A las 3 semanas de la inscripción. Cierre del embudo automático por correo.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo final de ficha",
+                title: "Recordatorio 4 (final): Ficha de matrícula",
+                detail: "Cuarto y último correo programado del flujo de ficha. Advierte que los certificados no podrán tramitarse sin este registro.",
+                rule: "Fin del embudo automático por correo para la ficha de matrícula."
+              }
+            ]
+          },
+          m1: {
+            title: "Al mes (día 30): entrega de certificado de taller",
+            subtitle: "Hito de entrega del primer certificado del diplomado.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de certificación",
+                title: "Certificado de taller habilitado",
+                detail: "Se envía un correo a todos los estudiantes inscritos informándoles que su certificado de taller ya se encuentra emitido y habilitado en la plataforma educativa.",
+                rule: "Cumplir 1 mes desde su fecha de inscripción (aplica a todos los estudiantes inscritos)."
+              }
+            ]
+          },
+          m3: {
+            title: "A los 3 meses: oportunidad final de cursos y gestión de deudas",
+            subtitle: "Última llamada para elegir cursos gratis si canceló el programa y contacto directo con estudiantes que deben mensualidades.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo condicionado",
+                title: "Último recordatorio de cursos gratis",
+                detail: "Si aún no ha seleccionado sus cursos gratis, se le brinda esta oportunidad final por correo.",
+                rule: "Solo se envía si el estudiante ha pagado el 100% de su programa contratado."
+              },
+              {
+                channel: "whatsapp",
+                badge: "WhatsApp de cobranza",
+                title: "Gestión de mora prolongada (más de 3 meses sin pago)",
+                detail: "A quienes adeudan cuotas y no han realizado ningún abono por más de 3 meses se les contacta de forma manual por WhatsApp para buscar respuesta o acuerdo formal.",
+                rule: "Si no responde al mensaje de WhatsApp, se procesa su retiro administrativo."
+              }
+            ]
+          },
+          fijo: {
+            title: "Fijo y mensual: recordatorios programados",
+            subtitle: "Comunicaciones periódicas de calendario para la rendición de exámenes.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de inicio de mes",
+                title: "Inicio de mes: Recordatorio de exámenes",
+                detail: "Se envía a todos los estudiantes que aún no culminan su diplomado recordándoles avanzar con sus evaluaciones.",
+                rule: "Diplomado aún no finalizado por el estudiante."
+              },
+              {
+                channel: "email",
+                badge: "Correo de quincena",
+                title: "Quincena: Segundo recordatorio de exámenes",
+                detail: "Se refuerza el avance académico a mitad de mes para incentivar la culminación antes del cierre mensual.",
+                rule: "Diplomado aún no finalizado por el estudiante."
+              }
+            ]
+          },
+          especiales: {
+            title: "Casos especiales: diplomados múltiples y vigencia",
+            subtitle: "Flujos condicionales para estudiantes con programas especiales o plazos específicos.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo semanal",
+                title: "Seleccionar siguiente diplomado",
+                detail: "Para estudiantes con programas de múltiples diplomados, se insiste semanalmente hasta que elijan su siguiente diplomado.",
+                rule: "Solo aplica si el estudiante ya completó y aprobó al 100% su primer diplomado."
+              },
+              {
+                channel: "email",
+                badge: "Correo de aviso",
+                title: "Aviso de vencimiento de plataforma (1 mes antes)",
+                detail: "Notificación formal de que su período de acceso en la plataforma educativa expirará en 30 días según su fecha de inscripción.",
+                rule: "Previo a la inhabilitación del usuario en la plataforma educativa."
+              }
+            ]
+          },
+          certificados: {
+            title: "Certificados: exámenes, validaciones y egreso",
+            subtitle: "Comunicaciones disparadas cuando el estudiante rinde y aprueba sus evaluaciones modulares.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo modular",
+                title: "Certificado modular habilitado",
+                detail: "Notificación enviada por correo cuando aprueba su examen modular y se valida que está al día y su programa incluye certificación.",
+                rule: "Nota aprobatoria + cuotas al día + programa contratado incluye certificación."
+              },
+              {
+                channel: "whatsapp",
+                badge: "WhatsApp modular",
+                title: "Certificado modular disponible para descarga",
+                detail: "Envío manual por WhatsApp confirmando que su certificado modular ya está emitido y listo para descargar en la plataforma educativa.",
+                rule: "Aprobación de evaluación modular y cumplimiento de la triple validación."
+              },
+              {
+                channel: "email",
+                badge: "Correo de graduación",
+                title: "Diploma general del diplomado habilitado",
+                detail: "Al rendir y aprobar su último examen modular, se habilita el diploma general junto con todas las certificaciones modulares pendientes.",
+                rule: "Aprobación de todos los exámenes modulares + pagos cancelados al 100%."
+              },
+              {
+                channel: "whatsapp",
+                badge: "WhatsApp de egreso",
+                title: "Todos los certificados habilitados (egreso)",
+                detail: "Envío manual del mensaje formal indicando que ya tiene todos sus certificados habilitados en plataforma y pasa a estado de egresado.",
+                rule: "Culminación de todos los módulos del diplomado y habilitación del diploma general."
+              }
+            ]
+          }
+        },
+        stages: [
+          {
+            id: 1,
+            stepTag: "1",
+            badgeText: "Día 0 - 1",
+            title: "Onboarding",
+            desc: "Accesos, malla y activación.",
+            color: "indigo",
+            name: "Etapa 1: Onboarding e inducción inmediata",
+            timeframe: "Día 0 (inscripción) y Día 1 (primer día hábil luego de la inscripción)",
+            objective: "Garantizar la entrega inmediata de credenciales, programa del diplomado y la activación del primer examen.",
+            studentStatus: "Estado: Ingresante",
+            badgeBg: "bg-indigo-100 text-indigo-800 border-indigo-300",
+            steps: [
+              { title: "Día 0: Correo de accesos a la plataforma", desc: "Envío programado de usuario, contraseña y enlace directo a la plataforma educativa una vez registrado en base de datos por el área comercial.", tag: "Correo", channel: "email" },
+              { title: "Día 0: Correo académico de malla curricular + ficha", desc: "Envío programado de la malla del diplomado seleccionado y formulario de ficha, siempre que la cuenta esté creada.", tag: "Correo", channel: "email" },
+              { title: "Día 0: WhatsApp con afiche de cuenta creada", desc: "Envío manual con saludo cordial, afiche gráfico de confirmación y contacto de soporte.", tag: "WhatsApp", channel: "whatsapp" },
+              { title: "Día 1: WhatsApp de módulos y examen 1 habilitados", desc: "Envío manual notificándole en el primer día hábil que todos los módulos y su primera evaluación ya están listos.", tag: "WhatsApp", channel: "whatsapp" },
+              { title: "Día 1: Correo de elección de cursos gratis (si aplica)", desc: "Si su programa académico incluye cursos gratis, se le avisa para que proceda a elegirlos.", tag: "Correo", channel: "email" }
+            ]
+          },
+          {
+            id: 2,
+            stepTag: "2",
+            badgeText: "Días 3 - 21",
+            title: "Registro y cursos",
+            desc: "Ficha de matrícula y cursos.",
+            color: "amber",
+            name: "Etapa 2: Registro y cursos",
+            timeframe: "Días 3, 5, 7, 14 y 21 posteriores a la matrícula",
+            objective: "Completar la ficha de matrícula del estudiante y asegurar que los cursos gratis queden asignados.",
+            studentStatus: "Estado: En regularización",
+            badgeBg: "bg-amber-100 text-amber-900 border-amber-300",
+            steps: [
+              { title: "Ficha de matrícula: Correos días 3, 7, 14 y 21", desc: "Exclusivamente por correo electrónico programado. Se reitera la urgencia de completar los datos para la certificación.", tag: "Correo", channel: "email" },
+              { title: "Cursos gratis: Correos días 3 y 5", desc: "Recordatorios tempranos para que elija del catálogo de cursos gratis.", tag: "Correo", channel: "email" },
+              { title: "Confirmación por WhatsApp al elegir cursos gratis", desc: "Cuando el estudiante nos escribe y elige sus cursos, se le envía manualmente un WhatsApp con afiche confirmando disponibilidad.", tag: "WhatsApp", channel: "whatsapp" }
+            ]
+          },
+          {
+            id: 3,
+            stepTag: "3",
+            badgeText: "Mes 1 en adelante",
+            title: "Formación",
+            desc: "Taller, mes y quincena.",
+            color: "purple",
+            name: "Etapa 3: Formación activa y acompañamiento",
+            timeframe: "Mes 1 (día 30), inicios de mes, quincenas y cada 7 días",
+            objective: "Sostener el ritmo de estudio, entregar logros tempranos y recordar evaluaciones periódicas.",
+            studentStatus: "Estado: Regular / Activo",
+            badgeBg: "bg-purple-100 text-purple-900 border-purple-300",
+            steps: [
+              { title: "Al mes (día 30): Certificado de taller", desc: "Correo enviado a todos los estudiantes avisando que su certificado de taller está listo y disponible en la plataforma educativa.", tag: "Correo", channel: "email" },
+              { title: "Inicio de mes: Recordatorio de exámenes", desc: "Correo fijo programado que invita a rendir exámenes si aún no han culminado su programa.", tag: "Correo", channel: "email" },
+              { title: "Quincena: Segundo recordatorio de exámenes", desc: "Correo fijo de seguimiento a mitad de mes para evitar deserción y reforzar el avance.", tag: "Correo", channel: "email" },
+              { title: "Cada 7 días: Diplomados múltiples (caso especial)", desc: "Envío semanal recordando elegir su siguiente diplomado, únicamente si ya finalizó por completo su primer diplomado.", tag: "Correo", channel: "email" }
+            ]
+          },
+          {
+            id: 4,
+            stepTag: "4",
+            badgeText: "Según exámenes",
+            title: "Certificación",
+            desc: "Triple validación y egreso.",
+            color: "emerald",
+            name: "Etapa 4: Evaluaciones, certificaciones y graduación",
+            timeframe: "Fecha variable (según avance modular del estudiante)",
+            objective: "Validar requisitos financieros y académicos para emitir certificados modulares o el diploma general al aprobar el último módulo.",
+            studentStatus: "Estado: Evaluado / Egresado",
+            badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300",
+            steps: [
+              { title: "Rendición de examen modular y registro de nota", desc: "El estudiante aprueba su evaluación en la plataforma educativa y la calificación se registra en la base de datos.", tag: "Académico", channel: "system" },
+              { title: "La triple validación obligatoria", desc: "Se verifica: 1) Nota aprobatoria, 2) Pagos al día, 3) Su programa contratado incluye certificación.", tag: "Validación", channel: "system" },
+              { title: "Examen modular aprobado: Correo", desc: "Se notifica por correo programado que su certificado modular ha sido habilitado en la plataforma educativa.", tag: "Correo", channel: "email" },
+              { title: "Certificado modular disponible: WhatsApp", desc: "Se confirma manualmente por WhatsApp que su certificado modular ya está listo para descargar en el aula virtual.", tag: "WhatsApp", channel: "whatsapp" },
+              { title: "Último examen modular aprobado: Correo de graduación", desc: "Al aprobar su último módulo, se notifica por correo que ha completado todos sus exámenes y su diploma general está disponible.", tag: "Correo", channel: "email" },
+              { title: "Egreso institucional: WhatsApp", desc: "Se envía WhatsApp de certificados completos y pasa a estado EGRESADO.", tag: "WhatsApp", channel: "whatsapp" }
+            ]
+          },
+          {
+            id: 5,
+            stepTag: "5",
+            badgeText: "Más de 3 meses",
+            title: "Mora y retiro",
+            desc: "Morosidad y suspensión de acceso.",
+            color: "rose",
+            name: "Etapa 5: Gestión de mora y cierre de accesos",
+            timeframe: "Mes 3 (más de 90 días de deuda) o 1 mes antes de caducar",
+            objective: "Gestionar carteras en riesgo, formalizar retiros y suspender accesos vencidos.",
+            studentStatus: "Estado: Retirado o Suspendido",
+            badgeBg: "bg-rose-100 text-rose-900 border-rose-300",
+            steps: [
+              { title: "Deuda de más de 3 meses sin abonos: WhatsApp manual directo", desc: "Mensaje manual por WhatsApp buscando comunicación formal para regularizar o llegar a un acuerdo de pago.", tag: "WhatsApp", channel: "whatsapp" },
+              { title: "Paso a estado RETIRADO por silencio", desc: "Si no contesta al mensaje de cobranza por WhatsApp, se procede con su baja definitiva en el sistema.", tag: "Retiro", channel: "system" },
+              { title: "Aviso de caducidad: 1 mes antes", desc: "Notificación preventiva por correo avisando la fecha en que caducará su período de acceso a la plataforma educativa.", tag: "Correo", channel: "email" },
+              { title: "Suspensión de plataforma educativa", desc: "Cumplido el período de acceso contractual según su fecha de inscripción, el acceso queda suspendido.", tag: "Cierre técnico", channel: "system" }
+            ]
+          }
+        ],
+        processes: {
+          p_matricula: {
+            name: "1. Ficha de matrícula (días 0, 3, 7, 14, 21)",
+            title: "Proceso 1: Flujo de ficha de matrícula",
+            channelNotice: "Regla institucional: Este flujo se gestiona EXCLUSIVAMENTE por correo electrónico programado.",
+            themeBadge: "bg-sky-100 text-sky-800 border-sky-300",
+            steps: [
+              { point: "Día 0 (inscripción)", channel: "Correo académico", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Se envía la malla curricular del diplomado y el enlace oficial a la ficha de matrícula (criterio: cuenta ya creada)." },
+              { point: "Día 3", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "1.er recordatorio si aún no completa la ficha digital de matrícula." },
+              { point: "Día 7", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "2.º recordatorio solicitando registrar sus datos oficiales para los trámites de certificación." },
+              { point: "Día 14", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "3.er recordatorio preventivo a las 2 semanas del ingreso del estudiante." },
+              { point: "Día 21", channel: "Correo final", badgeColor: "bg-amber-100 text-amber-900 border-amber-300", icon: "ph-bold ph-warning", desc: "4.º y último recordatorio del flujo automático de ficha antes de reporte administrativo." }
+            ]
+          },
+          p_cursos: {
+            name: "2. Elección de cursos gratis (días 1, 3, 5 y mes 3)",
+            title: "Proceso 2: Flujo de elección de cursos gratis",
+            channelNotice: "Combinación de correos programados y WhatsApp manual con afiche gráfico.",
+            themeBadge: "bg-emerald-100 text-emerald-800 border-emerald-300",
+            steps: [
+              { point: "Día 1 (día hábil luego de la inscripción)", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Aviso inicial notificando que tiene pendiente seleccionar sus cursos gratis si su programa contratado los incluye." },
+              { point: "Día 3", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Primer recordatorio para escoger del catálogo de cursos gratis." },
+              { point: "Día 5", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Segundo recordatorio para definir su selección de cursos gratis." },
+              { point: "Mes 3 (a los 3 meses)", channel: "Correo condicional", badgeColor: "bg-amber-100 text-amber-900 border-amber-300", icon: "ph-bold ph-lock-key", desc: "Último recordatorio si aún no escogió. CONDICIÓN: Haber cancelado el 100% del pago de su programa contratado." },
+              { point: "Al confirmar elección", channel: "WhatsApp", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-whatsapp-logo", desc: "Cuando el estudiante nos escribe y elige sus cursos, se le envía manualmente un WhatsApp con afiche gráfico confirmando disponibilidad en la plataforma educativa." }
+            ]
+          },
+          p_certificacion: {
+            name: "3. Exámenes y triple validación modular",
+            title: "Proceso 3: Exámenes y triple validación modular",
+            channelNotice: "Regla obligatoria: Solo se emite si cumple simultáneamente los 3 requisitos institucionales.",
+            themeBadge: "bg-indigo-100 text-indigo-800 border-indigo-300",
+            steps: [
+              { point: "Paso 1: Rendición de examen modular", channel: "Plataforma educativa", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-file-text", desc: "El estudiante rinde su evaluación modular en fecha variable dentro de la plataforma educativa." },
+              { point: "Paso 2: Registro de nota", channel: "Base de datos", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-database", desc: "Si aprueba, la calificación se registra en la base de datos institucional." },
+              { point: "Paso 3: Triple validación", channel: "Validación de sistema", badgeColor: "bg-amber-100 text-amber-900 border-amber-300", icon: "ph-bold ph-shield-check", desc: "Se verifica: 1) Nota aprobatoria, 2) Pagos al día, 3) Su programa contratado incluye certificación." },
+              { point: "Paso 4: Notificación modular por correo", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Se notifica por correo programado que su certificado modular ha sido habilitado en la plataforma educativa." },
+              { point: "Paso 5: Notificación modular por WhatsApp", channel: "WhatsApp", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-whatsapp-logo", desc: "Se confirma manualmente por WhatsApp indicando que su certificado modular ya está listo para descargar en la plataforma educativa." }
+            ]
+          },
+          p_egreso: {
+            name: "4. Último examen modular, diploma general y egreso",
+            title: "Proceso 4: Último examen modular, diploma general y egreso",
+            channelNotice: "Hito cumbre: Al rendir y aprobar el último módulo se titula y egresa el estudiante.",
+            themeBadge: "bg-emerald-100 text-emerald-800 border-emerald-300",
+            steps: [
+              { point: "Paso 1: Último examen modular rendido", channel: "Plataforma educativa", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-exam", desc: "El estudiante rinde y aprueba satisfactoriamente el último examen modular del diplomado." },
+              { point: "Paso 2: Validación integral de módulos y pagos", channel: "Filtro de sistema", badgeColor: "bg-amber-100 text-amber-900 border-amber-300", icon: "ph-bold ph-shield-check", desc: "Se verifica que todas las cuotas de su programa estén canceladas al 100% y todos los módulos aprobados." },
+              { point: "Paso 3: Notificación de diploma general", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Se notifica por correo programado que ha culminado todos sus módulos y su diploma general está disponible en la plataforma educativa." },
+              { point: "Paso 4: WhatsApp de certificados completos", channel: "WhatsApp", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-whatsapp-logo", desc: "Se envía manualmente el mensaje oficial confirmando: 'Ya tienes todos tus certificados habilitados en plataforma'." },
+              { point: "Paso 5: Transición de estado a egresado", channel: "Base de datos", badgeColor: "bg-purple-100 text-purple-900 border-purple-300", icon: "ph-bold ph-user-check", desc: "El estudiante pasa formalmente en el sistema al estado oficial de EGRESADO." }
+            ]
+          },
+          p_mora: {
+            name: "5. Morosidad de más de 3 meses y retiro",
+            title: "Proceso 5: Morosidad de más de 3 meses y retiro",
+            channelNotice: "Protocolo de cobranza manual por WhatsApp y regla definitiva de retiro administrativo.",
+            themeBadge: "bg-rose-100 text-rose-800 border-rose-300",
+            steps: [
+              { point: "Detección de deuda de más de 3 meses", channel: "Filtro financiero", badgeColor: "bg-rose-100 text-rose-800 border-rose-300", icon: "ph-bold ph-receipt", desc: "El estudiante tiene cuotas vencidas y no ha registrado ningún abono por más de 3 meses." },
+              { point: "Contacto directo de cobranza", channel: "WhatsApp", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-whatsapp-logo", desc: "Se envía un mensaje manual por WhatsApp solicitando respuesta o una propuesta formal de regularización." },
+              { point: "Evaluación de respuesta", channel: "Recepción", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-chat-circle-dots", desc: "Se evalúa si el estudiante responde y asume un compromiso de pago formal." },
+              { point: "Resolución por silencio: retiro", channel: "Baja en sistema", badgeColor: "bg-rose-200 text-rose-900 border-rose-400", icon: "ph-bold ph-user-minus", desc: "Si NO responde al mensaje de WhatsApp, el sistema lo cambia automáticamente al estado de RETIRADO." }
+            ]
+          },
+          p_vencimiento: {
+            name: "6. Caducidad e inhabilitación de plataforma",
+            title: "Proceso 6: Caducidad e inhabilitación de plataforma",
+            channelNotice: "Control del tiempo de servicio según la fecha de matrícula del estudiante.",
+            themeBadge: "bg-slate-100 text-slate-800 border-slate-300",
+            steps: [
+              { point: "Cálculo de período de acceso", channel: "Sistema", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-calendar-blank", desc: "Se monitorea el período de acceso asignado a la cuenta según su programa contratado y fecha de inscripción." },
+              { point: "1 mes antes de expirar", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Se envía una notificación de aviso preventiva por correo indicando la fecha exacta en que caducará su período de acceso." },
+              { point: "Fecha límite cumplida", channel: "Plataforma educativa", badgeColor: "bg-slate-200 text-slate-800 border-slate-400", icon: "ph-bold ph-lock", desc: "Inhabilitación automática de las credenciales de ingreso en la plataforma educativa." }
+            ]
+          },
+          p_multidiplomado: {
+            name: "7. Estudiantes con diplomados múltiples (caso especial)",
+            title: "Proceso 7: Estudiantes con diplomados múltiples (caso especial)",
+            channelNotice: "Condición indispensable: Solo se envía si el estudiante ya completó y aprobó al 100% su primer diplomado.",
+            themeBadge: "bg-purple-100 text-purple-800 border-purple-300",
+            steps: [
+              { point: "Programa contratado", channel: "Diplomados múltiples", badgeColor: "bg-purple-100 text-purple-800 border-purple-300", icon: "ph-bold ph-stack", desc: "El estudiante adquirió un programa compuesto por 2 o más diplomados." },
+              { point: "Validación de primer diplomado", channel: "Condición académica", badgeColor: "bg-amber-100 text-amber-900 border-amber-300", icon: "ph-bold ph-check-square-offset", desc: "Se valida que haya culminado y aprobado con éxito al 100% su primer diplomado." },
+              { point: "Frecuencia: Cada 7 días", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Se envía un correo automático semanal recordando que tiene pendiente seleccionar su siguiente diplomado." },
+              { point: "Confirmación del estudiante", channel: "Respuesta", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-check-circle", desc: "Al confirmar su elección, se le da de alta en el nuevo diplomado seleccionado." }
+            ]
+          },
+          p_rutina: {
+            name: "8. Rutina fija mensual (exámenes y taller)",
+            title: "Proceso 8: Rutina fija mensual (exámenes y taller)",
+            channelNotice: "Comunicaciones fijas de calendario que impulsan el avance académico.",
+            themeBadge: "bg-indigo-100 text-indigo-800 border-indigo-300",
+            steps: [
+              { point: "Inicios de mes", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Recordatorio fijo para rendir exámenes pendientes (siempre que no haya culminado su diplomado)." },
+              { point: "Quincena de mes", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Segundo recordatorio fijo mensual para no postergar las evaluaciones modulares." },
+              { point: "Al mes de matrícula (día 30)", channel: "Correo", badgeColor: "bg-purple-100 text-purple-800 border-purple-300", icon: "ph-bold ph-certificate", desc: "Se envía un correo a todos los estudiantes inscritos informándoles que su certificado de taller ya se encuentra emitido y habilitado en la plataforma educativa." }
+            ]
+          }
+        }
+      },
+
+      curso_ia: {
+        label: "Curso de IA de 0 a 100",
+        badgeStyle: "bg-gradient-to-r from-purple-600 to-indigo-600 text-white ring-2 ring-purple-400/25",
+        badgeIcon: "ph-bold ph-cpu text-sm",
+        activeTimeKey: "ia_d0",
+        activeStageKey: 1,
+        calls: {
+          hasCalls: true,
+          title: "Protocolo de 3 llamadas estratégicas",
+          desc: "En el <b>Curso de IA de 0 a 100</b> se ejecutan 3 llamadas clave para garantizar inducción, acompañar el progreso y asegurar la obtención del certificado:",
+          items: [
+            {
+              stepNum: 1,
+              title: "Llamada 1: Verificación de accesos y soporte técnico",
+              moment: "Primeros días post-inscripción (luego del correo de accesos)",
+              tagColor: "bg-indigo-100 text-indigo-800 border-indigo-300",
+              goal: "Contactar al estudiante para consultar si pudo acceder correctamente a la plataforma educativa con las credenciales que le llegaron a su correo.",
+              supportAction: "Si no ha podido acceder o presenta inconvenientes técnicos con sus contraseñas o enlaces, se le brinda soporte técnico asistido de forma inmediata en la llamada.",
+              fallbackRule: "Si NO contesta la llamada: Se le envía inmediatamente un mensaje de WhatsApp para verificar su estado de acceso y brindarle asistencia directa."
+            },
+            {
+              stepNum: 2,
+              title: "Llamada 2: Monitoreo y acompañamiento en el avance",
+              moment: "Durante el desarrollo del curso",
+              tagColor: "bg-purple-100 text-purple-800 border-purple-300",
+              goal: "Llamar al estudiante para consultar sobre cómo va su avance en las clases, si tiene dudas sobre las lecciones o si requiere orientación académica.",
+              supportAction: "Brindar acompañamiento pedagógico, motivarlo a continuar y resolver inquietudes sobre el temario antes de la habilitación del examen.",
+              fallbackRule: "Si NO contesta la llamada: Se le envía un mensaje de WhatsApp consultándole por su avance y recordándole los canales de consulta disponibles."
+            },
+            {
+              stepNum: 3,
+              title: "Llamada 3: Cierre, egreso y descarga de certificado",
+              moment: "Al momento del egreso (examen aprobado)",
+              tagColor: "bg-emerald-100 text-emerald-800 border-emerald-300",
+              goal: "Contactar al estudiante que concluyó su evaluación para verificar si ya pudo visualizar y descargar satisfactoriamente su certificado oficial en la plataforma educativa.",
+              supportAction: "Confirmar que los datos de su certificado estén correctos y validar su satisfacción general con el curso.",
+              fallbackRule: "Si NO contesta la llamada: Se le envía un mensaje de WhatsApp felicitándolo, confirmando que su certificado está emitido y adjuntando la guía de descarga."
+            }
+          ]
+        },
+        timePills: [
+          { key: 'ia_d0', label: 'Día 0 (inscripción)', icon: 'ph-bold ph-sparkle', color: 'purple' },
+          { key: 'ia_d3', label: 'Día 3', icon: 'ph-bold ph-calendar', color: 'sky' },
+          { key: 'ia_d7', label: 'Día 7 (semana 1)', icon: 'ph-bold ph-calendar', color: 'blue' },
+          { key: 'ia_d14', label: 'Día 14', icon: 'ph-bold ph-calendar', color: 'blue' },
+          { key: 'ia_d21', label: 'Día 21', icon: 'ph-bold ph-warning', color: 'amber' },
+          { key: 'ia_m1', label: 'Al mes (día 30)', icon: 'ph-bold ph-file-text', color: 'indigo' },
+          { key: 'ia_cada5d', label: 'Cada 5 días (examen)', icon: 'ph-bold ph-arrows-clockwise', color: 'sky' },
+          { key: 'ia_vencimiento', label: 'Cierre de plataforma', icon: 'ph-bold ph-clock', color: 'slate' },
+          { key: 'ia_certificado', label: 'Certificado único', icon: 'ph-bold ph-seal-check', color: 'emerald' }
+        ],
+        timeData: {
+          ia_d0: {
+            title: "Día 0: día de la inscripción",
+            subtitle: "Se registran los datos en el sistema y se envían los correos de accesos y académico con ficha.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de accesos",
+                title: "Credenciales y accesos a la plataforma",
+                detail: "Envío programado de usuario, contraseña y enlace directo para ingresar a la plataforma educativa del Curso de IA de 0 a 100.",
+                rule: "Registrado en la base de datos por el área comercial para su inscripción y envío del correo de accesos."
+              },
+              {
+                channel: "email",
+                badge: "Correo académico",
+                title: "Temario del curso + Ficha de matrícula",
+                detail: "Se adjunta la estructura académica del Curso de IA de 0 a 100 y el enlace oficial para completar la ficha digital de matrícula.",
+                rule: "Se envía con la cuenta creada para que el estudiante complete su ficha de matrícula."
+              }
+            ]
+          },
+          ia_d3: {
+            title: "Día 3: primer control de ficha de matrícula",
+            subtitle: "Revisión programada de ficha de matrícula pendiente (no aplica selección de cursos gratis).",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de ficha",
+                title: "Recordatorio 1: Ficha de matrícula",
+                detail: "Si aún no ha llenado la ficha digital, se le envía el primer recordatorio por correo con el enlace directo.",
+                rule: "Ficha de matrícula pendiente de registro en el sistema."
+              }
+            ]
+          },
+          ia_d7: {
+            title: "Día 7: segundo control de ficha de matrícula",
+            subtitle: "A una semana exacta de la inscripción al Curso de IA de 0 a 100.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de ficha",
+                title: "Recordatorio 2: Ficha de matrícula",
+                detail: "Segundo recordatorio formal por correo destacando la necesidad de registrar sus datos oficiales para su certificación.",
+                rule: "Ficha de matrícula aún no completada por el estudiante."
+              }
+            ]
+          },
+          ia_d14: {
+            title: "Día 14: tercer control de ficha de matrícula",
+            subtitle: "Alerta preventiva a las 2 semanas del ingreso del estudiante.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de ficha",
+                title: "Recordatorio 3: Ficha de matrícula",
+                detail: "Tercer correo preventivo informándole que lleva 2 semanas sin registrar sus datos oficiales.",
+                rule: "Ficha de matrícula aún pendiente de registro."
+              }
+            ]
+          },
+          ia_d21: {
+            title: "Día 21: recordatorio final de ficha de matrícula",
+            subtitle: "Cierre del embudo automático por correo para la ficha del Curso de IA.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo final de ficha",
+                title: "Recordatorio 4 (final): Ficha de matrícula",
+                detail: "Cuarto y último recordatorio programado de ficha. Se advierte que su certificado no podrá emitirse sin este registro.",
+                rule: "Fin del embudo automático por correo para la ficha de matrícula."
+              }
+            ]
+          },
+          ia_m1: {
+            title: "Al mes (día 30): habilitación del examen",
+            subtitle: "Hito de inicio del período de evaluación del Curso de IA de 0 a 100 (sin certificado de taller).",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de examen",
+                title: "Examen del Curso de IA habilitado",
+                detail: "Se envía un correo notificándole formalmente que su evaluación ya se encuentra habilitada en la plataforma educativa para cuando decida rendirla.",
+                rule: "Cumplir 1 mes desde su fecha de inscripción (aplica a todos los estudiantes del curso)."
+              }
+            ]
+          },
+          ia_cada5d: {
+            title: "Cada 5 días: recordatorio recurrente de examen",
+            subtitle: "Seguimiento periódico a partir del mes 1 hasta que el estudiante rinda su evaluación.",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo recurrente",
+                title: "Recordatorio de rendición de examen (cada 5 días)",
+                detail: "A partir de que el examen queda habilitado al mes, se despacha un correo cada 5 días recordando rendir la evaluación del curso.",
+                rule: "Estudiante con examen habilitado que aún no ha rendido la evaluación."
+              }
+            ]
+          },
+          ia_vencimiento: {
+            title: "Cierre de plataforma: aviso 1 mes antes",
+            subtitle: "Notificación preventiva previa al vencimiento del período de acceso (sin gestión de deudas).",
+            actions: [
+              {
+                channel: "email",
+                badge: "Correo de aviso",
+                title: "Aviso de vencimiento de plataforma (1 mes antes)",
+                detail: "Notificación formal indicando que su período de acceso en la plataforma educativa expirará en 30 días según su fecha de inscripción.",
+                rule: "Previo a la inhabilitación técnica del usuario en la plataforma educativa."
+              }
+            ]
+          },
+          ia_certificado: {
+            title: "Certificado único: aprobación del Curso de IA",
+            subtitle: "Emisión y notificación única del certificado oficial del curso.",
+            actions: [
+              {
+                channel: "email",
+                badge: "1 solo correo",
+                title: "Certificado del Curso de IA habilitado",
+                detail: "Al rendir y aprobar el examen, se habilita su certificado oficial en la plataforma educativa y se envía 1 único correo de habilitación.",
+                rule: "Aprobación del examen del curso (este producto cuenta con 1 solo certificado oficial)."
+              }
+            ]
+          }
+        },
+        stages: [
+          {
+            id: 1,
+            stepTag: "1",
+            badgeText: "Día 0 - 1",
+            title: "Onboarding IA",
+            desc: "Accesos y ficha inicial.",
+            color: "indigo",
+            name: "Etapa 1: Onboarding e inducción inmediata",
+            timeframe: "Día 0 (inscripción) y primer día hábil",
+            objective: "Garantizar la entrega inmediata de credenciales a la plataforma educativa, temario del curso y ficha de matrícula.",
+            studentStatus: "Estado: Ingresante",
+            badgeBg: "bg-indigo-100 text-indigo-800 border-indigo-300",
+            steps: [
+              { title: "Día 0: Correo de accesos a la plataforma", desc: "Envío programado de usuario, contraseña y enlace directo a la plataforma educativa del Curso de IA de 0 a 100.", tag: "Correo", channel: "email" },
+              { title: "Día 0: Correo académico de temario + ficha", desc: "Envío del temario y el enlace oficial a la ficha de matrícula una vez creada la cuenta.", tag: "Correo", channel: "email" }
+            ]
+          },
+          {
+            id: 2,
+            stepTag: "2",
+            badgeText: "Días 3 - 21",
+            title: "Ficha matrícula",
+            desc: "Recordatorios de registro.",
+            color: "amber",
+            name: "Etapa 2: Regularización de ficha de matrícula",
+            timeframe: "Días 3, 7, 14 y 21 posteriores a la matrícula",
+            objective: "Asegurar que el estudiante complete su ficha de matrícula exclusivamente por correo (no aplica selección de cursos gratis).",
+            studentStatus: "Estado: En regularización",
+            badgeBg: "bg-amber-100 text-amber-900 border-amber-300",
+            steps: [
+              { title: "Día 3: Recordatorio 1 de ficha de matrícula", desc: "Primer recordatorio automático por correo con enlace directo a la ficha.", tag: "Correo", channel: "email" },
+              { title: "Día 7: Recordatorio 2 de ficha de matrícula", desc: "Segundo recordatorio formal destacando la importancia de registrar sus datos.", tag: "Correo", channel: "email" },
+              { title: "Día 14: Recordatorio 3 de ficha de matrícula", desc: "Tercer correo preventivo a las 2 semanas del ingreso.", tag: "Correo", channel: "email" },
+              { title: "Día 21: Recordatorio 4 (final) de ficha", desc: "Último recordatorio automático advirtiendo que no se emitirá el certificado sin ficha registrada.", tag: "Correo", channel: "email" }
+            ]
+          },
+          {
+            id: 3,
+            stepTag: "3",
+            badgeText: "Al mes",
+            title: "Examen activo",
+            desc: "Habilitación y cada 5 días.",
+            color: "purple",
+            name: "Etapa 3: Examen habilitado y seguimiento cada 5 días",
+            timeframe: "Mes 1 (Día 30) y cada 5 días posteriores",
+            objective: "Habilitar la evaluación al cumplirse 1 mes e impulsar su rendición cada 5 días (sin recordatorios de inicio de mes ni quincena).",
+            studentStatus: "Estado: Regular / Examen habilitado",
+            badgeBg: "bg-purple-100 text-purple-900 border-purple-300",
+            steps: [
+              { title: "Al mes (día 30): Correo de examen habilitado", desc: "Notificación formal avisando que su examen del Curso de IA ya está cargado y disponible para rendir en la plataforma educativa.", tag: "Correo", channel: "email" },
+              { title: "Cada 5 días: Recordatorio de rendición de examen", desc: "Correo automático cada 5 días recordando rendir la evaluación pendiente hasta que sea completada.", tag: "Correo", channel: "email" }
+            ]
+          },
+          {
+            id: 4,
+            stepTag: "4",
+            badgeText: "Al aprobar",
+            title: "Certificado único",
+            desc: "1 solo correo oficial.",
+            color: "emerald",
+            name: "Etapa 4: Aprobación y certificado único",
+            timeframe: "Fecha variable (según rendición del examen)",
+            objective: "Validar la aprobación del examen y emitir el único certificado oficial del curso.",
+            studentStatus: "Estado: Certificado",
+            badgeBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
+            steps: [
+              { title: "Rendición de evaluación en plataforma educativa", desc: "El estudiante rinde su examen y el sistema registra la nota aprobatoria.", tag: "Académico", channel: "system" },
+              { title: "Emisión de certificado y 1 único correo de habilitación", desc: "Se habilita el único certificado del curso y se envía 1 solo correo notificando que ya está disponible para descargar.", tag: "Correo", channel: "email" }
+            ]
+          },
+          {
+            id: 5,
+            stepTag: "5",
+            badgeText: "1 mes antes",
+            title: "Cierre aula",
+            desc: "Caducidad de vigencia.",
+            color: "rose",
+            name: "Etapa 5: Cierre de acceso a plataforma educativa",
+            timeframe: "1 mes previo a la caducidad (sin cobranzas de deuda)",
+            objective: "Notificar la fecha límite de permanencia en el aula virtual y suspender el servicio al vencerse el plazo.",
+            studentStatus: "Estado: Inhabilitado",
+            badgeBg: "bg-rose-100 text-rose-900 border-rose-300",
+            steps: [
+              { title: "1 mes antes: Notificación preventiva de corte", desc: "Correo automático avisando la fecha exacta en la que vencerá su período de acceso contratado.", tag: "Correo", channel: "email" },
+              { title: "Corte de credenciales en plataforma educativa", desc: "Inhabilitación automática del usuario según su fecha de inscripción (no aplican gestiones de deuda).", tag: "Cierre técnico", channel: "system" }
+            ]
+          }
+        ],
+        processes: {
+          ia_p_matricula: {
+            name: "1. Ficha de matrícula (días 0, 3, 7, 14, 21)",
+            title: "Proceso 1: Flujo de ficha de matrícula (Curso de IA)",
+            channelNotice: "Regla institucional: Gestionado exclusivamente por correo electrónico programado.",
+            themeBadge: "bg-sky-100 text-sky-800 border-sky-300",
+            steps: [
+              { point: "Día 0 (inscripción)", channel: "Correo académico", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Envío del temario del Curso de IA de 0 a 100 y enlace oficial a la ficha de matrícula." },
+              { point: "Día 3", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "1.er recordatorio automático si no completó la ficha digital." },
+              { point: "Día 7", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "2.º recordatorio formal para registrar sus datos de certificación." },
+              { point: "Día 14", channel: "Correo", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "3.er recordatorio preventivo a las 2 semanas del ingreso." },
+              { point: "Día 21", channel: "Correo final", badgeColor: "bg-amber-100 text-amber-900 border-amber-300", icon: "ph-bold ph-warning", desc: "4.º y último recordatorio automático antes de reporte administrativo." }
+            ]
+          },
+          ia_p_examen: {
+            name: "2. Examen al mes y recordatorios cada 5 días",
+            title: "Proceso 2: Examen al mes y seguimiento recurrente cada 5 días",
+            channelNotice: "Se habilita al mes de inscripción y se recuerda automáticamente cada 5 días.",
+            themeBadge: "bg-purple-100 text-purple-800 border-purple-300",
+            steps: [
+              { point: "Al mes (día 30)", channel: "Correo de examen", badgeColor: "bg-purple-100 text-purple-800 border-purple-300", icon: "ph-bold ph-file-text", desc: "Notificación formal indicando que el examen del curso ya se encuentra cargado y disponible para rendir en la plataforma educativa." },
+              { point: "Cada 5 días posteriores", channel: "Correo recurrente", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-arrows-clockwise", desc: "Correo automático cada 5 días recordando rendir la evaluación del curso hasta que sea aprobada." }
+            ]
+          },
+          ia_p_certificado: {
+            name: "3. Evaluación y certificado único (1 solo correo)",
+            title: "Proceso 3: Aprobación y habilitación del certificado único",
+            channelNotice: "Este producto otorga 1 único certificado oficial mediante 1 solo correo de notificación.",
+            themeBadge: "bg-emerald-100 text-emerald-800 border-emerald-300",
+            steps: [
+              { point: "Paso 1: Rendición de examen", channel: "Plataforma educativa", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-exam", desc: "El estudiante rinde la evaluación del curso en fecha variable." },
+              { point: "Paso 2: Registro de nota aprobatoria", channel: "Base de datos", badgeColor: "bg-slate-100 text-slate-800 border-slate-300", icon: "ph-bold ph-database", desc: "El sistema graba la nota aprobatoria del estudiante." },
+              { point: "Paso 3: Notificación única por correo", channel: "1 solo correo", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-envelope-simple", desc: "Se habilita el certificado oficial en plataforma y se envía 1 solo correo notificando que está disponible para su descarga." }
+            ]
+          },
+          ia_p_vencimiento: {
+            name: "4. Caducidad e inhabilitación (aviso 1 mes antes)",
+            title: "Proceso 4: Vencimiento de vigencia en plataforma educativa",
+            channelNotice: "Control del tiempo de servicio contractual (no aplican gestiones de deuda).",
+            themeBadge: "bg-slate-100 text-slate-800 border-slate-300",
+            steps: [
+              { point: "1 mes antes del corte", channel: "Correo de aviso", badgeColor: "bg-sky-100 text-sky-800 border-sky-300", icon: "ph-bold ph-envelope-simple", desc: "Se envía una notificación preventiva por correo indicando la fecha exacta en que caducará su período de acceso." },
+              { point: "Fecha límite cumplida", channel: "Plataforma educativa", badgeColor: "bg-slate-200 text-slate-800 border-slate-400", icon: "ph-bold ph-lock", desc: "Inhabilitación automática de las credenciales de ingreso en la plataforma educativa." }
+            ]
+          },
+          ia_p_llamadas: {
+            name: "5. Protocolo de las 3 llamadas clave y WhatsApp de respaldo",
+            title: "Proceso 5: Protocolo de llamadas de inducción, avance y egreso",
+            channelNotice: "Regla obligatoria: Si no contesta cualquiera de las llamadas, se envía WhatsApp de respaldo de inmediato.",
+            themeBadge: "bg-indigo-100 text-indigo-800 border-indigo-300",
+            steps: [
+              { point: "Llamada 1 (inducción)", channel: "Llamada + WhatsApp", badgeColor: "bg-indigo-100 text-indigo-800 border-indigo-300", icon: "ph-bold ph-phone-call", desc: "Verificación de acceso correcto según correo de credenciales. Soporte asistido si hubo error. WhatsApp si no contesta." },
+              { point: "Llamada 2 (avance)", channel: "Llamada + WhatsApp", badgeColor: "bg-purple-100 text-purple-800 border-purple-300", icon: "ph-bold ph-phone-call", desc: "Consulta sobre ritmo de avance en clases y dudas académicas previas al examen. WhatsApp si no contesta." },
+              { point: "Llamada 3 (egreso)", channel: "Llamada + WhatsApp", badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-300", icon: "ph-bold ph-phone-call", desc: "Confirmación de visualización y descarga del certificado oficial aprobado. Felicitaciones y WhatsApp si no contesta." }
+            ]
+          }
+        }
+      }
+    };
+
+    // Toggle Product Dropdown
+    function toggleProductDropdown() {
+      const menu = document.getElementById('product-dropdown-menu');
+      if (menu) {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    // Close Dropdown when clicking outside
+    window.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('product-dropdown-wrapper');
+      const menu = document.getElementById('product-dropdown-menu');
+      if (wrapper && menu && !wrapper.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Change Product Function
+    function changeProduct(productKey) {
+      if (!productsDB[productKey] || currentProduct === productKey) {
+        const menu = document.getElementById('product-dropdown-menu');
+        if (menu) menu.classList.add('hidden');
+        return;
+      }
+
+      currentProduct = productKey;
+      const prod = productsDB[currentProduct];
+
+      // Update badge UI
+      const badgeBtn = document.getElementById('product-badge-btn');
+      const badgeLabel = document.getElementById('current-product-label');
+      const badgeIcon = document.getElementById('current-product-badge-icon');
+
+      if (badgeBtn) badgeBtn.className = `${prod.badgeStyle} hover:opacity-95 text-xs font-bold px-3.5 py-1.5 rounded-xl shadow-xs flex items-center gap-2 transition-all cursor-pointer`;
+      if (badgeLabel) badgeLabel.textContent = prod.label;
+      if (badgeIcon) badgeIcon.innerHTML = `<i class="${prod.badgeIcon}"></i>`;
+
+      // Update checkmarks in dropdown
+      const checkDiplomados = document.getElementById('check-diplomados');
+      const checkCursoIa = document.getElementById('check-curso_ia');
+      if (checkDiplomados && checkCursoIa) {
+        if (currentProduct === 'diplomados') {
+          checkDiplomados.classList.remove('hidden');
+          checkCursoIa.classList.add('hidden');
+        } else {
+          checkDiplomados.classList.add('hidden');
+          checkCursoIa.classList.remove('hidden');
+        }
+      }
+
+      // Close dropdown
+      const menu = document.getElementById('product-dropdown-menu');
+      if (menu) menu.classList.add('hidden');
+
+      // Re-render all views
+      renderProductViews();
+    }
+
+    // Render Product Views (Panels 1, 2, 3, 4)
+    function renderProductViews() {
+      const prod = productsDB[currentProduct];
+
+      // 1. Render Time Pills in Panel 1 con sus colores individuales
+      const pillsContainer = document.getElementById('time-pills-bar');
+      pillsContainer.innerHTML = prod.timePills.map(tp => {
+        const colorCls = pillColorClasses[tp.color] || pillColorClasses.slate;
+        return `
+        <button onclick="selectTimePoint('${tp.key}')" id="tp-${tp.key}" class="px-3 py-1.5 rounded-xl text-xs font-extrabold ${colorCls} border transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs">
+          <i class="${tp.icon}"></i> ${tp.label}
+        </button>
+        `;
+      }).join('');
+
+      // 2. Render Stages Cards in Panel 2 con sus colores correspondientes por etapa
+      const stagesContainer = document.getElementById('stages-grid-container');
+      stagesContainer.innerHTML = prod.stages.map(st => {
+        const stStyle = stageColorStyles[st.color] || stageColorStyles.indigo;
+        return `
+        <div onclick="selectStage(${st.id})" id="stage-card-${st.id}" class="cursor-pointer transition-all p-3.5 rounded-2xl border-2 ${stStyle.idle} shadow-2xs">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="w-6 h-6 rounded-lg ${stStyle.badge} font-extrabold text-xs flex items-center justify-center">${st.stepTag}</span>
+            <span class="text-[10px] ${stStyle.tag}">${st.badgeText}</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-xs sm:text-sm text-balance">${st.title}</h3>
+          <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">${st.desc}</p>
+        </div>
+        `;
+      }).join('');
+
+      // 3. Render Process Dropdown Options in Panel 3
+      const dropdown = document.getElementById('process-dropdown');
+      dropdown.innerHTML = Object.keys(prod.processes).map(procKey => `
+        <option value="${procKey}">${prod.processes[procKey].name}</option>
+      `).join('');
+
+      // 4. Render Calls Panel in Panel 4
+      renderCallsPanel();
+
+      // Select initial items
+      selectTimePoint(prod.activeTimeKey);
+      selectStage(prod.activeStageKey);
+      const firstProcKey = Object.keys(prod.processes)[0];
+      if (firstProcKey) {
+        dropdown.value = firstProcKey;
+        renderSelectedProcess(firstProcKey);
+      }
+    }
+
+    // Tab Switching Function
+    function switchTab(tabKey) {
+      const tabs = ['time', 'stages', 'process', 'calls'];
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}-content`).classList.add('hidden');
+        const btn = document.getElementById(`nav-${t}`);
+        btn.classList.remove('active-nav-tab');
+        btn.classList.add('text-slate-600');
+      });
+
+      document.getElementById(`tab-${tabKey}-content`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`nav-${tabKey}`);
+      activeBtn.classList.add('active-nav-tab');
+      activeBtn.classList.remove('text-slate-600');
+    }
+
+    // Render Panel 4: Calls View
+    function renderCallsPanel() {
+      const prod = productsDB[currentProduct];
+      const headerBadge = document.getElementById('calls-badge-header');
+      const container = document.getElementById('calls-container');
+      if (!container || !headerBadge) return;
+
+      if (!prod.calls.hasCalls) {
+        headerBadge.innerHTML = `
+          <span class="text-[11px] font-semibold bg-slate-100 text-slate-700 px-3 py-1 rounded-full border border-slate-300 self-start sm:self-auto flex items-center gap-1.5">
+            <i class="ph-bold ph-phone-slash text-slate-500"></i> No aplica llamadas
+          </span>
+        `;
+
+        container.innerHTML = `
+          <div class="bg-gradient-to-br from-slate-50 via-slate-50 to-indigo-50/20 p-8 sm:p-10 rounded-2xl border-2 border-slate-200 text-center space-y-4">
+            <div class="w-14 h-14 rounded-2xl bg-slate-100 border border-slate-200 text-slate-400 flex items-center justify-center text-2xl mx-auto shadow-xs">
+              <i class="ph-bold ph-phone-slash"></i>
+            </div>
+            <div class="max-w-md mx-auto space-y-1.5">
+              <h3 class="text-base font-extrabold text-slate-900">${prod.calls.title}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed font-medium">${prod.calls.desc}</p>
+            </div>
+            <div class="pt-2 flex flex-wrap items-center justify-center gap-2">
+              <span class="text-xs bg-sky-50 text-sky-800 border border-sky-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5">
+                <i class="ph-bold ph-envelope-simple text-sm"></i> Correos electrónicos programados
+              </span>
+              <span class="text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5">
+                <i class="ph-bold ph-whatsapp-logo text-sm"></i> WhatsApp manual institucional
+              </span>
+            </div>
+          </div>
+        `;
+      } else {
+        headerBadge.innerHTML = `
+          <span class="text-[11px] font-semibold bg-purple-50 text-purple-800 px-3 py-1 rounded-full border border-purple-200 self-start sm:self-auto flex items-center gap-1.5">
+            <i class="ph-bold ph-phone-call text-purple-600"></i> 3 Llamadas clave + WhatsApp de respaldo
+          </span>
+        `;
+
+        const callsHtml = prod.calls.items.map(call => `
+          <div class="bg-gradient-to-br from-white to-slate-50/80 p-5 rounded-2xl border-2 border-slate-200/90 shadow-2xs space-y-3.5">
+            
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+              <div class="flex items-center gap-2.5">
+                <span class="w-7 h-7 rounded-xl bg-purple-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0 shadow-xs">
+                  ${call.stepNum}
+                </span>
+                <h4 class="text-sm font-extrabold text-slate-900 leading-snug">${call.title}</h4>
+              </div>
+              <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-lg border ${call.tagColor} flex items-center gap-1 self-start sm:self-auto shadow-2xs">
+                <i class="ph-bold ph-clock"></i> ${call.moment}
+              </span>
+            </div>
+
+            <!-- Objetivo -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                <i class="ph-bold ph-target text-indigo-600"></i>
+                <span>Objetivo de la llamada:</span>
+              </div>
+              <p class="text-xs text-slate-600 font-medium leading-relaxed pl-5">${call.goal}</p>
+            </div>
+
+            <!-- Soporte en caso de incidencia -->
+            <div class="bg-indigo-50/50 p-3 rounded-xl border border-indigo-100/90 space-y-1">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-indigo-900">
+                <i class="ph-bold ph-wrench text-indigo-600"></i>
+                <span>Soporte / Acción inmediata:</span>
+              </div>
+              <p class="text-xs text-indigo-950 font-medium leading-relaxed pl-5">${call.supportAction}</p>
+            </div>
+
+            <!-- Regla de Respaldo por WhatsApp si no contesta -->
+            <div class="bg-emerald-50/60 p-3 rounded-xl border border-emerald-200/80 space-y-1">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-900">
+                <i class="ph-bold ph-whatsapp-logo text-emerald-600 text-sm"></i>
+                <span>Si no contesta la llamada:</span>
+              </div>
+              <p class="text-xs text-emerald-950 font-medium leading-relaxed pl-5">${call.fallbackRule}</p>
+            </div>
+
+          </div>
+        `).join('');
+
+        container.innerHTML = `
+          <div class="bg-gradient-to-br from-slate-50 to-indigo-50/30 p-4 sm:p-5 rounded-2xl border-2 border-indigo-100 space-y-4">
+            <div class="space-y-1">
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900">${prod.calls.title}</h3>
+              <p class="text-xs text-slate-600 font-medium">${prod.calls.desc}</p>
+            </div>
+            <div class="grid grid-cols-1 gap-3.5 pt-1">
+              ${callsHtml}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Select Time Point Detail
+    function selectTimePoint(key) {
+      const prod = productsDB[currentProduct];
+      prod.timePills.forEach(tp => {
+        const btn = document.getElementById(`tp-${tp.key}`);
+        if (btn) {
+          btn.classList.remove('active-time-pill');
+          const colorCls = pillColorClasses[tp.color] || pillColorClasses.slate;
+          btn.className = `px-3 py-1.5 rounded-xl text-xs font-extrabold ${colorCls} border transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs`;
+        }
+      });
+
+      const activeBtn = document.getElementById(`tp-${key}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active-time-pill');
+        activeBtn.className = "active-time-pill px-3 py-1.5 rounded-xl text-xs font-extrabold bg-slate-900 text-white shadow-md transition-all flex items-center gap-1.5 cursor-pointer";
+      }
+
+      const data = prod.timeData[key];
+      const container = document.getElementById('time-detail-container');
+      if (!data || !container) return;
+
+      const actionsHtml = data.actions.map(act => {
+        const isEmail = act.channel === 'email';
+        const icon = isEmail ? 'ph-bold ph-envelope-simple' : 'ph-bold ph-whatsapp-logo';
+        const badgeColor = isEmail 
+          ? 'bg-sky-100 text-sky-800 border-sky-300' 
+          : 'bg-emerald-100 text-emerald-800 border-emerald-300';
+        const cardBg = isEmail 
+          ? 'bg-gradient-to-br from-sky-50/70 via-sky-50/30 to-blue-50/60 border-sky-200/90' 
+          : 'bg-gradient-to-br from-emerald-50/70 via-emerald-50/30 to-teal-50/60 border-emerald-200/90';
+
+        return `
+          <div class="p-4 rounded-2xl border-2 ${cardBg} shadow-xs space-y-2.5 flex flex-col justify-between">
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border ${badgeColor} inline-flex items-center gap-1.5 shadow-xs whitespace-nowrap overflow-hidden text-ellipsis min-w-0 max-w-[170px] sm:max-w-none">
+                  <i class="${icon} text-sm shrink-0"></i> <span class="truncate">${act.badge}</span>
+                </span>
+                <span class="text-[10px] uppercase font-extrabold text-slate-500 tracking-wider bg-white/80 px-2 py-0.5 rounded-md border border-slate-200 flex items-center shrink-0 whitespace-nowrap">${isEmail ? 'Programado' : 'Manual'}</span>
+              </div>
+              <h4 class="text-xs sm:text-sm font-extrabold text-slate-900 leading-snug pt-1 text-balance">${act.title}</h4>
+              <p class="text-xs text-slate-600 leading-relaxed font-medium">${act.detail}</p>
+            </div>
+            
+            <!-- Caja de Criterio: 2 líneas limpias -->
+            <div class="pt-2">
+              <div class="text-[11px] bg-white/95 p-2.5 rounded-xl border border-slate-200/90 shadow-2xs space-y-1">
+                <div class="flex items-center gap-1.5 font-bold text-slate-900 leading-none">
+                  <i class="ph-bold ph-check-circle text-emerald-600 text-sm leading-none shrink-0 flex items-center"></i>
+                  <span class="leading-none">Criterio:</span>
+                </div>
+                <p class="font-medium text-slate-600 leading-relaxed">
+                  ${act.rule}
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="bg-gradient-to-br from-slate-50 to-indigo-50/30 p-4 sm:p-5 rounded-2xl border-2 border-indigo-100 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900 text-balance">${data.title}</h3>
+              <p class="text-xs text-slate-600 font-medium">${data.subtitle}</p>
+            </div>
+            <span class="text-xs bg-white px-3 py-1 rounded-xl border border-slate-200 font-bold text-slate-700 shadow-2xs self-start sm:self-auto flex items-center gap-1.5 whitespace-nowrap uppercase">
+              <i class="ph-bold ph-list-checks text-indigo-600"></i> ${data.actions.length} ${data.actions.length === 1 ? 'ACCIÓN' : 'ACCIONES'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+            ${actionsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // Select Stage Detail
+    function selectStage(stageNum) {
+      const prod = productsDB[currentProduct];
+      prod.stages.forEach(st => {
+        const card = document.getElementById(`stage-card-${st.id}`);
+        if (card) {
+          const stStyle = stageColorStyles[st.color] || stageColorStyles.indigo;
+          if (st.id === stageNum) {
+            card.className = `cursor-pointer transition-all p-3.5 rounded-2xl border-2 ${stStyle.active}`;
+          } else {
+            card.className = `cursor-pointer transition-all p-3.5 rounded-2xl border-2 ${stStyle.idle} shadow-2xs`;
+          }
+        }
+      });
+
+      const stage = prod.stages.find(st => st.id === stageNum);
+      const container = document.getElementById('stage-detail-container');
+      if (!stage || !container) return;
+
+      const stepsHtml = stage.steps.map((st, idx) => {
+        let channelIcon = "ph-bold ph-gear";
+        let channelColor = "bg-slate-100 text-slate-700 border-slate-200";
+        if (st.channel === "email") {
+          channelIcon = "ph-bold ph-envelope-simple";
+          channelColor = "bg-sky-100 text-sky-800 border-sky-300";
+        } else if (st.channel === "whatsapp") {
+          channelIcon = "ph-bold ph-whatsapp-logo";
+          channelColor = "bg-emerald-100 text-emerald-800 border-emerald-300";
+        }
+
+        return `
+          <div class="bg-white p-3.5 rounded-2xl border-2 border-slate-200/90 shadow-2xs flex items-start gap-3">
+            <span class="w-7 h-7 rounded-xl bg-indigo-50 text-indigo-700 font-black text-xs flex items-center justify-center shrink-0 mt-0.5 border border-indigo-200 shadow-2xs">
+              ${idx + 1}
+            </span>
+            <div class="space-y-1 flex-1">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <h4 class="text-xs sm:text-sm font-extrabold text-slate-900">${st.title}</h4>
+                <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${channelColor} flex items-center gap-1 shadow-2xs">
+                  <i class="${channelIcon}"></i> ${st.tag}
+                </span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed font-medium">${st.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="bg-gradient-to-br from-slate-50 to-indigo-50/40 p-4 sm:p-5 rounded-2xl border-2 border-indigo-100 space-y-3.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-3">
+            <div>
+              <span class="text-xs font-black text-indigo-700 flex items-center gap-1">
+                <i class="ph-bold ph-clock"></i> ${stage.timeframe}
+              </span>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mt-0.5">${stage.name}</h3>
+              <p class="text-xs text-slate-600 font-medium"><b>Objetivo:</b> ${stage.objective}</p>
+            </div>
+            <span class="text-xs font-black px-3 py-1 rounded-xl border ${stage.badgeBg} shadow-2xs self-start sm:self-auto flex items-center">
+              ${stage.studentStatus}
+            </span>
+          </div>
+
+          <div class="space-y-2.5 pt-1">
+            ${stepsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Process Steps
+    function renderSelectedProcess(processKey) {
+      const prod = productsDB[currentProduct];
+      const proc = prod.processes[processKey];
+      const container = document.getElementById('process-diagram-container');
+      if (!proc || !container) return;
+
+      // Paletas temáticas por tipo de paso para enriquecer visualmente el Panel 3
+      const stepThemes = {
+        sky: {
+          badge: "bg-sky-600 text-white shadow-sky-200",
+          card: "border-sky-200/90 bg-gradient-to-r from-sky-50/70 via-sky-50/30 to-white",
+          point: "text-sky-950",
+          line: "bg-sky-200"
+        },
+        emerald: {
+          badge: "bg-emerald-600 text-white shadow-emerald-200",
+          card: "border-emerald-200/90 bg-gradient-to-r from-emerald-50/70 via-emerald-50/30 to-white",
+          point: "text-emerald-950",
+          line: "bg-emerald-200"
+        },
+        indigo: {
+          badge: "bg-indigo-600 text-white shadow-indigo-200",
+          card: "border-indigo-200/90 bg-gradient-to-r from-indigo-50/70 via-indigo-50/30 to-white",
+          point: "text-indigo-950",
+          line: "bg-indigo-200"
+        },
+        amber: {
+          badge: "bg-amber-500 text-white shadow-amber-200",
+          card: "border-amber-200/90 bg-gradient-to-r from-amber-50/70 via-amber-50/30 to-white",
+          point: "text-amber-950",
+          line: "bg-amber-200"
+        },
+        purple: {
+          badge: "bg-purple-600 text-white shadow-purple-200",
+          card: "border-purple-200/90 bg-gradient-to-r from-purple-50/70 via-purple-50/30 to-white",
+          point: "text-purple-950",
+          line: "bg-purple-200"
+        },
+        rose: {
+          badge: "bg-rose-600 text-white shadow-rose-200",
+          card: "border-rose-200/90 bg-gradient-to-r from-rose-50/70 via-rose-50/30 to-white",
+          point: "text-rose-950",
+          line: "bg-rose-200"
+        },
+        slate: {
+          badge: "bg-slate-600 text-white shadow-slate-200",
+          card: "border-slate-200/90 bg-gradient-to-r from-slate-50/70 via-slate-50/30 to-white",
+          point: "text-slate-900",
+          line: "bg-slate-300"
+        }
+      };
+
+      const stepsHtml = proc.steps.map((st, idx) => {
+        // Determinación del color del paso según su badgeColor o tipo de canal
+        let colorKey = "indigo";
+        if (st.badgeColor.includes("sky")) colorKey = "sky";
+        else if (st.badgeColor.includes("emerald")) colorKey = "emerald";
+        else if (st.badgeColor.includes("amber")) colorKey = "amber";
+        else if (st.badgeColor.includes("purple")) colorKey = "purple";
+        else if (st.badgeColor.includes("rose")) colorKey = "rose";
+        else if (st.badgeColor.includes("slate")) colorKey = "slate";
+
+        const theme = stepThemes[colorKey] || stepThemes.indigo;
+
+        return `
+        <div class="relative flex items-start gap-3.5 pb-4 last:pb-0">
+          ${idx < proc.steps.length - 1 ? `<div class="absolute left-4 top-9 -bottom-1 w-0.5 ${theme.line}"></div>` : ''}
+          
+          <div class="w-8 h-8 rounded-xl ${theme.badge} font-extrabold text-xs flex items-center justify-center shrink-0 z-10 shadow-sm">
+            ${idx + 1}
+          </div>
+
+          <div class="p-3.5 rounded-2xl border-2 ${theme.card} flex-1 shadow-2xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
+              <span class="text-xs font-extrabold ${theme.point}">${st.point}</span>
+              <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border ${st.badgeColor} self-start sm:self-auto flex items-center gap-1 shadow-2xs bg-white/90">
+                <i class="${st.icon}"></i> ${st.channel}
+              </span>
+            </div>
+            <p class="text-xs text-slate-600 font-medium leading-relaxed">${st.desc}</p>
+          </div>
+        </div>
+        `;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="bg-gradient-to-br from-slate-50 to-indigo-50/40 p-4 sm:p-5 rounded-2xl border-2 border-indigo-100 space-y-3.5">
+          <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900">${proc.title}</h3>
+              <p class="text-xs text-indigo-700 font-semibold mt-0.5 flex items-center gap-1">
+                <i class="ph-bold ph-info"></i> ${proc.channelNotice}
+              </p>
+            </div>
+            <span class="text-xs font-black px-3 py-1 rounded-xl border ${proc.themeBadge} shadow-2xs self-start sm:self-auto flex items-center">
+              ${proc.steps.length} Pasos
+            </span>
+          </div>
+
+          <div class="pt-1">
+            ${stepsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // Initialize UI on DOM Load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProductViews();
+    });
+
+    // Función para descargar el archivo HTML completo
+    function downloadCurrentHTML() {
+      // Captura todo el documento HTML actual
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const downloadUrl = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = 'seguimiento-academico-edumin.html';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(downloadUrl);
+
+      // Confirmación visual sin alertas emergentes (modo icono)
+      const btn = document.getElementById('btn-download-html');
+      if (btn) {
+        const originalHTML = btn.innerHTML;
+        btn.classList.add('border-emerald-400', 'bg-emerald-50');
+        btn.innerHTML = `<i class="ph-bold ph-check text-lg text-emerald-600"></i>`;
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.classList.remove('border-emerald-400', 'bg-emerald-50');
+        }, 2000);
+      }
+    }
+  </script>
+
+</body>
+</html>
