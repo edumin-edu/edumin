@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¡Feliz cumpleaños! | EDUMIN</title>
+
+    <!-- Favicon EDUMIN -->
+    <link rel="icon" type="image/png" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
+    <link rel="apple-touch-icon" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts (Optimizado para Carga Rápida) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+      // Paleta Slate oficial y moderna de Tailwind CSS (formato OKLCH de Tailwind v4):
+      const slate = {
+        50: "oklch(0.984 0.003 247.858)",
+        100: "oklch(0.968 0.007 247.896)",
+        200: "oklch(0.929 0.013 255.508)",
+        300: "oklch(0.869 0.022 252.894)",
+        400: "oklch(0.704 0.04 256.788)",
+        500: "oklch(0.554 0.046 257.417)",
+        600: "oklch(0.446 0.043 257.281)",
+        700: "oklch(0.372 0.044 257.287)",
+        800: "oklch(0.279 0.041 260.031)",
+        900: "oklch(0.208 0.042 265.755)",
+        950: "oklch(0.129 0.042 264.695)",
+      };
+
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Barlow Semi Condensed"', "sans-serif"],
+              heading: ['"Barlow Condensed"', "sans-serif"],
+            },
+            colors: {
+              principal: slate[950],
+              secundario: slate[700],
+              terciario: slate[300],
+              cuaternario: slate[100],
+              brand: {
+                blue: "#024adf",
+                blueDark: "#013bb5",
+                dark: "#1d1d1b",
+                darkSecondary: "#121210",
+                cardBg: "#fafafa",
+                gold: "#f59e0b",
+                goldHover: "#d97706",
+              },
+            },
+            boxShadow: {
+              glow: "0 0 30px -5px rgba(2, 74, 223, 0.45)",
+              "gold-glow": "0 0 25px -3px rgba(245, 158, 11, 0.4)",
+              "card-lift": "0 12px 30px -5px rgba(0, 0, 0, 0.35)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      .bg-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg opacity='0.45'%3E%3Crect x='20' y='25' width='7' height='7' rx='1.5' transform='rotate(25 23.5 28.5)' fill='%23f59e0b'/%3E%3Crect x='75' y='18' width='12' height='5' rx='2' transform='rotate(-35 81 20.5)' fill='%23024adf'/%3E%3Ccircle cx='130' cy='35' r='3.5' fill='%23ec4899'/%3E%3Crect x='45' y='70' width='9' height='5' rx='2' transform='rotate(45 49.5 72.5)' fill='%2310b981'/%3E%3Crect x='110' y='80' width='6' height='6' rx='1.5' transform='rotate(-15 113 83)' fill='%238b5cf6'/%3E%3Ccircle cx='18' cy='115' r='3' fill='%23ffffff'/%3E%3Crect x='85' y='125' width='7' height='7' rx='1.5' transform='rotate(60 88.5 128.5)' fill='%23024adf'/%3E%3Crect x='140' y='135' width='10' height='4.5' rx='2' transform='rotate(-20 145 137.25)' fill='%23f59e0b'/%3E%3Ccircle cx='60' cy='145' r='3.5' fill='%2310b981'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 160px 160px;
+      }
+
+      .hero-glow {
+        background: radial-gradient(circle at 50% 18%, rgb(2 74 223 / 38%) 0%, transparent 65%), radial-gradient(circle at 50% 32%, rgb(236 72 153 / 18%) 0%, transparent 55%), radial-gradient(circle at 50% 62%, rgb(245 158 11 / 22%) 0%, transparent 50%);
+        mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) 0%, rgb(0 0 0 / 100%) 70%, rgb(0 0 0 / 0%) 100%);
+      }
+
+      /* Estilo para las tarjetas de curso */
+      .course-card {
+        background-color: #fafafa;
+        color: #1d1d1b;
+        border: 2px solid #1d1d1b;
+        border-bottom: 6px solid #1d1d1b;
+        transition: all 0.22s ease-in-out;
+        cursor: pointer;
+      }
+
+      .course-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 26px -6px rgb(0 0 0 / 22%);
+      }
+
+      /* Marquee continuo para el cintillo superior */
+      @keyframes marquee {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+
+        100% {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+
+      .animate-marquee {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: marquee 30s linear infinite;
+      }
+
+      .animate-marquee:hover {
+        animation-play-state: paused;
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 16px -2px rgb(245 158 11 / 45%);
+        }
+
+        50% {
+          box-shadow: 0 0 24px 1px rgb(245 158 11 / 65%);
+        }
+      }
+
+      @keyframes btn-shimmer {
+        0% {
+          transform: translateX(-150%) skewX(-20deg);
+        }
+
+        30%,
+        100% {
+          transform: translateX(250%) skewX(-20deg);
+        }
+      }
+
+      .btn-cta-hero {
+        position: relative;
+        overflow: hidden;
+        animation: pulse-glow 2.5s infinite ease-in-out;
+      }
+
+      .btn-cta-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgb(255 255 255 / 35%), transparent);
+        transform: translateX(-150%) skewX(-20deg);
+        animation: btn-shimmer 3.5s infinite ease-in-out;
+        pointer-events: none;
+      }
+
+      /* Animación suave de entrada para el modal */
+      @keyframes modal-scale-in {
+        from {
+          opacity: 0;
+          transform: scale(0.96) translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .animate-modal-in {
+        animation: modal-scale-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      /* Accesibilidad: Respetar preferencias de reducción de movimiento */
+      @media (prefers-reduced-motion: reduce) {
+        .animate-marquee,
+        .btn-cta-hero,
+        .btn-cta-hero::after,
+        .animate-modal-in {
+          animation: none !important;
+        }
+      }
+
+      /* ==========================================================================
+         Estilos CSS en Español para Vistas de Estado (Vista 1 y Vista 3)
+         ========================================================================== */
+      .pantalla-estado {
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5rem 1.5rem 2.5rem;
+        text-align: center;
+        background-color: #1d1d1b;
+        position: relative;
+        z-index: 50;
+      }
+
+      .logo-superior-pantalla {
+        position: absolute;
+        top: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: inline-block;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .logo-superior-pantalla img {
+        height: 2.5rem;
+        width: auto;
+        object-fit: contain;
+      }
+
+      @media (width >= 640px) {
+        .logo-superior-pantalla {
+          top: 2.5rem;
+        }
+
+        .logo-superior-pantalla img {
+          height: 3rem;
+        }
+      }
+
+      .tarjeta-estado {
+        max-width: 28rem;
+        width: 100%;
+        background-color: #121210;
+        color: #fff;
+        border-radius: 1.5rem;
+        padding: 2.25rem 2rem 2rem;
+        border: 1px solid rgb(255 255 255 / 10%);
+        box-shadow: 0 12px 30px -5px rgb(0 0 0 / 35%);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .caja-icono-estado {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 0.875rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        flex-shrink: 0;
+      }
+
+      .caja-icono-estado i {
+        font-size: 1.75rem;
+        line-height: 1;
+      }
+
+      .titulo-estado {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 700;
+        font-size: 1.75rem;
+        line-height: 1.25;
+        text-transform: uppercase;
+        color: #fff;
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+        text-wrap: balance;
+      }
+
+      .subtitulo-estado {
+        font-family: "Barlow Semi Condensed", sans-serif;
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        color: #cbd5e1;
+        margin: 0;
+        max-width: 22rem;
+        text-wrap: balance;
+      }
+
+      /* Vista 1: Carga (Azul EDUMIN Resplandeciente) */
+      .tema-estado-carga .caja-icono-estado {
+        background-color: rgb(2 74 223 / 15%);
+        border: 1px solid rgb(2 74 223 / 35%);
+        color: #3b82f6;
+        box-shadow: 0 0 30px -5px rgb(2 74 223 / 45%);
+      }
+
+      /* Vista 3: Expirado (Ámbar Dorado Resplandeciente) */
+      .tema-estado-expirado .caja-icono-estado {
+        background-color: rgb(245 158 11 / 15%);
+        border: 1px solid rgb(245 158 11 / 35%);
+        color: #fbbf24;
+        box-shadow: 0 0 25px -3px rgb(245 158 11 / 40%);
+      }
+    </style>
+  </head>
+  <body class="bg-brand-dark text-cuaternario font-sans font-medium min-h-screen flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
+    <!-- VISTA 1: Pantalla de Carga (Inicialmente Visible) -->
+    <div id="pantalla-carga" class="pantalla-estado tema-estado-carga">
+      <!-- Fondo continuo de confeti sutil -->
+      <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
+
+      <!-- Logo Oficial EDUMIN superior centrado -->
+      <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN">
+        <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" onerror="handleLogoError(this)" />
+      </a>
+
+      <div class="tarjeta-estado">
+        <div class="caja-icono-estado">
+          <i class="ph-bold ph-circle-notch animate-spin"></i>
+        </div>
+        <h2 class="titulo-estado">VERIFICANDO TU ENLACE DE REGALO…</h2>
+        <p class="subtitulo-estado">Por favor, espera un momento mientras validamos la vigencia de tu beneficio de cumpleaños.</p>
+      </div>
+    </div>
+
+    <!-- VISTA 2: Selección de Curso (Inicialmente Oculta) -->
+    <div id="pantalla-cursos" class="hidden flex-col justify-between min-h-screen relative">
+      <!-- Fondo continuo de confeti sutil para toda la página -->
+      <div class="bg-pattern fixed inset-0 opacity-40 pointer-events-none"></div>
+
+      <!-- Fixed Top Birthday Banner (Continuous Infinite Marquee) -->
+      <div id="cintilloCumpleanos" class="fixed inset-x-0 top-0 z-50 h-10 overflow-hidden bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-principal font-heading font-bold text-lg leading-none flex items-center uppercase shadow-sm select-none border-b border-amber-600/20">
+        <div class="animate-marquee flex items-center h-full"></div>
+      </div>
+
+      <div id="seccionHero" class="min-h-screen pt-10 flex flex-col relative">
+        <!-- Hero Section -->
+        <header class="relative flex-1 flex flex-col justify-center py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+          <!-- Capa 2: Degradado de luces (debajo de textos, sobre confeti) -->
+          <div class="hero-glow absolute inset-0 pointer-events-none"></div>
+
+          <!-- Capa 3: Textos y elementos del Hero -->
+          <div class="max-w-5xl mx-auto text-center relative flex flex-col items-center my-auto w-full">
+            <!-- 1. EDUMIN Official Logo -->
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 sm:mb-4 inline-block shrink-0" title="Ir al sitio web de EDUMIN">
+              <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-10 sm:h-12 md:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
+            </a>
+
+            <!-- Títulos del Hero con propiedades heredadas -->
+            <div class="font-heading font-bold uppercase leading-none text-white text-balance">
+              <!-- 2. Feliz Cumpleaños + Nombre -->
+              <h1 class="text-3xl sm:text-5xl md:text-6xl mb-1.5 sm:mb-2">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
+
+              <!-- 3. H2: Beneficio Especial -->
+              <h2 class="text-2xl sm:text-4xl md:text-5xl mb-3 sm:mb-4">Tu beneficio especial ya está disponible</h2>
+            </div>
+
+            <!-- 4. Subtítulo (Opción 3) -->
+            <p class="text-terciario text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-medium mb-6 sm:mb-8 text-balance [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial otorgándote acceso totalmente gratuito a <strong>UN CURSO DE ALTA ESPECIALIZACIÓN</strong> a tu elección para seguir impulsando tu carrera profesional.</p>
+
+            <!-- 5. Botón de Acción -->
+            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl sm:text-2xl px-5 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-200 transform active:scale-95 inline-flex items-center justify-center gap-3 sm:gap-4 uppercase mb-6 sm:mb-8 whitespace-nowrap">
+              <i class="ph-bold ph-gift text-xl sm:text-3xl leading-none"></i>
+              <span>ELEGIR MI CURSO<span class="hidden sm:inline">&nbsp;DE REGALO</span></span>
+            </button>
+
+            <!-- General Course Details Bar (Clean White Style) -->
+            <div class="w-full max-w-4xl bg-white text-secundario rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl">
+              <div id="heroCaracteristicas" class="grid grid-cols-3 gap-2 sm:gap-4"></div>
+            </div>
+          </div>
+        </header>
+      </div>
+
+      <!-- Main Catalog Section -->
+      <main id="catalogo" class="scroll-mt-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-16 relative z-10">
+        <!-- White Container for Search, Categories, Grid & Empty State -->
+        <div class="bg-white rounded-3xl p-6 md:p-10 shadow-2xl w-full">
+          <!-- Catalog Section Heading -->
+          <div class="text-center mb-6 sm:mb-8">
+            <h3 class="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-principal uppercase">Cursos de Alta Especialización</h3>
+            <p class="text-secundario text-sm sm:text-base md:text-lg font-medium mt-2 max-w-2xl mx-auto text-balance">Explora el catálogo completo, filtra las opciones por categoría o utiliza el buscador para encontrar el curso de tu interés.</p>
+          </div>
+
+          <!-- Search & Category Filters Box -->
+          <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-3xl p-5 border-2 border-brand-dark border-b-[6px] border-b-brand-dark mb-8 shadow-md">
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-5 items-center justify-between pb-5 border-b border-slate-200">
+              <!-- Search Input Wrapper (Flexbox Layout) -->
+              <div class="w-full sm:flex-1 max-w-2xl flex items-center gap-3 px-4 py-2.5 bg-white border border-slate-300 focus-within:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-xl transition-all shadow-sm group">
+                <i class="ph-bold ph-magnifying-glass text-secundario/50 group-focus-within:text-amber-500 text-xl w-5 h-5 flex items-center justify-center shrink-0 transition-colors"></i>
+                <input type="text" id="inputBusqueda" placeholder="Buscar curso por nombre…" class="w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 text-base font-sans font-medium placeholder:text-secundario/50 text-principal" />
+                <button id="btnLimpiarBusqueda" class="hidden w-6 h-6 rounded-lg bg-transparent hover:bg-slate-200/90 active:bg-slate-300 text-secundario/50 hover:text-secundario flex items-center justify-center shrink-0 transition-all active:scale-95 cursor-pointer">
+                  <i class="ph-bold ph-x text-xs leading-none"></i>
+                </button>
+              </div>
+
+              <!-- Course Counter Indicator -->
+              <div class="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-sans font-medium text-secundario shrink-0 select-none py-1 sm:py-0">
+                <i class="ph-bold ph-sparkle text-amber-500 text-base sm:text-lg"></i>
+                <span><strong id="contadorCursos" class="text-principal font-bold">76</strong> cursos disponibles</span>
+              </div>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="mt-5">
+              <label class="block text-xs sm:text-sm font-sans font-bold uppercase text-principal mb-3 flex items-center gap-2 select-none">
+                <i class="ph-bold ph-funnel text-brand-blue text-base sm:text-lg"></i>
+                <span>Filtrar por Categoría:</span>
+              </label>
+              <div class="flex flex-wrap gap-2.5" id="contenedorCategorias">
+                <!-- Categories dynamically rendered here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Courses Grid -->
+          <div id="grillaCursos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Courses injected via Javascript -->
+          </div>
+
+          <!-- Claimed Course Single Gift Card State -->
+          <div id="estadoCanjeado" class="hidden w-full">
+            <div class="bg-brand-cardBg rounded-3xl p-6 sm:p-8 md:p-10 border-2 border-brand-dark border-b-[6px] border-b-brand-dark shadow-md w-full text-center flex flex-col items-center justify-center gap-5">
+              <div class="w-20 h-20 bg-amber-500/10 text-amber-600 rounded-full flex items-center justify-center text-3xl border border-amber-500/20 shadow-sm shrink-0">
+                <i class="ph-bold ph-gift"></i>
+              </div>
+
+              <div class="space-y-1">
+                <h3 class="font-heading text-2xl sm:text-3xl font-bold text-principal uppercase text-balance">¡Ya elegiste tu curso de regalo!</h3>
+                <p class="text-secundario text-sm sm:text-base font-medium text-balance">Has registrado exitosamente tu curso gratuito por tu cumpleaños:</p>
+              </div>
+
+              <!-- Selected Course Card Box (Clean Slate Border, No Black Border) -->
+              <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm text-left w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="space-y-1.5 flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-heading font-bold text-white bg-brand-blue px-3 py-0.5 rounded-xl uppercase shrink-0" id="insigniaCursoCanjeado">Curso Seleccionado</span>
+                    <span class="text-xs font-heading font-semibold text-emerald-700 bg-emerald-100 px-3 py-0.5 rounded-full shrink-0">Certificación Incluida por 30 Horas</span>
+                  </div>
+                  <h4 id="tituloCursoCanjeado" class="font-sans font-bold text-principal text-lg sm:text-xl uppercase leading-tight text-balance">Nombre del Curso</h4>
+                </div>
+
+                <button onclick="handleSendWhatsApp()" class="w-full sm:w-auto h-11 px-6 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-heading font-bold uppercase transition-all duration-200 transform active:scale-95 shadow-md inline-flex items-center justify-center gap-2.5 shrink-0 cursor-pointer">
+                  <i class="ph-bold ph-whatsapp-logo text-xl"></i>
+                  <span>Confirmar por WhatsApp</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty Search State Container -->
+          <div id="estadoVacio" class="hidden text-center py-16 bg-brand-cardBg rounded-3xl border-2 border-brand-dark border-b-[6px] border-b-brand-dark shadow-md">
+            <div class="w-20 h-20 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border border-brand-blue/20 shadow-sm">
+              <i class="ph-bold ph-ghost"></i>
+            </div>
+            <h3 class="font-heading text-2xl font-bold text-principal mb-2 uppercase text-balance">No se encontraron cursos</h3>
+            <p class="text-secundario text-base max-w-md mx-auto mb-6 font-medium text-balance">Prueba buscando con otro término o haz clic en "Todos" para restablecer la lista.</p>
+            <button onclick="resetFilters()" class="px-6 py-3 bg-brand-blue hover:bg-brand-blueDark text-white rounded-2xl text-xs font-heading font-bold uppercase transition shadow-md inline-flex items-center gap-2 cursor-pointer">
+              <i class="ph-bold ph-arrows-counter-clockwise"></i>
+              <span>Ver todos los cursos</span>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Direct Confirmation Modal (2-Step Registration + WhatsApp) -->
+      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-4">
+        <div class="bg-brand-cardBg rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden my-auto animate-modal-in max-h-[90vh] flex flex-col">
+          <!-- Modal Header (Hero Style with Confetti Pattern & Radial Glow) -->
+          <div class="relative bg-brand-dark p-4 sm:p-5 border-b border-white/10 text-white shrink-0 overflow-hidden">
+            <!-- Background Confetti Pattern -->
+            <div class="bg-pattern absolute inset-0 opacity-30 pointer-events-none"></div>
+
+            <!-- Radial Glow Effect (Hero Style) -->
+            <div class="hero-glow absolute inset-0 pointer-events-none opacity-80"></div>
+
+            <!-- Content Container -->
+            <div class="relative z-10">
+              <div class="flex items-center justify-between gap-3 mb-4">
+                <div class="inline-flex items-center gap-2 bg-amber-400 text-principal font-heading font-bold text-sm px-4 py-1 rounded-full uppercase">
+                  <i class="ph-bold ph-gift text-lg"></i>
+                  <span>Confirmación de Curso</span>
+                </div>
+                <button id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-8 h-8 shrink-0 inline-flex items-center justify-center rounded-full text-terciario hover:text-white hover:bg-white/10 transition-colors duration-150 cursor-pointer leading-none">
+                  <i class="ph-bold ph-x text-lg"></i>
+                </button>
+              </div>
+
+              <h3 class="font-sans font-bold text-xl sm:text-2xl text-white leading-[1.15] uppercase text-balance line-clamp-2 overflow-hidden drop-shadow-sm" id="modalTituloCurso">Nombre del Curso</h3>
+            </div>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-4 sm:p-5 flex flex-col gap-4 overflow-y-auto">
+            <!-- Step 1: Initial Action View -->
+            <div id="modalPaso1" class="flex flex-col gap-4">
+              <div class="bg-blue-50/80 border border-blue-200/80 text-blue-950 rounded-2xl p-4 text-center flex flex-col items-center justify-center gap-1.5">
+                <i class="ph-bold ph-info text-3xl text-brand-blue"></i>
+                <h4 class="font-heading font-bold text-lg sm:text-xl uppercase text-brand-blue text-balance">Confirmación de Registro</h4>
+                <p class="font-medium text-base text-principal text-balance">Haz clic en <strong>REGISTRAR CURSO</strong> para guardar tu selección y habilitar el envío por WhatsApp.</p>
+              </div>
+
+              <div class="flex items-center gap-2.5 sm:gap-3">
+                <button type="button" id="btnVolverModal" onclick="closeModal()" aria-label="Volver" title="Volver" class="py-3 px-3.5 sm:px-5 rounded-xl ring-1 ring-inset ring-slate-300 text-secundario text-base font-heading font-bold uppercase hover:bg-slate-100 transition cursor-pointer inline-flex items-center justify-center gap-1.5 shrink-0">
+                  <i class="ph-bold ph-arrow-left text-xl"></i>
+                  <span class="hidden sm:inline">Volver</span>
+                </button>
+                <button type="button" id="btnRegistrarCurso" onclick="handleRegisterCourse()" class="flex-1 py-3 px-3.5 sm:px-5 bg-brand-blue hover:bg-brand-blueDark text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer whitespace-nowrap">
+                  <i class="ph-bold ph-check-circle text-xl"></i>
+                  <span>REGISTRAR CURSO</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Registered Success View & WhatsApp Send -->
+            <div id="modalPaso2" class="hidden [&:not(.hidden)]:flex flex-col gap-4">
+              <div class="bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 rounded-2xl p-4 text-center flex flex-col items-center justify-center gap-1.5">
+                <i class="ph-bold ph-check-circle text-3xl text-emerald-600"></i>
+                <h4 class="font-heading font-bold text-lg sm:text-xl uppercase text-emerald-900 text-balance">¡Curso Registrado con Éxito!</h4>
+                <p class="font-medium text-base text-principal text-balance">Tu curso ha sido registrado correctamente. Haz clic en <strong>ENVIAR POR WHATSAPP</strong> para finalizar tu inscripción.</p>
+              </div>
+
+              <button type="button" onclick="handleSendWhatsApp()" class="w-full py-3 px-5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2.5 shadow-md transition-all duration-200 transform active:scale-95 cursor-pointer">
+                <i class="ph-bold ph-whatsapp-logo text-xl"></i>
+                <span>Enviar por WhatsApp</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cierre de VISTA 2: #pantalla-cursos -->
+
+    <!-- VISTA 3: Enlace Expirado (Inicialmente Oculta) -->
+    <div id="pantalla-expirado" class="pantalla-estado tema-estado-expirado hidden">
+      <!-- Fondo continuo de confeti sutil -->
+      <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
+
+      <!-- Logo Oficial EDUMIN superior centrado -->
+      <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN">
+        <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" onerror="handleLogoError(this)" />
+      </a>
+
+      <div class="tarjeta-estado">
+        <div class="caja-icono-estado">
+          <i class="ph-bold ph-clock-countdown"></i>
+        </div>
+        <h2 class="titulo-estado">¡ENLACE EXPIRADO O NO VÁLIDO!</h2>
+        <p class="subtitulo-estado">El plazo límite para reclamar tu curso ha finalizado o el enlace ingresado ya no está disponible.</p>
+      </div>
+    </div>
+
+    <!-- Footer General Compartido (Vistas 1, 2 y 3) -->
+    <footer id="footerGeneral" class="bg-black/90 text-cuaternario py-4 sm:py-6 px-4 sm:px-6 border-t border-white/10 text-sm relative z-10 w-full shrink-0">
+      <div class="max-w-7xl mx-auto">
+        <div id="footerFlexWrapper" class="flex flex-col lg:flex-row items-center justify-center gap-6">
+          <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
+          <div id="footerMarcaIzquierda" class="hidden flex-col sm:flex-row items-center gap-3.5 text-center sm:text-left" style="display: none !important">
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer" title="Ir al sitio web de EDUMIN">
+              <img
+                src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png"
+                alt="EDUMIN Logo"
+                class="h-8 object-contain"
+                onerror="
+                  this.onerror = null;
+                  this.src = 'https://placehold.co/120x30/024adf/ffffff?text=EDUMIN';
+                "
+              />
+            </a>
+            <span class="text-xs sm:text-sm font-sans font-bold uppercase text-balance max-w-[250px] inline-block leading-tight sm:pl-3.5 sm:border-l sm:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
+          </div>
+
+          <!-- Right: Contact & Social Media (Visible en Vistas 1, 2 y 3) -->
+          <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+            <!-- WhatsApp Support Block -->
+            <div class="flex flex-col items-center sm:items-start gap-2">
+              <span class="text-xs font-sans font-bold uppercase">Contáctanos:</span>
+              <a href="https://wa.me/51980694497" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 px-3.5 rounded-xl transition-colors duration-150 shadow-sm">
+                <i class="ph-bold ph-whatsapp-logo text-lg text-emerald-400"></i>
+                <span>980 694 497</span>
+              </a>
+            </div>
+
+            <!-- Social Media Block -->
+            <div class="flex flex-col items-center sm:items-start gap-2 text-terciario">
+              <span class="text-xs font-sans font-bold uppercase">Síguenos en:</span>
+              <div class="flex items-center gap-2">
+                <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                  <i class="ph-bold ph-instagram-logo"></i>
+                </a>
+                <a href="https://www.facebook.com/edumin.pe" target="_blank" aria-label="Facebook" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                  <i class="ph-bold ph-facebook-logo"></i>
+                </a>
+                <a href="https://www.tiktok.com/@edumin_pe" target="_blank" aria-label="TikTok" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                  <i class="ph-bold ph-tiktok-logo"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                  <i class="ph-bold ph-linkedin-logo"></i>
+                </a>
+                <a href="https://www.edumin.pe/" target="_blank" aria-label="Sitio Web EDUMIN" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                  <i class="ph-bold ph-globe"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Configuración y variables globales
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFibwSnti14GeBPiO06VomGLKjt1N3LRRr8st6t0eLkwLeQC3JJ8IWbf8CqJ-xa1F4/exec";
+      const WHATSAPP_PHONE = "51980694497";
+
+      let userToken = null;
+      let urlParams = null;
+      let activeCategory = "Todos";
+      let selectedCourse = null;
+      let isRegisteringCourse = false;
+
+      // Full catalog of 76 EDUMIN 2026 courses
+      const ALL_COURSES = [
+        { id: 1, title: "MANEJO DE EPPS SEGÚN LA NORMA TÉCNICA PERUANA LEY 29783", category: "Seguridad y prevención" },
+        { id: 2, title: "IMPLEMENTACIÓN DE MEDIDAS DE CONTROL EN RIESGOS MINEROS", category: "Seguridad y prevención" },
+        { id: 3, title: "ERGONOMÍA Y SALUD OCUPACIONAL EN EL SECTOR MINERO E INDUSTRIAL", category: "Seguridad y prevención" },
+        { id: 4, title: "MARCO JURÍDICO Y NORMATIVO DE LA MINERÍA", category: "Legislación y normativa" },
+        { id: 5, title: "GESTIÓN DE PROVEEDORES EN MINERÍA", category: "Logística y almacenes" },
+        { id: 6, title: "CONTROL DE COSTOS EN ALMACENES MINEROS", category: "Logística y almacenes" },
+        { id: 7, title: "LOGÍSTICA Y DISTRIBUCIÓN EN LA INDUSTRIA Y MINERÍA", category: "Logística y almacenes" },
+        { id: 8, title: "CONTRATOS EN LA INDUSTRIA MINERA", category: "Legislación y normativa" },
+        { id: 9, title: "DERECHOS HUMANOS EN MINERÍA", category: "Legislación y normativa" },
+        { id: 10, title: "GESTIÓN DE TRABAJO EN ALTO RIESGO EN MINERÍA", category: "Seguridad y prevención" },
+        { id: 11, title: "RESPONSABILIDAD PENAL EN MINERÍA", category: "Legislación y normativa" },
+        { id: 12, title: "DERECHO LABORAL EN MINERÍA", category: "Legislación y normativa" },
+        { id: 13, title: "TIPOS DE CONCESIONES MINERAS", category: "Legislación y normativa" },
+        { id: 14, title: "GESTIÓN DE CONTRATOS LOGÍSTICOS EN LA INDUSTRIA Y MINERÍA", category: "Logística y almacenes" },
+        { id: 15, title: "CURSO DE PREVENCIÓN DE RIESGOS", category: "Seguridad y prevención" },
+        { id: 16, title: "IMPLEMENTACIÓN DE LA ISO 45001:2018", category: "Seguridad y prevención" },
+        { id: 17, title: "GESTIÓN DE EMERGENCIAS EN INDUSTRIA Y MINERÍA", category: "Seguridad y prevención" },
+        { id: 18, title: "GESTIÓN DE INVENTARIOS EN INDUSTRIA Y MINERÍA", category: "Logística y almacenes" },
+        { id: 19, title: "CONTROL FINANCIERO EN ALMACENES", category: "Logística y almacenes" },
+        { id: 20, title: "LOGÍSTICA INTERNA EN CONTROL DE ALMACENES", category: "Logística y almacenes" },
+        { id: 21, title: "FUNDAMENTOS DE BIG DATA", category: "Inteligencia de datos" },
+        { id: 22, title: "MÉTODOS DE CAPTURA DE INFORMACIÓN EN BIG DATA", category: "Inteligencia de datos" },
+        { id: 23, title: "TENDENCIAS 2025-2026: CLAVES DE BIG DATA", category: "Inteligencia de datos" },
+        { id: 24, title: "BIG DATA: TRANSFORMACIÓN DE DATOS (PYTHON Y R)", category: "Inteligencia de datos" },
+        { id: 25, title: "MINERÍA 4.0 ESSENTIALS (NUEVAS HERRAMIENTAS)", category: "Tecnología e innovación" },
+        { id: 26, title: "INNOVACIÓN EN MINERÍA: APLICACIONES DE INTELIGENCIA ARTIFICIAL", category: "Tecnología e innovación" },
+        { id: 27, title: "AUTOMATIZACIÓN 4.0 EN PROCESOS MINEROS", category: "Tecnología e innovación" },
+        { id: 28, title: "CADENA DE SUMINISTRO LOGÍSTICA Y DISTRIBUCIÓN", category: "Logística y almacenes" },
+        { id: 29, title: "MEJORA DE LOS MÉTODOS Y MEDICIÓN DE LOS RECURSOS", category: "Operaciones y procesos" },
+        { id: 30, title: "INTRODUCCIÓN A LA GESTIÓN DE PROYECTOS", category: "Operaciones y procesos" },
+        { id: 31, title: "ARQUITECTURA DE DATOS: LA IMPORTANCIA DEL DISEÑO, COMPONENTES, FUNCIÓN, CONFIGURACIÓN Y PATRONES", category: "Inteligencia de datos" },
+        { id: 32, title: "ECOSISTEMA BIG DATA: HERRAMIENTAS Y TECNOLOGÍAS ESENCIALES", category: "Inteligencia de datos" },
+        { id: 33, title: "INTRODUCCIÓN A MACHINE LEARNING PARA BIG DATA", category: "Inteligencia de datos" },
+        { id: 34, title: "PROYECTOS CON HERRAMIENTAS DIGITALES PARA MINERÍA", category: "Tecnología e innovación" },
+        { id: 35, title: "INTRODUCCIÓN A MACHINE LEARNING EN MINERÍA", category: "Tecnología e innovación" },
+        { id: 36, title: "TIPOS DE INTELIGENCIA ARTIFICIAL APLICADAS A LA MINERÍA", category: "Tecnología e innovación" },
+        { id: 37, title: "HERRAMIENTAS DE BIG DATA APLICADA A MINERÍA", category: "Inteligencia de datos" },
+        { id: 38, title: "GESTIÓN AVANZADA DE OPERACIONES INDUSTRIALES", category: "Operaciones y procesos" },
+        { id: 39, title: "BIG DATA APLICADA A PROCESOS INDUSTRIALES", category: "Inteligencia de datos" },
+        { id: 40, title: "CONTROL DE COSTOS EN PRODUCCIÓN INDUSTRIAL O EN ÁREAS DE PRODUCCIÓN", category: "Operaciones y procesos" },
+        { id: 41, title: "IMPORTACIÓN Y EXPORTACIÓN DESDE 0: CLAVES PARA EL ÉXITO", category: "Comercio exterior" },
+        { id: 42, title: "IMPLEMENTACIÓN DE LA NORMA ISO 9001:2015", category: "Operaciones y procesos" },
+        { id: 43, title: "ANÁLISIS DE MERCADOS INTERNACIONALES: ESTRATEGIAS DE IMPORTACIÓN Y EXPORTACIÓN 2025-2026", category: "Comercio exterior" },
+        { id: 44, title: "DE LA IMPORTACIÓN A LA VENTA ONLINE: IMPLEMENTA TU TIENDA VIRTUAL DESDE CERO", category: "Comercio exterior" },
+        { id: 45, title: "CONTROL Y SUPERVISIÓN DE PROCESOS CON SOFTWARE SCADA", category: "Tecnología e innovación" },
+        { id: 46, title: "GESTIÓN DE OPERACIONES Y PROCESOS EN LA MINERÍA", category: "Operaciones y procesos" },
+        { id: 47, title: "PIRÁMIDE DE PROCESOS: TÉCNICAS DE CONTROL EN MINERÍA", category: "Operaciones y procesos" },
+        { id: 48, title: "PROCESO DE OPTIMIZACIÓN DE MANTENIMIENTO A PARTIR DEL USO DE TÉCNICAS DE LA INDUSTRIA 4.0", category: "Mantenimiento industrial" },
+        { id: 49, title: "SISTEMAS INTEGRADOS PARA LA GESTIÓN DE MANTENIMIENTO", category: "Mantenimiento industrial" },
+        { id: 50, title: "ESTÁNDARES Y SISTEMA DE CALIDAD DEL MANTENIMIENTO", category: "Mantenimiento industrial" },
+        { id: 51, title: "DOCUMENTACIÓN Y TRÁMITES ADUANEROS", category: "Comercio exterior" },
+        { id: 52, title: "REVISIÓN DE PROVEEDORES PARA EVITAR ESTAFAS EN IMPORTACIONES CHINAS", category: "Comercio exterior" },
+        { id: 53, title: "PLANIFICACIÓN DE RIESGOS PARA IMPORTACIÓN Y EXPORTACIÓN", category: "Comercio exterior" },
+        { id: 54, title: "CONTROL DE CALIDAD EN PROCESOS MINEROS", category: "Operaciones y procesos" },
+        { id: 55, title: "MONITOREO Y CONTROL EN LA OPERACIÓN DE PLANTAS MINERAS", category: "Operaciones y procesos" },
+        { id: 56, title: "SOSTENIBILIDAD Y SEGURIDAD EN CAMPAMENTOS MINEROS", category: "Medio ambiente" },
+        { id: 57, title: "ANÁLISIS DE DATOS PARA OPTIMIZAR OPERACIONES MINERAS", category: "Inteligencia de datos" },
+        { id: 58, title: "SEGURIDAD Y CONTROL AMBIENTAL EN EL MANTENIMIENTO", category: "Medio ambiente" },
+        { id: 59, title: "GERENCIA DE PROYECTOS DEL MANTENIMIENTO", category: "Mantenimiento industrial" },
+        { id: 60, title: "GESTIÓN DE COSTOS DEL MANTENIMIENTO EN LA INDUSTRIA 4.0", category: "Mantenimiento industrial" },
+        { id: 61, title: "SOSTENIBILIDAD Y MINERÍA RESPONSABLE", category: "Medio ambiente" },
+        { id: 62, title: "PRIMEROS AUXILIOS EN MINERÍA", category: "Seguridad y prevención" },
+        { id: 63, title: "INDICADORES CLAVE (KPIS) PARA LA CADENA DE ABASTECIMIENTOS", category: "Logística y almacenes" },
+        { id: 64, title: "EXPLORACIÓN MINERA Y EVALUACIÓN DE YACIMIENTOS", category: "Operaciones y procesos" },
+        { id: 65, title: "REQUISITOS CLAVE DE ISO 14001 Y CÓMO APLICARLOS EN LA EMPRESA", category: "Medio ambiente" },
+        { id: 66, title: "SISTEMAS INTEGRADOS DE GESTIÓN HSEQ (ISO 9001, 14001, 45001)", category: "Legislación y normativa" },
+        { id: 67, title: "GESTIÓN DE CRISIS Y MANEJO DE CONFLICTOS EN AMBIENTES INDUSTRIALES", category: "Legislación y normativa" },
+        { id: 68, title: "PLANIFICACIÓN ESTRATÉGICA Y BALANCED SCORECARD", category: "Operaciones y procesos" },
+        { id: 69, title: "GESTIÓN DE LA ENERGÍA EN OPERACIONES MINERAS", category: "Medio ambiente" },
+        { id: 70, title: "GESTIÓN DE LA CADENA DE SUMINISTRO EN EMPRESAS MINERAS", category: "Logística y almacenes" },
+        { id: 71, title: "SEGURIDAD Y NORMATIVA EN EL CONTROL DE INVENTARIO Y LOGÍSTICA MINERA", category: "Logística y almacenes" },
+        { id: 72, title: "SALUD MENTAL EN EL TRABAJO: DETECCIÓN Y PREVENCIÓN DE TRASTORNOS PSICOLÓGICOS", category: "Seguridad y prevención" },
+        { id: 73, title: "IMPLEMENTACIÓN DE LEAN MANUFACTURING EN PROCESOS INDUSTRIALES", category: "Operaciones y procesos" },
+        { id: 74, title: "ERGONOMÍA Y DISEÑO DE PUESTOS DE TRABAJO EN LA INDUSTRIA", category: "Seguridad y prevención" },
+        { id: 75, title: "GESTIÓN DE SEGURIDAD DURANTE LAS PARADAS DE PLANTA Y MANTENIMIENTO", category: "Mantenimiento industrial" },
+        { id: 76, title: "GESTIÓN DE RELAVES Y RESIDUOS MINEROS", category: "Medio ambiente" },
+      ];
+
+      const categories = ["Todos", "Seguridad y prevención", "Medio ambiente", "Inteligencia de datos", "Tecnología e innovación", "Logística y almacenes", "Mantenimiento industrial", "Operaciones y procesos", "Comercio exterior", "Legislación y normativa"];
+
+      // Función para alternar entre las 3 Vistas principales y adaptar el Footer
+      function mostrarVista(vistaId) {
+        const v1 = document.getElementById("pantalla-carga");
+        const v2 = document.getElementById("pantalla-cursos");
+        const v3 = document.getElementById("pantalla-expirado");
+
+        if (v1) v1.classList.add("hidden");
+        if (v2) v2.classList.add("hidden");
+        if (v3) v3.classList.add("hidden");
+
+        const target = document.getElementById(vistaId);
+        if (target) {
+          target.classList.remove("hidden");
+          target.classList.add("flex");
+        }
+
+        // Control dinámico del contenido del Footer compartido
+        const marcaIzquierda = document.getElementById("footerMarcaIzquierda");
+        const flexWrapper = document.getElementById("footerFlexWrapper");
+
+        if (vistaId === "pantalla-cursos") {
+          if (marcaIzquierda) {
+            marcaIzquierda.style.setProperty("display", "flex", "important");
+            marcaIzquierda.classList.remove("hidden");
+          }
+          if (flexWrapper) {
+            flexWrapper.classList.remove("justify-center");
+            flexWrapper.classList.add("justify-between");
+          }
+        } else {
+          // En Vista 1 y Vista 3: Se oculta 100% la 1ra columna (Logo y Eslogan)
+          if (marcaIzquierda) {
+            marcaIzquierda.style.setProperty("display", "none", "important");
+            marcaIzquierda.classList.add("hidden");
+          }
+          if (flexWrapper) {
+            flexWrapper.classList.remove("justify-between");
+            flexWrapper.classList.add("justify-center");
+          }
+        }
+      }
+
+      function unlockScroll() {
+        document.documentElement.style.overflow = "auto";
+        document.body.style.overflow = "auto";
+      }
+
+      function getClaimKey() {
+        return "edumin_claimed_" + (userToken ? userToken.trim() : "demo");
+      }
+
+      function checkClaimedState(apiData) {
+        const key = getClaimKey();
+        let saved = localStorage.getItem(key);
+
+        // Si la API devuelve un curso previamente registrado para este token
+        if (!saved && apiData && (apiData.curso || apiData.cursoSeleccionado || apiData.claimedCourse)) {
+          const titleStr = String(apiData.curso || apiData.cursoSeleccionado || apiData.claimedCourse).trim();
+          const matched = ALL_COURSES.find((c) => c.title.toLowerCase() === titleStr.toLowerCase() || c.id.toString() === titleStr);
+          if (matched) {
+            saved = JSON.stringify(matched);
+            localStorage.setItem(key, saved);
+          } else if (titleStr) {
+            saved = JSON.stringify({ id: 0, title: titleStr, category: "Curso Registrado" });
+            localStorage.setItem(key, saved);
+          }
+        }
+
+        const grillaCursos = document.getElementById("grillaCursos");
+        const searchBox = document.getElementById("cajaFiltrosYBusqueda");
+        const estadoVacio = document.getElementById("estadoVacio");
+        const estadoCanjeado = document.getElementById("estadoCanjeado");
+        const tituloCursoCanjeado = document.getElementById("tituloCursoCanjeado");
+        const insigniaCursoCanjeado = document.getElementById("insigniaCursoCanjeado");
+
+        if (!saved) {
+          if (grillaCursos) grillaCursos.classList.remove("hidden");
+          if (searchBox) searchBox.classList.remove("hidden");
+          if (estadoCanjeado) estadoCanjeado.classList.add("hidden");
+          return false;
+        }
+
+        try {
+          const claimedData = JSON.parse(saved);
+          selectedCourse = claimedData;
+
+          if (grillaCursos) grillaCursos.classList.add("hidden");
+          if (searchBox) searchBox.classList.add("hidden");
+          if (estadoVacio) estadoVacio.classList.add("hidden");
+
+          if (estadoCanjeado) estadoCanjeado.classList.remove("hidden");
+          if (tituloCursoCanjeado) tituloCursoCanjeado.textContent = claimedData.id ? `#${claimedData.id} - ${claimedData.title}` : claimedData.title;
+          if (insigniaCursoCanjeado) insigniaCursoCanjeado.textContent = claimedData.category || "Curso Seleccionado";
+
+          return true;
+        } catch (e) {
+          console.warn("Claimed state parse warning:", e);
+          if (grillaCursos) grillaCursos.classList.remove("hidden");
+          if (searchBox) searchBox.classList.remove("hidden");
+          if (estadoCanjeado) estadoCanjeado.classList.add("hidden");
+          return false;
+        }
+      }
+
+      function isTokenValido(data) {
+        if (!data) return false;
+
+        const rawStr = JSON.stringify(data)
+          .toUpperCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+
+        // Si indica explícitamente error o expiración
+        if (rawStr.includes("EXPIRAD") || rawStr.includes("INVALID") || rawStr.includes("NO ENCONTRADO") || rawStr.includes("INEXISTENTE")) {
+          return false;
+        }
+
+        // Si contiene cualquier palabra de éxito/disponibilidad
+        if (rawStr.includes("VALID") || rawStr.includes("DISPONIBLE") || rawStr.includes("ACTIVO") || rawStr.includes("HABILITAD") || rawStr.includes("OK") || rawStr.includes("TRUE") || rawStr.includes("SUCCESS") || rawStr.includes("REGISTRAD") || data.valid === true) {
+          return true;
+        }
+
+        // Si devolvió un objeto válido sin errores
+        if (typeof data === "object" && Object.keys(data).length > 0 && !data.error) {
+          return true;
+        }
+
+        return false;
+      }
+
+      // Manejo unificado de error de carga del logo (mantiene 100% el diseño original de cada vista)
+      function handleLogoError(img, context) {
+        if (!img) return;
+        if (context === "marquee") {
+          img.outerHTML = '<span class="inline-flex items-center h-6 sm:h-7 leading-none">EDUMIN</span>';
+        } else if (context === "hero") {
+          img.outerHTML = '<span class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-white h-10 sm:h-12 md:h-14 inline-flex items-center justify-center leading-none">EDUMIN</span>';
+        } else {
+          // Vista 1 (Pantalla de carga) y Vista 3 (Expirado): exactamente el diseño original
+          img.outerHTML = '<span class="font-heading font-bold text-3xl sm:text-4xl text-white h-10 sm:h-12 inline-flex items-center justify-center leading-none">EDUMIN</span>';
+        }
+      }
+
+      function handleHeroLogoError(img) {
+        handleLogoError(img, "hero");
+      }
+
+      // Generar dinámicamente el contenido del cintillo para loop infinito continuo (100% DRY & a11y)
+      function initBirthdayBannerMarquee() {
+        const marqueeTrack = document.querySelector("#cintilloCumpleanos .animate-marquee");
+        if (!marqueeTrack) return;
+
+        const frases = ["BENEFICIO EXCLUSIVO DE CUMPLEAÑOS", "1 CURSO GRATIS A TU ELECCIÓN", "VÁLIDO POR TIEMPO LIMITADO"];
+
+        const logoHTML = `<img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20negro.png" alt="EDUMIN" class="h-6 sm:h-7 w-auto object-contain shrink-0" onerror="handleLogoError(this, 'marquee')" />`;
+        const sparkleHTML = `<i class="ph-bold ph-sparkle shrink-0"></i>`;
+
+        // Generar una ronda con el patrón: [LOGO] [DESTEL] [FRASE] [DESTEL]
+        const rondaHTML = frases.map((frase) => `${logoHTML}${sparkleHTML}<span>${frase}</span>${sparkleHTML}`).join("");
+
+        // Bloque con 2 repeticiones de la ronda para cubrir pantallas panorámicas
+        const bloqueHTML = `
+          <div class="flex items-center h-full gap-8 sm:gap-12 shrink-0 pr-8 sm:pr-12">
+            ${rondaHTML}${rondaHTML}
+          </div>
+        `;
+
+        // Inyectar el bloque original y su clon con aria-hidden para el bucle continuo al -50%
+        marqueeTrack.innerHTML = bloqueHTML;
+        const clone = marqueeTrack.firstElementChild.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        marqueeTrack.appendChild(clone);
+      }
+
+      // Renderizar dinámicamente las características generales del curso en el Hero
+      function renderHeroFeatures() {
+        const container = document.getElementById("heroCaracteristicas");
+        if (!container) return;
+
+        const features = [
+          {
+            icon: "ph-student",
+            colorClass: "bg-brand-blue/15 border-brand-blue/30 text-brand-blue",
+            label: "Modalidad:",
+            val: "100% asincrónica",
+          },
+          {
+            icon: "ph-monitor-play",
+            colorClass: "bg-amber-500/15 border-amber-500/30 text-amber-600",
+            label: "Clases:",
+            val: "De 2 a 4 sesiones",
+          },
+          {
+            icon: "ph-certificate",
+            colorClass: "bg-emerald-500/15 border-emerald-500/30 text-emerald-600",
+            label: "Certificado:",
+            val: "Por 30 horas",
+          },
+        ];
+
+        container.innerHTML = features
+          .map(
+            (item) => `
+              <div class="bg-brand-cardBg border border-slate-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl border flex items-center justify-center text-lg sm:text-xl shrink-0 ${item.colorClass}">
+                  <i class="ph-bold ${item.icon}"></i>
+                </div>
+                <div class="flex flex-col items-center sm:items-start min-w-0">
+                  <span class="block text-xs sm:text-sm font-heading font-bold uppercase">${item.label}</span>
+                  <span class="block text-xs sm:text-base font-bold text-principal uppercase">${item.val}</span>
+                </div>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
+      // Lógica de verificación al cargar la página
+      document.addEventListener("DOMContentLoaded", () => {
+        initBirthdayBannerMarquee();
+        renderHeroFeatures();
+
+        urlParams = new URLSearchParams(window.location.search);
+        userToken = urlParams.get("token");
+
+        if (urlParams.has("reset")) {
+          localStorage.removeItem("edumin_claimed_demo");
+          if (userToken) localStorage.removeItem("edumin_claimed_" + userToken.trim());
+        }
+
+        // Soporte para pruebas directas en la URL (?vista=1, ?vista=2, ?vista=3)
+        const vistaParam = urlParams.get("vista") || urlParams.get("view");
+        if (vistaParam === "1") {
+          mostrarVista("pantalla-carga");
+          return;
+        }
+        if (vistaParam === "3") {
+          mostrarVista("pantalla-expirado");
+          return;
+        }
+        if (vistaParam === "2") {
+          mostrarVista("pantalla-cursos");
+          initCursosApp();
+          return;
+        }
+
+        const isLocalFile = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+        // Permite pruebas locales con ?demo=1, ?token=demo o al abrir el archivo HTML directamente en local
+        if (urlParams.get("demo") === "1" || userToken === "demo" || (!userToken && isLocalFile)) {
+          localStorage.removeItem("edumin_claimed_demo");
+          mostrarVista("pantalla-cursos");
+          initCursosApp();
+          return;
+        }
+
+        // 1. Si NO hay token en la URL, mostrar Vista 3 (Expirado)
+        if (!userToken) {
+          mostrarVista("pantalla-expirado");
+          return;
+        }
+
+        // 2. Si SÍ hay token, verificar GET vía fetch() a Apps Script (si está configurado)
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
+          mostrarVista("pantalla-cursos");
+          initCursosApp();
+          return;
+        }
+
+        const fetchUrl = `${APPS_SCRIPT_URL}?token=${encodeURIComponent(userToken)}`;
+
+        fetch(fetchUrl)
+          .then((res) => res.text())
+          .then((text) => {
+            let data = {};
+            try {
+              data = JSON.parse(text);
+            } catch (e) {
+              console.warn("Apps Script respuesta no-JSON:", text);
+            }
+
+            console.log("Resultado de Verificación de Token en Apps Script:", data);
+
+            if (isTokenValido(data)) {
+              mostrarVista("pantalla-cursos");
+              initCursosApp(data);
+            } else {
+              mostrarVista("pantalla-expirado");
+            }
+          })
+          .catch((err) => {
+            console.error("Error en la conexión con Apps Script:", err);
+            mostrarVista("pantalla-cursos");
+            initCursosApp();
+          });
+      });
+
+      // Cargar nombre personalizado del estudiante desde el token (API) o URL
+      function cargarNombreEstudiante(apiData) {
+        const params = urlParams || new URLSearchParams(window.location.search);
+        const nombreDirecto = (apiData && (apiData.nombre || apiData.estudiante || apiData.name || apiData.alumno || apiData.student)) || params.get("nombre") || params.get("estudiante") || params.get("name");
+        const spanNombre = document.getElementById("nombreEstudiante");
+        const spanPrefijo = document.getElementById("prefijoNombreEstudiante");
+        if (spanNombre) {
+          if (nombreDirecto && typeof nombreDirecto === "string" && nombreDirecto.trim()) {
+            if (spanPrefijo) spanPrefijo.textContent = ", ";
+            spanNombre.textContent = nombreDirecto.trim();
+          } else {
+            if (spanPrefijo) spanPrefijo.textContent = "";
+            spanNombre.textContent = "";
+          }
+        }
+      }
+
+      function initCursosApp(apiData) {
+        unlockScroll();
+        cargarNombreEstudiante(apiData);
+        renderHeroFeatures();
+
+        renderCategories();
+        renderCourses(ALL_COURSES);
+        checkClaimedState(apiData);
+
+        // Listeners de búsqueda
+        const inputBusqueda = document.getElementById("inputBusqueda");
+        const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
+
+        if (inputBusqueda) {
+          inputBusqueda.addEventListener("input", (e) => {
+            const query = e.target.value.trim();
+            if (query.length > 0) {
+              btnLimpiarBusqueda.classList.remove("hidden");
+            } else {
+              btnLimpiarBusqueda.classList.add("hidden");
+            }
+            filterCourses();
+          });
+        }
+
+        if (btnLimpiarBusqueda) {
+          btnLimpiarBusqueda.addEventListener("click", () => {
+            inputBusqueda.value = "";
+            btnLimpiarBusqueda.classList.add("hidden");
+            filterCourses();
+          });
+        }
+
+        setTimeout(() => {
+          launchConfetti();
+        }, 400);
+
+        // Disparar confeti festivo interactivo al hacer clic (solo activo en la Vista 2)
+        document.addEventListener("click", (e) => {
+          const v1 = document.getElementById("pantalla-carga");
+          const v3 = document.getElementById("pantalla-expirado");
+
+          // Desactivar confeti por clic en Vista 1 (carga) y Vista 3 (expirado)
+          if ((v1 && !v1.classList.contains("hidden")) || (v3 && !v3.classList.contains("hidden"))) {
+            return;
+          }
+
+          // No distraer la interacción del usuario mientras escribe en el input de búsqueda
+          if (e.target && e.target.tagName === "INPUT") return;
+
+          const x = e.clientX && window.innerWidth ? e.clientX / window.innerWidth : 0.5;
+          const y = e.clientY && window.innerHeight ? e.clientY / window.innerHeight : 0.6;
+
+          launchConfetti({
+            x: Math.max(0.05, Math.min(0.95, x)),
+            y: Math.max(0.05, Math.min(0.95, y)),
+          });
+        });
+      }
+
+      let lastConfettiTime = 0;
+
+      function launchConfetti(originCoords) {
+        const v1 = document.getElementById("pantalla-carga");
+        const v3 = document.getElementById("pantalla-expirado");
+
+        // No lanzar confeti si la pantalla actual es Vista 1 (carga) o Vista 3 (expirado)
+        if ((v1 && !v1.classList.contains("hidden")) || (v3 && !v3.classList.contains("hidden"))) {
+          return;
+        }
+
+        const now = Date.now();
+        // Evita doble disparo en milisegundos si el elemento ya disparó confeti propio
+        if (originCoords && now - lastConfettiTime < 120) return;
+        lastConfettiTime = now;
+
+        if (typeof confetti === "function") {
+          try {
+            const isClick = !!originCoords;
+            confetti({
+              particleCount: isClick ? 80 : 130,
+              spread: isClick ? 75 : 85,
+              origin: originCoords || { y: 0.6 },
+              ticks: 200,
+              gravity: 1.1,
+              decay: 0.94,
+              startVelocity: isClick ? 28 : 38,
+              colors: ["#024adf", "#f59e0b", "#10b981", "#ec4899", "#8b5cf6", "#ffffff"],
+            });
+          } catch (e) {
+            console.warn("Confetti animation warning:", e);
+          }
+        }
+      }
+
+      function scrollToCourses() {
+        launchConfetti();
+
+        const element = document.getElementById("catalogo");
+        if (element && typeof element.scrollIntoView === "function") {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+
+      function renderCategories() {
+        const container = document.getElementById("contenedorCategorias");
+        if (!container) return;
+
+        container.innerHTML = categories
+          .map((cat) => {
+            const isActive = activeCategory === cat;
+            const catLabel = cat === "Todos" ? "Todos" : formatSentenceCase(cat);
+
+            return `
+                    <button onclick="selectCategory('${cat}')" 
+                        class="px-4 py-1.5 rounded-full font-sans text-sm sm:text-base font-semibold transition transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer ${isActive ? "bg-brand-blue text-white border border-brand-blue font-bold shadow-sm" : "bg-slate-100 text-secundario hover:bg-slate-200 border border-slate-300"}">
+                        <span>${catLabel}</span>
+                    </button>
+                `;
+          })
+          .join("");
+      }
+
+      function selectCategory(cat) {
+        activeCategory = cat;
+        filterCourses();
+      }
+
+      function removeAccents(str) {
+        if (!str) return "";
+        return str
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase();
+      }
+
+      function filterCourses() {
+        const inputBusqueda = document.getElementById("inputBusqueda");
+        const rawQuery = inputBusqueda ? inputBusqueda.value.trim() : "";
+        const cleanQuery = removeAccents(rawQuery);
+
+        renderCategories();
+
+        const filtered = ALL_COURSES.filter((course) => {
+          const matchesCategory = activeCategory === "Todos" || course.category === activeCategory;
+          const courseTitleClean = removeAccents(course.title);
+          const matchesSearch = !cleanQuery || courseTitleClean.includes(cleanQuery) || course.id.toString() === rawQuery;
+          return matchesCategory && matchesSearch;
+        });
+
+        renderCourses(filtered);
+      }
+
+      function resetFilters() {
+        const inputBusqueda = document.getElementById("inputBusqueda");
+        const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
+
+        if (inputBusqueda) inputBusqueda.value = "";
+        if (btnLimpiarBusqueda) btnLimpiarBusqueda.classList.add("hidden");
+        activeCategory = "Todos";
+        renderCategories();
+        renderCourses(ALL_COURSES);
+      }
+
+      function formatSentenceCase(str) {
+        if (!str) return "";
+        if (str === str.toUpperCase()) {
+          return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+        return str;
+      }
+
+      function renderCourses(list) {
+        const grid = document.getElementById("grillaCursos");
+        const estadoVacio = document.getElementById("estadoVacio");
+        const contadorCursos = document.getElementById("contadorCursos");
+
+        if (contadorCursos) contadorCursos.textContent = list.length;
+
+        if (!grid) return;
+
+        if (list.length === 0) {
+          grid.innerHTML = "";
+          if (estadoVacio) estadoVacio.classList.remove("hidden");
+          return;
+        }
+
+        if (estadoVacio) estadoVacio.classList.add("hidden");
+        grid.classList.remove("hidden");
+
+        // Render tarjetas
+        grid.innerHTML = list
+          .map(
+            (course) => `
+                <div onclick="openModal(${course.id})" class="course-card rounded-3xl p-5 shadow-md flex flex-col justify-between relative group overflow-hidden cursor-pointer">
+                    
+                    <div>
+                        <!-- Category Badge & Course Number -->
+                        <div class="flex items-center justify-between mb-4 gap-2">
+                            <span class="text-sm font-heading font-bold bg-brand-blue text-white px-3 py-1 rounded-lg uppercase whitespace-nowrap shrink-0">
+                                Curso #${course.id}
+                            </span>
+                            <span class="text-xs sm:text-sm font-heading font-semibold text-secundario bg-slate-100 border border-slate-300 px-3 py-1 rounded-lg truncate min-w-0">
+                                ${formatSentenceCase(course.category)}
+                            </span>
+                        </div>
+
+                        <!-- Course Title -->
+                        <h3 class="font-sans font-bold text-principal text-xl leading-[1.15] mb-6 uppercase text-balance">
+                            ${course.title}
+                        </h3>
+                    </div>
+
+                    <!-- Action Badge Footer -->
+                    <div class="pt-4 border-t border-slate-200 flex items-center justify-between gap-2">
+                        <span class="inline-flex items-center gap-1.5 text-brand-blue bg-brand-blue/10 border border-brand-blue/20 px-3 py-1 rounded-lg text-xs sm:text-sm font-heading font-bold uppercase min-w-0 max-w-[calc(100%-2rem)]">
+                            <i class="ph-bold ph-hand-tap text-base shrink-0"></i>
+                            <span class="whitespace-nowrap truncate min-w-0">Seleccionar curso</span>
+                        </span>
+                        <i class="ph-bold ph-arrow-right text-brand-blue text-base leading-4 sm:leading-5 group-hover:translate-x-1 transition transform shrink-0"></i>
+                    </div>
+
+                </div>
+            `,
+          )
+          .join("");
+      }
+
+      function openModal(courseId) {
+        if (localStorage.getItem(getClaimKey())) {
+          checkClaimedState();
+          return;
+        }
+
+        selectedCourse = ALL_COURSES.find((c) => c.id === courseId);
+        if (!selectedCourse) return;
+
+        isRegisteringCourse = false;
+        resetBotonRegistro();
+
+        const modalTitle = document.getElementById("modalTituloCurso");
+        const modalCanje = document.getElementById("modalCanje");
+        const step1 = document.getElementById("modalPaso1");
+        const step2 = document.getElementById("modalPaso2");
+        const btnVolver = document.getElementById("btnVolverModal");
+        const btnCerrar = document.getElementById("btnCerrarModal");
+
+        if (modalTitle) modalTitle.textContent = `#${selectedCourse.id} - ${selectedCourse.title}`;
+
+        if (btnVolver) {
+          btnVolver.disabled = false;
+          btnVolver.classList.remove("opacity-50", "pointer-events-none");
+        }
+
+        if (btnCerrar) {
+          btnCerrar.disabled = false;
+          btnCerrar.classList.remove("opacity-50", "pointer-events-none");
+        }
+
+        if (step1) {
+          step1.classList.remove("hidden");
+        }
+        if (step2) {
+          step2.classList.add("hidden");
+        }
+
+        if (modalCanje) modalCanje.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      let timerResetBoton = null;
+
+      function resetBotonRegistro() {
+        if (timerResetBoton) {
+          clearTimeout(timerResetBoton);
+          timerResetBoton = null;
+        }
+        const btn = document.getElementById("btnRegistrarCurso");
+        if (btn) {
+          btn.disabled = false;
+          btn.className = "flex-1 py-3 px-3.5 sm:px-5 bg-brand-blue hover:bg-brand-blueDark text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer whitespace-nowrap";
+          btn.innerHTML = `<i class="ph-bold ph-check-circle text-xl"></i><span>REGISTRAR CURSO</span>`;
+        }
+      }
+
+      function closeModal() {
+        // Bloquear salida si el registro está en proceso
+        if (isRegisteringCourse) return;
+
+        resetBotonRegistro();
+
+        const modalCanje = document.getElementById("modalCanje");
+        if (modalCanje) modalCanje.classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      // Cerrar modal al presionar la tecla Escape (solo si no está registrando)
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // Registro de elección en Google Sheets vía POST (no-cors) con control de timeout y reintento
+      function handleRegisterCourse(e) {
+        if (e && typeof e.preventDefault === "function") {
+          e.preventDefault();
+        }
+
+        if (!selectedCourse || isRegisteringCourse) return;
+
+        if (timerResetBoton) {
+          clearTimeout(timerResetBoton);
+          timerResetBoton = null;
+        }
+
+        isRegisteringCourse = true;
+
+        const btn = document.getElementById("btnRegistrarCurso");
+        const btnVolver = document.getElementById("btnVolverModal");
+        const btnCerrar = document.getElementById("btnCerrarModal");
+
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = `<i class="ph-bold ph-circle-notch animate-spin text-xl"></i><span>Guardando…</span>`;
+        }
+
+        // Bloquear navegación mientras se guarda
+        if (btnVolver) {
+          btnVolver.disabled = true;
+          btnVolver.classList.add("opacity-50", "pointer-events-none");
+        }
+        if (btnCerrar) {
+          btnCerrar.disabled = true;
+          btnCerrar.classList.add("opacity-50", "pointer-events-none");
+        }
+
+        const tokenUsuario = userToken || "TOKEN-DEMO";
+        const cursoSeleccionado = selectedCourse.title;
+
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
+          finalizarRegistroExitoso();
+          return;
+        }
+
+        // Timeout de seguridad a los 10 segundos
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => {
+          controller.abort();
+        }, 10000);
+
+        fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: tokenUsuario, curso: cursoSeleccionado }),
+          signal: controller.signal,
+        })
+          .then(() => {
+            clearTimeout(timeoutId);
+            finalizarRegistroExitoso();
+          })
+          .catch((err) => {
+            clearTimeout(timeoutId);
+            console.warn("Fallo o timeout al enviar a Apps Script:", err);
+            mostrarErrorRegistro();
+          });
+      }
+
+      function mostrarErrorRegistro() {
+        isRegisteringCourse = false;
+
+        const btn = document.getElementById("btnRegistrarCurso");
+        const btnVolver = document.getElementById("btnVolverModal");
+        const btnCerrar = document.getElementById("btnCerrarModal");
+
+        // Habilitar de nuevo para que el alumno pueda decidir volver o reintentar
+        if (btnVolver) {
+          btnVolver.disabled = false;
+          btnVolver.classList.remove("opacity-50", "pointer-events-none");
+        }
+        if (btnCerrar) {
+          btnCerrar.disabled = false;
+          btnCerrar.classList.remove("opacity-50", "pointer-events-none");
+        }
+
+        // Estado de error en el botón (cambia a rojo con aviso de error y luego regresa al azul)
+        if (btn) {
+          btn.disabled = false;
+          btn.className = "flex-1 py-3 px-3.5 sm:px-5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer whitespace-nowrap";
+          btn.innerHTML = `<i class="ph-bold ph-warning-circle text-xl"></i><span>ERROR AL REGISTRAR</span>`;
+
+          // Regresar automáticamente al estado azul a los 2.5 segundos
+          if (timerResetBoton) clearTimeout(timerResetBoton);
+          timerResetBoton = setTimeout(() => {
+            resetBotonRegistro();
+          }, 2500);
+        }
+      }
+
+      function finalizarRegistroExitoso() {
+        isRegisteringCourse = false;
+
+        if (timerResetBoton) {
+          clearTimeout(timerResetBoton);
+          timerResetBoton = null;
+        }
+
+        const btnCerrar = document.getElementById("btnCerrarModal");
+        if (btnCerrar) {
+          btnCerrar.disabled = false;
+          btnCerrar.classList.remove("opacity-50", "pointer-events-none");
+        }
+
+        // Guardar selección en localStorage aislada por cada token
+        localStorage.setItem(getClaimKey(), JSON.stringify(selectedCourse));
+
+        // Transición en Modal
+        const step1 = document.getElementById("modalPaso1");
+        const step2 = document.getElementById("modalPaso2");
+
+        if (step1) {
+          step1.classList.add("hidden");
+        }
+        if (step2) {
+          step2.classList.remove("hidden");
+        }
+
+        // Bloquear catálogo de fondo
+        checkClaimedState();
+      }
+
+      function handleSendWhatsApp() {
+        if (!selectedCourse) return;
+
+        const message = `¡Hola, EDUMIN! 🎉 Acabo de elegir mi curso de regalo por mi cumpleaños: *"${selectedCourse.title}"*. Quedo a la espera de las indicaciones para acceder a la plataforma educativa. ¡Saludos!`;
+        const encodedMessage = encodeURIComponent(message);
+        const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
+
+        setTimeout(() => {
+          window.open(waUrl, "_blank");
+          closeModal();
+        }, 150);
+      }
+    </script>
+  </body>
+</html>
