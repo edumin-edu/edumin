@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>¡Feliz Cumpleaños! | EDUMIN</title>
+    <title>¡Feliz cumpleaños! | EDUMIN</title>
 
     <!-- Favicon EDUMIN -->
     <link rel="icon" type="image/png" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
@@ -45,6 +45,9 @@
       tailwind.config = {
         theme: {
           extend: {
+            fontSize: ({ theme }) => ({
+              ...theme("spacing"),
+            }),
             fontFamily: {
               sans: ['"Barlow Semi Condensed"', "sans-serif"],
               heading: ['"Barlow Condensed"', "sans-serif"],
@@ -103,11 +106,11 @@
       /* Marquee continuo para el cintillo superior */
       @keyframes marquee {
         0% {
-          transform: translate3d(0, 0, 0);
+          transform: translateX(0%);
         }
 
         100% {
-          transform: translate3d(-50%, 0, 0);
+          transform: translateX(-50%);
         }
       }
 
@@ -115,11 +118,24 @@
         display: flex;
         width: max-content;
         will-change: transform;
-        animation: marquee 30s linear infinite;
+        animation: marquee 25s linear infinite;
       }
 
       .animate-marquee:hover {
         animation-play-state: paused;
+      }
+
+      /* Máscara de desvanecimiento suave en los bordes laterales (Fade Mask) */
+      .cintillo-fade-mask {
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+      }
+
+      @media (min-width: 640px) {
+        .cintillo-fade-mask {
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
+        }
       }
 
       @keyframes pulse-glow {
@@ -179,16 +195,6 @@
         animation: modal-scale-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
 
-      /* Accesibilidad: Respetar preferencias de reducción de movimiento */
-      @media (prefers-reduced-motion: reduce) {
-        .animate-marquee,
-        .btn-cta-hero,
-        .btn-cta-hero::after,
-        .animate-modal-in {
-          animation: none !important;
-        }
-      }
-
       /* ==========================================================================
          Estilos CSS en Español para Vistas de Estado (Vista 1 y Vista 3)
          ========================================================================== */
@@ -221,7 +227,7 @@
         object-fit: contain;
       }
 
-      @media (width >= 640px) {
+      @media (width >=640px) {
         .logo-superior-pantalla {
           top: 2.5rem;
         }
@@ -303,6 +309,7 @@
       }
     </style>
   </head>
+
   <body class="bg-brand-dark text-cuaternario font-sans font-medium min-h-screen flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
     <!-- VISTA 1: Pantalla de Carga (Inicialmente Visible) -->
     <div id="pantalla-carga" class="pantalla-estado tema-estado-carga">
@@ -328,45 +335,47 @@
       <!-- Fondo continuo de confeti sutil para toda la página -->
       <div class="bg-pattern fixed inset-0 opacity-40 pointer-events-none"></div>
 
-      <!-- Fixed Top Birthday Banner (Continuous Infinite Marquee) -->
+      <!-- Fixed Top Birthday Banner (Continuous Infinite Marquee with Fade Mask) -->
       <div id="cintilloCumpleanos" class="fixed inset-x-0 top-0 z-50 h-10 overflow-hidden bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-principal font-heading font-bold text-lg leading-none flex items-center uppercase shadow-sm select-none border-b border-amber-600/20">
-        <div class="animate-marquee flex items-center h-full"></div>
+        <div class="cintillo-fade-mask w-full h-full overflow-hidden flex items-center">
+          <div class="animate-marquee flex items-center h-full"></div>
+        </div>
       </div>
 
-      <div id="seccionHero" class="min-h-screen pt-10 flex flex-col relative">
+      <div id="seccionHero" class="min-h-screen min-h-svh min-h-dvh pt-10 flex flex-col relative">
         <!-- Hero Section -->
-        <header class="relative flex-1 flex flex-col justify-center py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+        <header class="relative flex-1 flex flex-col justify-center p-4 md:p-6 lg:p-8">
           <!-- Capa 2: Degradado de luces (debajo de textos, sobre confeti) -->
           <div class="hero-glow absolute inset-0 pointer-events-none"></div>
 
           <!-- Capa 3: Textos y elementos del Hero -->
           <div class="max-w-5xl mx-auto text-center relative flex flex-col items-center my-auto w-full">
             <!-- 1. EDUMIN Official Logo -->
-            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 sm:mb-4 inline-block shrink-0" title="Ir al sitio web de EDUMIN">
-              <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-10 sm:h-12 md:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 md:mb-4 inline-block shrink-0" title="Ir al sitio web de EDUMIN">
+              <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-10 md:h-12 lg:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
             </a>
 
             <!-- Títulos del Hero con propiedades heredadas -->
-            <div class="font-heading font-bold uppercase leading-none text-white text-balance">
+            <div class="font-heading font-bold uppercase text-white text-balance">
               <!-- 2. Feliz Cumpleaños + Nombre -->
-              <h1 class="text-3xl sm:text-5xl md:text-6xl mb-1.5 sm:mb-2">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
+              <h1 class="text-4xl md:text-5xl lg:text-6xl mb-1.5 md:mb-2 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
 
               <!-- 3. H2: Beneficio Especial -->
-              <h2 class="text-2xl sm:text-4xl md:text-5xl mb-3 sm:mb-4">Tu beneficio especial ya está disponible</h2>
+              <h2 class="text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 !leading-none">Tu beneficio especial ya está disponible</h2>
             </div>
 
             <!-- 4. Subtítulo (Opción 3) -->
-            <p class="text-terciario text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-medium mb-6 sm:mb-8 text-balance [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial otorgándote acceso totalmente gratuito a <strong>UN CURSO DE ALTA ESPECIALIZACIÓN</strong> a tu elección para seguir impulsando tu carrera profesional.</p>
+            <p class="text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial otorgándote acceso totalmente gratuito a <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong> a tu elección para seguir impulsando tu carrera profesional.</p>
 
             <!-- 5. Botón de Acción -->
-            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl sm:text-2xl px-5 sm:px-8 py-3 sm:py-4 rounded-2xl transition-all duration-200 transform active:scale-95 inline-flex items-center justify-center gap-3 sm:gap-4 uppercase mb-6 sm:mb-8 whitespace-nowrap">
-              <i class="ph-bold ph-gift text-xl sm:text-3xl leading-none"></i>
-              <span>ELEGIR MI CURSO<span class="hidden sm:inline">&nbsp;DE REGALO</span></span>
+            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 transform active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-8 whitespace-nowrap">
+              <i class="ph-bold ph-gift text-6 md:text-7 lg:text-8"></i>
+              <span>ELEGIR MI CURSO<span class="hidden md:inline-flex">&nbsp;DE REGALO</span></span>
             </button>
 
             <!-- General Course Details Bar (Clean White Style) -->
-            <div class="w-full max-w-4xl bg-white text-secundario rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-2xl">
-              <div id="heroCaracteristicas" class="grid grid-cols-3 gap-2 sm:gap-4"></div>
+            <div class="w-full max-w-4xl bg-white text-secundario rounded-2xl md:rounded-3xl p-3 md:p-4 shadow-2xl">
+              <div id="heroCaracteristicas" class="flex flex-col sm:grid sm:grid-cols-3 sm:gap-3 md:gap-4"></div>
             </div>
           </div>
         </header>
@@ -384,7 +393,7 @@
 
           <!-- Search & Category Filters Box -->
           <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-3xl p-5 border-2 border-brand-dark border-b-[6px] border-b-brand-dark mb-8 shadow-md">
-            <div class="flex flex-col sm:flex-row gap-4 sm:gap-5 items-center justify-between pb-5 border-b border-slate-200">
+            <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-5 items-center justify-between pb-4 sm:pb-5 border-b border-slate-200">
               <!-- Search Input Wrapper (Flexbox Layout) -->
               <div class="w-full sm:flex-1 max-w-2xl flex items-center gap-3 px-4 py-2.5 bg-white border border-slate-300 focus-within:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-xl transition-all shadow-sm group">
                 <i class="ph-bold ph-magnifying-glass text-secundario/50 group-focus-within:text-amber-500 text-xl w-5 h-5 flex items-center justify-center shrink-0 transition-colors"></i>
@@ -395,19 +404,36 @@
               </div>
 
               <!-- Course Counter Indicator -->
-              <div class="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-sans font-medium text-secundario shrink-0 select-none py-1 sm:py-0">
+              <div class="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-sans font-medium text-secundario shrink-0 select-none">
                 <i class="ph-bold ph-sparkle text-amber-500 text-base sm:text-lg"></i>
                 <span><strong id="contadorCursos" class="text-principal font-bold">76</strong> cursos disponibles</span>
               </div>
             </div>
 
-            <!-- Category Pills -->
-            <div class="mt-5">
-              <label class="block text-xs sm:text-sm font-sans font-bold uppercase text-principal mb-3 flex items-center gap-2 select-none">
-                <i class="ph-bold ph-funnel text-brand-blue text-base sm:text-lg"></i>
-                <span>Filtrar por Categoría:</span>
-              </label>
-              <div class="flex flex-wrap gap-2.5" id="contenedorCategorias">
+            <!-- Category Pills Accordion -->
+            <div class="mt-4 sm:mt-5">
+              <!-- Header & Mobile Toggle Controls -->
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 mb-3">
+                <!-- Row 1 (Mobile) / Left (Desktop): Label -->
+                <label class="text-xs sm:text-sm font-sans font-bold uppercase text-principal flex items-center gap-2 select-none">
+                  <i class="ph-bold ph-funnel text-brand-blue text-base sm:text-lg shrink-0"></i>
+                  <span>Filtrar por Categoría:</span>
+                </label>
+
+                <!-- Row 2 (Mobile) / Hidden on Desktop: Active Category Pill + Toggle Button -->
+                <div class="flex sm:hidden items-center justify-between gap-2 w-full pt-0.5">
+                  <div class="flex items-center min-w-0">
+                    <span id="insigniaCategoriaActiva" onclick="toggleCategorias()" class="font-sans font-bold text-white bg-brand-blue border border-brand-blue px-3.5 py-1.5 rounded-full shadow-sm truncate text-xs cursor-pointer">Todos</span>
+                  </div>
+                  <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" class="text-xs font-sans font-bold uppercase text-brand-blue hover:text-brand-blueDark bg-brand-blue/10 hover:bg-brand-blue/20 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shrink-0">
+                    <span id="textoToggleCategorias">Ver (10)</span>
+                    <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-sm transition-transform duration-200"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Category Pills Container -->
+              <div class="hidden sm:flex flex-wrap gap-2.5 pt-1" id="contenedorCategorias">
                 <!-- Categories dynamically rendered here -->
               </div>
             </div>
@@ -464,25 +490,25 @@
       </main>
 
       <!-- Direct Confirmation Modal (2-Step Registration + WhatsApp) -->
-      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-4">
+      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-6 sm:p-8 overscroll-contain">
         <div class="bg-brand-cardBg rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden my-auto animate-modal-in max-h-[90vh] flex flex-col">
           <!-- Modal Header (Hero Style with Confetti Pattern & Radial Glow) -->
-          <div class="relative bg-brand-dark p-4 sm:p-5 border-b border-white/10 text-white shrink-0 overflow-hidden">
+          <div class="relative bg-brand-dark p-4 sm:p-5 text-white shrink-0 overflow-hidden">
             <!-- Background Confetti Pattern -->
-            <div class="bg-pattern absolute inset-0 opacity-30 pointer-events-none"></div>
+            <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
 
             <!-- Radial Glow Effect (Hero Style) -->
-            <div class="hero-glow absolute inset-0 pointer-events-none opacity-80"></div>
+            <div class="hero-glow absolute inset-0 pointer-events-none"></div>
 
             <!-- Content Container -->
             <div class="relative z-10">
               <div class="flex items-center justify-between gap-3 mb-4">
-                <div class="inline-flex items-center gap-2 bg-amber-400 text-principal font-heading font-bold text-sm px-4 py-1 rounded-full uppercase">
-                  <i class="ph-bold ph-gift text-lg"></i>
-                  <span>Confirmación de Curso</span>
+                <div class="inline-flex items-center gap-1.5 bg-amber-400 text-principal font-heading font-bold text-xs sm:text-sm px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full uppercase !leading-none select-none">
+                  <i class="ph-bold ph-gift text-4 sm:text-5 shrink-0"></i>
+                  <span>Selección de Curso</span>
                 </div>
-                <button id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-8 h-8 shrink-0 inline-flex items-center justify-center rounded-full text-terciario hover:text-white hover:bg-white/10 transition-colors duration-150 cursor-pointer leading-none">
-                  <i class="ph-bold ph-x text-lg"></i>
+                <button id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-9 aspect-square shrink-0 inline-flex items-center justify-center rounded-full text-terciario hover:text-white hover:bg-white/10 transition-colors duration-150 cursor-pointer leading-none">
+                  <i class="ph-bold ph-x text-5"></i>
                 </button>
               </div>
 
@@ -491,40 +517,12 @@
           </div>
 
           <!-- Modal Body -->
-          <div class="p-4 sm:p-5 flex flex-col gap-4 overflow-y-auto">
-            <!-- Step 1: Initial Action View -->
-            <div id="modalPaso1" class="flex flex-col gap-4">
-              <div class="bg-blue-50/80 border border-blue-200/80 text-blue-950 rounded-2xl p-4 text-center flex flex-col items-center justify-center gap-1.5">
-                <i class="ph-bold ph-info text-3xl text-brand-blue"></i>
-                <h4 class="font-heading font-bold text-lg sm:text-xl uppercase text-brand-blue text-balance">Confirmación de Registro</h4>
-                <p class="font-medium text-base text-principal text-balance">Haz clic en <strong>REGISTRAR CURSO</strong> para guardar tu selección y habilitar el envío por WhatsApp.</p>
-              </div>
+          <div class="p-4 sm:p-5 flex flex-col gap-4 overflow-y-auto overscroll-contain">
+            <!-- Step 1: Initial Action View (Inyectado por script vía MODAL_CONFIG) -->
+            <div id="modalPaso1" class="flex flex-col gap-4"></div>
 
-              <div class="flex items-center gap-2.5 sm:gap-3">
-                <button type="button" id="btnVolverModal" onclick="closeModal()" aria-label="Volver" title="Volver" class="py-3 px-3.5 sm:px-5 rounded-xl ring-1 ring-inset ring-slate-300 text-secundario text-base font-heading font-bold uppercase hover:bg-slate-100 transition cursor-pointer inline-flex items-center justify-center gap-1.5 shrink-0">
-                  <i class="ph-bold ph-arrow-left text-xl"></i>
-                  <span class="hidden sm:inline">Volver</span>
-                </button>
-                <button type="button" id="btnRegistrarCurso" onclick="handleRegisterCourse()" class="flex-1 py-3 px-3.5 sm:px-5 bg-brand-blue hover:bg-brand-blueDark text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer whitespace-nowrap">
-                  <i class="ph-bold ph-check-circle text-xl"></i>
-                  <span>REGISTRAR CURSO</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Step 2: Registered Success View & WhatsApp Send -->
-            <div id="modalPaso2" class="hidden [&:not(.hidden)]:flex flex-col gap-4">
-              <div class="bg-emerald-50/80 border border-emerald-200/80 text-emerald-950 rounded-2xl p-4 text-center flex flex-col items-center justify-center gap-1.5">
-                <i class="ph-bold ph-check-circle text-3xl text-emerald-600"></i>
-                <h4 class="font-heading font-bold text-lg sm:text-xl uppercase text-emerald-900 text-balance">¡Curso Registrado con Éxito!</h4>
-                <p class="font-medium text-base text-principal text-balance">Tu curso ha sido registrado correctamente. Haz clic en <strong>ENVIAR POR WHATSAPP</strong> para finalizar tu inscripción.</p>
-              </div>
-
-              <button type="button" onclick="handleSendWhatsApp()" class="w-full py-3 px-5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2.5 shadow-md transition-all duration-200 transform active:scale-95 cursor-pointer">
-                <i class="ph-bold ph-whatsapp-logo text-xl"></i>
-                <span>Enviar por WhatsApp</span>
-              </button>
-            </div>
+            <!-- Step 2: Registered Success View & WhatsApp Send (Inyectado por script vía MODAL_CONFIG) -->
+            <div id="modalPaso2" class="hidden [&:not(.hidden)]:flex flex-col gap-4"></div>
           </div>
         </div>
       </div>
@@ -612,6 +610,106 @@
       const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFibwSnti14GeBPiO06VomGLKjt1N3LRRr8st6t0eLkwLeQC3JJ8IWbf8CqJ-xa1F4/exec";
       const WHATSAPP_PHONE = "51980694497";
 
+      // ==========================================================================
+      // CONFIGURACIÓN Y ESTILOS UNIFICADOS DEL MODAL (100% DRY)
+      // Edita en MODAL_CONFIG.estilos para cambiar el diseño en ambos pasos a la vez.
+      // ==========================================================================
+      const MODAL_CONFIG = {
+        estilos: {
+          cajaAlerta: "border rounded-2xl p-3.5 sm:p-4 text-center flex flex-col items-center justify-center gap-2",
+          icono: "ph-bold text-8 sm:text-9",
+          titulo: "font-heading font-bold text-lg sm:text-xl uppercase text-balance",
+          parrafo: "font-medium text-sm sm:text-base text-principal text-balance",
+          tamanoIconoBoton: "text-5 sm:text-6",
+          botonBase: "py-3.5 sm:py-4 px-3.5 sm:px-5 rounded-xl font-heading font-bold text-base sm:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none transition active:scale-95 cursor-pointer whitespace-nowrap",
+          colorBotonVolver: "ring-1 ring-inset ring-slate-300 text-secundario hover:bg-slate-100 shrink-0",
+        },
+        paso1: {
+          colorCaja: "bg-blue-50/80 border-blue-200/80 text-blue-950",
+          iconoPaso: "ph-seal-question text-brand-blue",
+          colorTitulo: "text-brand-blue",
+          colorBoton: "flex-1 bg-brand-blue hover:bg-brand-blueDark text-white shadow-md",
+          colorBotonError: "flex-1 bg-rose-600 hover:bg-rose-700 text-white shadow-md",
+          titulo: "Confirma tu curso de regalo",
+          parrafo: "Asegúrate de que este sea el curso que deseas llevar. Si no estás seguro puedes <strong>volver</strong> y elegir otro; de lo contrario, haz clic en <strong>REGISTRAR CURSO</strong> para guardar tu selección.",
+          textoBoton: "REGISTRAR CURSO",
+          iconoBoton: "ph-paper-plane-tilt",
+        },
+        paso2: {
+          colorCaja: "bg-emerald-50/80 border-emerald-200/80 text-emerald-950",
+          iconoPaso: "ph-seal-check text-emerald-600",
+          colorTitulo: "text-emerald-900",
+          colorBoton: "w-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md",
+          titulo: "¡Curso Registrado con Éxito!",
+          parrafo: "Tu curso ya fue guardado en el sistema. Se habilitará en <strong>1 día hábil</strong> y te notificaremos por <strong>correo y WhatsApp</strong> en cuanto tu acceso se encuentre completamente disponible.",
+          textoBoton: "NOTIFICAR POR WHATSAPP",
+          iconoBoton: "ph-whatsapp-logo",
+        },
+      };
+
+      function renderModalSteps() {
+        const p1 = document.getElementById("modalPaso1");
+        const p2 = document.getElementById("modalPaso2");
+        const { estilos, paso1, paso2 } = MODAL_CONFIG;
+
+        if (p1) {
+          p1.innerHTML = `
+            <div class="${estilos.cajaAlerta} ${paso1.colorCaja}">
+              <i class="${estilos.icono} ${paso1.iconoPaso}"></i>
+              <h4 class="${estilos.titulo} ${paso1.colorTitulo}">
+                ${paso1.titulo}
+              </h4>
+              <p class="${estilos.parrafo}">
+                ${paso1.parrafo}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2.5 sm:gap-3">
+              <button
+                type="button"
+                id="btnVolverModal"
+                onclick="closeModal()"
+                aria-label="Volver"
+                title="Volver"
+                class="${estilos.botonBase} ${estilos.colorBotonVolver}">
+                <i class="ph-bold ph-arrow-left ${estilos.tamanoIconoBoton}"></i>
+                <span class="hidden sm:inline">Volver</span>
+              </button>
+              <button
+                type="button"
+                id="btnRegistrarCurso"
+                onclick="handleRegisterCourse()"
+                class="${estilos.botonBase} ${paso1.colorBoton}">
+                <i class="ph-bold ${paso1.iconoBoton} ${estilos.tamanoIconoBoton}"></i>
+                <span>${paso1.textoBoton}</span>
+              </button>
+            </div>
+          `;
+        }
+
+        if (p2) {
+          p2.innerHTML = `
+            <div class="${estilos.cajaAlerta} ${paso2.colorCaja}">
+              <i class="${estilos.icono} ${paso2.iconoPaso}"></i>
+              <h4 class="${estilos.titulo} ${paso2.colorTitulo}">
+                ${paso2.titulo}
+              </h4>
+              <p class="${estilos.parrafo}">
+                ${paso2.parrafo}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onclick="handleSendWhatsApp()"
+              class="${estilos.botonBase} ${paso2.colorBoton}">
+              <i class="ph-bold ${paso2.iconoBoton} ${estilos.tamanoIconoBoton}"></i>
+              <span>${paso2.textoBoton}</span>
+            </button>
+          `;
+        }
+      }
+
       let userToken = null;
       let urlParams = null;
       let activeCategory = "Todos";
@@ -620,82 +718,386 @@
 
       // Full catalog of 76 EDUMIN 2026 courses
       const ALL_COURSES = [
-        { id: 1, title: "MANEJO DE EPPS SEGÚN LA NORMA TÉCNICA PERUANA LEY 29783", category: "Seguridad y prevención" },
-        { id: 2, title: "IMPLEMENTACIÓN DE MEDIDAS DE CONTROL EN RIESGOS MINEROS", category: "Seguridad y prevención" },
-        { id: 3, title: "ERGONOMÍA Y SALUD OCUPACIONAL EN EL SECTOR MINERO E INDUSTRIAL", category: "Seguridad y prevención" },
-        { id: 4, title: "MARCO JURÍDICO Y NORMATIVO DE LA MINERÍA", category: "Legislación y normativa" },
-        { id: 5, title: "GESTIÓN DE PROVEEDORES EN MINERÍA", category: "Logística y almacenes" },
-        { id: 6, title: "CONTROL DE COSTOS EN ALMACENES MINEROS", category: "Logística y almacenes" },
-        { id: 7, title: "LOGÍSTICA Y DISTRIBUCIÓN EN LA INDUSTRIA Y MINERÍA", category: "Logística y almacenes" },
-        { id: 8, title: "CONTRATOS EN LA INDUSTRIA MINERA", category: "Legislación y normativa" },
-        { id: 9, title: "DERECHOS HUMANOS EN MINERÍA", category: "Legislación y normativa" },
-        { id: 10, title: "GESTIÓN DE TRABAJO EN ALTO RIESGO EN MINERÍA", category: "Seguridad y prevención" },
-        { id: 11, title: "RESPONSABILIDAD PENAL EN MINERÍA", category: "Legislación y normativa" },
-        { id: 12, title: "DERECHO LABORAL EN MINERÍA", category: "Legislación y normativa" },
-        { id: 13, title: "TIPOS DE CONCESIONES MINERAS", category: "Legislación y normativa" },
-        { id: 14, title: "GESTIÓN DE CONTRATOS LOGÍSTICOS EN LA INDUSTRIA Y MINERÍA", category: "Logística y almacenes" },
-        { id: 15, title: "CURSO DE PREVENCIÓN DE RIESGOS", category: "Seguridad y prevención" },
-        { id: 16, title: "IMPLEMENTACIÓN DE LA ISO 45001:2018", category: "Seguridad y prevención" },
-        { id: 17, title: "GESTIÓN DE EMERGENCIAS EN INDUSTRIA Y MINERÍA", category: "Seguridad y prevención" },
-        { id: 18, title: "GESTIÓN DE INVENTARIOS EN INDUSTRIA Y MINERÍA", category: "Logística y almacenes" },
-        { id: 19, title: "CONTROL FINANCIERO EN ALMACENES", category: "Logística y almacenes" },
-        { id: 20, title: "LOGÍSTICA INTERNA EN CONTROL DE ALMACENES", category: "Logística y almacenes" },
-        { id: 21, title: "FUNDAMENTOS DE BIG DATA", category: "Inteligencia de datos" },
-        { id: 22, title: "MÉTODOS DE CAPTURA DE INFORMACIÓN EN BIG DATA", category: "Inteligencia de datos" },
-        { id: 23, title: "TENDENCIAS 2025-2026: CLAVES DE BIG DATA", category: "Inteligencia de datos" },
-        { id: 24, title: "BIG DATA: TRANSFORMACIÓN DE DATOS (PYTHON Y R)", category: "Inteligencia de datos" },
-        { id: 25, title: "MINERÍA 4.0 ESSENTIALS (NUEVAS HERRAMIENTAS)", category: "Tecnología e innovación" },
-        { id: 26, title: "INNOVACIÓN EN MINERÍA: APLICACIONES DE INTELIGENCIA ARTIFICIAL", category: "Tecnología e innovación" },
-        { id: 27, title: "AUTOMATIZACIÓN 4.0 EN PROCESOS MINEROS", category: "Tecnología e innovación" },
-        { id: 28, title: "CADENA DE SUMINISTRO LOGÍSTICA Y DISTRIBUCIÓN", category: "Logística y almacenes" },
-        { id: 29, title: "MEJORA DE LOS MÉTODOS Y MEDICIÓN DE LOS RECURSOS", category: "Operaciones y procesos" },
-        { id: 30, title: "INTRODUCCIÓN A LA GESTIÓN DE PROYECTOS", category: "Operaciones y procesos" },
-        { id: 31, title: "ARQUITECTURA DE DATOS: LA IMPORTANCIA DEL DISEÑO, COMPONENTES, FUNCIÓN, CONFIGURACIÓN Y PATRONES", category: "Inteligencia de datos" },
-        { id: 32, title: "ECOSISTEMA BIG DATA: HERRAMIENTAS Y TECNOLOGÍAS ESENCIALES", category: "Inteligencia de datos" },
-        { id: 33, title: "INTRODUCCIÓN A MACHINE LEARNING PARA BIG DATA", category: "Inteligencia de datos" },
-        { id: 34, title: "PROYECTOS CON HERRAMIENTAS DIGITALES PARA MINERÍA", category: "Tecnología e innovación" },
-        { id: 35, title: "INTRODUCCIÓN A MACHINE LEARNING EN MINERÍA", category: "Tecnología e innovación" },
-        { id: 36, title: "TIPOS DE INTELIGENCIA ARTIFICIAL APLICADAS A LA MINERÍA", category: "Tecnología e innovación" },
-        { id: 37, title: "HERRAMIENTAS DE BIG DATA APLICADA A MINERÍA", category: "Inteligencia de datos" },
-        { id: 38, title: "GESTIÓN AVANZADA DE OPERACIONES INDUSTRIALES", category: "Operaciones y procesos" },
-        { id: 39, title: "BIG DATA APLICADA A PROCESOS INDUSTRIALES", category: "Inteligencia de datos" },
-        { id: 40, title: "CONTROL DE COSTOS EN PRODUCCIÓN INDUSTRIAL O EN ÁREAS DE PRODUCCIÓN", category: "Operaciones y procesos" },
-        { id: 41, title: "IMPORTACIÓN Y EXPORTACIÓN DESDE 0: CLAVES PARA EL ÉXITO", category: "Comercio exterior" },
-        { id: 42, title: "IMPLEMENTACIÓN DE LA NORMA ISO 9001:2015", category: "Operaciones y procesos" },
-        { id: 43, title: "ANÁLISIS DE MERCADOS INTERNACIONALES: ESTRATEGIAS DE IMPORTACIÓN Y EXPORTACIÓN 2025-2026", category: "Comercio exterior" },
-        { id: 44, title: "DE LA IMPORTACIÓN A LA VENTA ONLINE: IMPLEMENTA TU TIENDA VIRTUAL DESDE CERO", category: "Comercio exterior" },
-        { id: 45, title: "CONTROL Y SUPERVISIÓN DE PROCESOS CON SOFTWARE SCADA", category: "Tecnología e innovación" },
-        { id: 46, title: "GESTIÓN DE OPERACIONES Y PROCESOS EN LA MINERÍA", category: "Operaciones y procesos" },
-        { id: 47, title: "PIRÁMIDE DE PROCESOS: TÉCNICAS DE CONTROL EN MINERÍA", category: "Operaciones y procesos" },
-        { id: 48, title: "PROCESO DE OPTIMIZACIÓN DE MANTENIMIENTO A PARTIR DEL USO DE TÉCNICAS DE LA INDUSTRIA 4.0", category: "Mantenimiento industrial" },
-        { id: 49, title: "SISTEMAS INTEGRADOS PARA LA GESTIÓN DE MANTENIMIENTO", category: "Mantenimiento industrial" },
-        { id: 50, title: "ESTÁNDARES Y SISTEMA DE CALIDAD DEL MANTENIMIENTO", category: "Mantenimiento industrial" },
-        { id: 51, title: "DOCUMENTACIÓN Y TRÁMITES ADUANEROS", category: "Comercio exterior" },
-        { id: 52, title: "REVISIÓN DE PROVEEDORES PARA EVITAR ESTAFAS EN IMPORTACIONES CHINAS", category: "Comercio exterior" },
-        { id: 53, title: "PLANIFICACIÓN DE RIESGOS PARA IMPORTACIÓN Y EXPORTACIÓN", category: "Comercio exterior" },
-        { id: 54, title: "CONTROL DE CALIDAD EN PROCESOS MINEROS", category: "Operaciones y procesos" },
-        { id: 55, title: "MONITOREO Y CONTROL EN LA OPERACIÓN DE PLANTAS MINERAS", category: "Operaciones y procesos" },
-        { id: 56, title: "SOSTENIBILIDAD Y SEGURIDAD EN CAMPAMENTOS MINEROS", category: "Medio ambiente" },
-        { id: 57, title: "ANÁLISIS DE DATOS PARA OPTIMIZAR OPERACIONES MINERAS", category: "Inteligencia de datos" },
-        { id: 58, title: "SEGURIDAD Y CONTROL AMBIENTAL EN EL MANTENIMIENTO", category: "Medio ambiente" },
-        { id: 59, title: "GERENCIA DE PROYECTOS DEL MANTENIMIENTO", category: "Mantenimiento industrial" },
-        { id: 60, title: "GESTIÓN DE COSTOS DEL MANTENIMIENTO EN LA INDUSTRIA 4.0", category: "Mantenimiento industrial" },
-        { id: 61, title: "SOSTENIBILIDAD Y MINERÍA RESPONSABLE", category: "Medio ambiente" },
-        { id: 62, title: "PRIMEROS AUXILIOS EN MINERÍA", category: "Seguridad y prevención" },
-        { id: 63, title: "INDICADORES CLAVE (KPIS) PARA LA CADENA DE ABASTECIMIENTOS", category: "Logística y almacenes" },
-        { id: 64, title: "EXPLORACIÓN MINERA Y EVALUACIÓN DE YACIMIENTOS", category: "Operaciones y procesos" },
-        { id: 65, title: "REQUISITOS CLAVE DE ISO 14001 Y CÓMO APLICARLOS EN LA EMPRESA", category: "Medio ambiente" },
-        { id: 66, title: "SISTEMAS INTEGRADOS DE GESTIÓN HSEQ (ISO 9001, 14001, 45001)", category: "Legislación y normativa" },
-        { id: 67, title: "GESTIÓN DE CRISIS Y MANEJO DE CONFLICTOS EN AMBIENTES INDUSTRIALES", category: "Legislación y normativa" },
-        { id: 68, title: "PLANIFICACIÓN ESTRATÉGICA Y BALANCED SCORECARD", category: "Operaciones y procesos" },
-        { id: 69, title: "GESTIÓN DE LA ENERGÍA EN OPERACIONES MINERAS", category: "Medio ambiente" },
-        { id: 70, title: "GESTIÓN DE LA CADENA DE SUMINISTRO EN EMPRESAS MINERAS", category: "Logística y almacenes" },
-        { id: 71, title: "SEGURIDAD Y NORMATIVA EN EL CONTROL DE INVENTARIO Y LOGÍSTICA MINERA", category: "Logística y almacenes" },
-        { id: 72, title: "SALUD MENTAL EN EL TRABAJO: DETECCIÓN Y PREVENCIÓN DE TRASTORNOS PSICOLÓGICOS", category: "Seguridad y prevención" },
-        { id: 73, title: "IMPLEMENTACIÓN DE LEAN MANUFACTURING EN PROCESOS INDUSTRIALES", category: "Operaciones y procesos" },
-        { id: 74, title: "ERGONOMÍA Y DISEÑO DE PUESTOS DE TRABAJO EN LA INDUSTRIA", category: "Seguridad y prevención" },
-        { id: 75, title: "GESTIÓN DE SEGURIDAD DURANTE LAS PARADAS DE PLANTA Y MANTENIMIENTO", category: "Mantenimiento industrial" },
-        { id: 76, title: "GESTIÓN DE RELAVES Y RESIDUOS MINEROS", category: "Medio ambiente" },
+        {
+          id: 1,
+          title: "MANEJO DE EPPS SEGÚN LA NORMA TÉCNICA PERUANA LEY 29783",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 2,
+          title: "IMPLEMENTACIÓN DE MEDIDAS DE CONTROL EN RIESGOS MINEROS",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 3,
+          title: "ERGONOMÍA Y SALUD OCUPACIONAL EN EL SECTOR MINERO E INDUSTRIAL",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 4,
+          title: "MARCO JURÍDICO Y NORMATIVO DE LA MINERÍA",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 5,
+          title: "GESTIÓN DE PROVEEDORES EN MINERÍA",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 6,
+          title: "CONTROL DE COSTOS EN ALMACENES MINEROS",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 7,
+          title: "LOGÍSTICA Y DISTRIBUCIÓN EN LA INDUSTRIA Y MINERÍA",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 8,
+          title: "CONTRATOS EN LA INDUSTRIA MINERA",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 9,
+          title: "DERECHOS HUMANOS EN MINERÍA",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 10,
+          title: "GESTIÓN DE TRABAJO EN ALTO RIESGO EN MINERÍA",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 11,
+          title: "RESPONSABILIDAD PENAL EN MINERÍA",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 12,
+          title: "DERECHO LABORAL EN MINERÍA",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 13,
+          title: "TIPOS DE CONCESIONES MINERAS",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 14,
+          title: "GESTIÓN DE CONTRATOS LOGÍSTICOS EN LA INDUSTRIA Y MINERÍA",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 15,
+          title: "CURSO DE PREVENCIÓN DE RIESGOS",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 16,
+          title: "IMPLEMENTACIÓN DE LA ISO 45001:2018",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 17,
+          title: "GESTIÓN DE EMERGENCIAS EN INDUSTRIA Y MINERÍA",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 18,
+          title: "GESTIÓN DE INVENTARIOS EN INDUSTRIA Y MINERÍA",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 19,
+          title: "CONTROL FINANCIERO EN ALMACENES",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 20,
+          title: "LOGÍSTICA INTERNA EN CONTROL DE ALMACENES",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 21,
+          title: "FUNDAMENTOS DE BIG DATA",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 22,
+          title: "MÉTODOS DE CAPTURA DE INFORMACIÓN EN BIG DATA",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 23,
+          title: "TENDENCIAS 2025-2026: CLAVES DE BIG DATA",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 24,
+          title: "BIG DATA: TRANSFORMACIÓN DE DATOS (PYTHON Y R)",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 25,
+          title: "MINERÍA 4.0 ESSENTIALS (NUEVAS HERRAMIENTAS)",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 26,
+          title: "INNOVACIÓN EN MINERÍA: APLICACIONES DE INTELIGENCIA ARTIFICIAL",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 27,
+          title: "AUTOMATIZACIÓN 4.0 EN PROCESOS MINEROS",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 28,
+          title: "CADENA DE SUMINISTRO LOGÍSTICA Y DISTRIBUCIÓN",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 29,
+          title: "MEJORA DE LOS MÉTODOS Y MEDICIÓN DE LOS RECURSOS",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 30,
+          title: "INTRODUCCIÓN A LA GESTIÓN DE PROYECTOS",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 31,
+          title: "ARQUITECTURA DE DATOS: LA IMPORTANCIA DEL DISEÑO, COMPONENTES, FUNCIÓN, CONFIGURACIÓN Y PATRONES",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 32,
+          title: "ECOSISTEMA BIG DATA: HERRAMIENTAS Y TECNOLOGÍAS ESENCIALES",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 33,
+          title: "INTRODUCCIÓN A MACHINE LEARNING PARA BIG DATA",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 34,
+          title: "PROYECTOS CON HERRAMIENTAS DIGITALES PARA MINERÍA",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 35,
+          title: "INTRODUCCIÓN A MACHINE LEARNING EN MINERÍA",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 36,
+          title: "TIPOS DE INTELIGENCIA ARTIFICIAL APLICADAS A LA MINERÍA",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 37,
+          title: "HERRAMIENTAS DE BIG DATA APLICADA A MINERÍA",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 38,
+          title: "GESTIÓN AVANZADA DE OPERACIONES INDUSTRIALES",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 39,
+          title: "BIG DATA APLICADA A PROCESOS INDUSTRIALES",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 40,
+          title: "CONTROL DE COSTOS EN PRODUCCIÓN INDUSTRIAL O EN ÁREAS DE PRODUCCIÓN",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 41,
+          title: "IMPORTACIÓN Y EXPORTACIÓN DESDE 0: CLAVES PARA EL ÉXITO",
+          category: "Comercio exterior",
+        },
+        {
+          id: 42,
+          title: "IMPLEMENTACIÓN DE LA NORMA ISO 9001:2015",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 43,
+          title: "ANÁLISIS DE MERCADOS INTERNACIONALES: ESTRATEGIAS DE IMPORTACIÓN Y EXPORTACIÓN 2025-2026",
+          category: "Comercio exterior",
+        },
+        {
+          id: 44,
+          title: "DE LA IMPORTACIÓN A LA VENTA ONLINE: IMPLEMENTA TU TIENDA VIRTUAL DESDE CERO",
+          category: "Comercio exterior",
+        },
+        {
+          id: 45,
+          title: "CONTROL Y SUPERVISIÓN DE PROCESOS CON SOFTWARE SCADA",
+          category: "Tecnología e innovación",
+        },
+        {
+          id: 46,
+          title: "GESTIÓN DE OPERACIONES Y PROCESOS EN LA MINERÍA",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 47,
+          title: "PIRÁMIDE DE PROCESOS: TÉCNICAS DE CONTROL EN MINERÍA",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 48,
+          title: "PROCESO DE OPTIMIZACIÓN DE MANTENIMIENTO A PARTIR DEL USO DE TÉCNICAS DE LA INDUSTRIA 4.0",
+          category: "Mantenimiento industrial",
+        },
+        {
+          id: 49,
+          title: "SISTEMAS INTEGRADOS PARA LA GESTIÓN DE MANTENIMIENTO",
+          category: "Mantenimiento industrial",
+        },
+        {
+          id: 50,
+          title: "ESTÁNDARES Y SISTEMA DE CALIDAD DEL MANTENIMIENTO",
+          category: "Mantenimiento industrial",
+        },
+        {
+          id: 51,
+          title: "DOCUMENTACIÓN Y TRÁMITES ADUANEROS",
+          category: "Comercio exterior",
+        },
+        {
+          id: 52,
+          title: "REVISIÓN DE PROVEEDORES PARA EVITAR ESTAFAS EN IMPORTACIONES CHINAS",
+          category: "Comercio exterior",
+        },
+        {
+          id: 53,
+          title: "PLANIFICACIÓN DE RIESGOS PARA IMPORTACIÓN Y EXPORTACIÓN",
+          category: "Comercio exterior",
+        },
+        {
+          id: 54,
+          title: "CONTROL DE CALIDAD EN PROCESOS MINEROS",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 55,
+          title: "MONITOREO Y CONTROL EN LA OPERACIÓN DE PLANTAS MINERAS",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 56,
+          title: "SOSTENIBILIDAD Y SEGURIDAD EN CAMPAMENTOS MINEROS",
+          category: "Medio ambiente",
+        },
+        {
+          id: 57,
+          title: "ANÁLISIS DE DATOS PARA OPTIMIZAR OPERACIONES MINERAS",
+          category: "Inteligencia de datos",
+        },
+        {
+          id: 58,
+          title: "SEGURIDAD Y CONTROL AMBIENTAL EN EL MANTENIMIENTO",
+          category: "Medio ambiente",
+        },
+        {
+          id: 59,
+          title: "GERENCIA DE PROYECTOS DEL MANTENIMIENTO",
+          category: "Mantenimiento industrial",
+        },
+        {
+          id: 60,
+          title: "GESTIÓN DE COSTOS DEL MANTENIMIENTO EN LA INDUSTRIA 4.0",
+          category: "Mantenimiento industrial",
+        },
+        {
+          id: 61,
+          title: "SOSTENIBILIDAD Y MINERÍA RESPONSABLE",
+          category: "Medio ambiente",
+        },
+        {
+          id: 62,
+          title: "PRIMEROS AUXILIOS EN MINERÍA",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 63,
+          title: "INDICADORES CLAVE (KPIS) PARA LA CADENA DE ABASTECIMIENTOS",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 64,
+          title: "EXPLORACIÓN MINERA Y EVALUACIÓN DE YACIMIENTOS",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 65,
+          title: "REQUISITOS CLAVE DE ISO 14001 Y CÓMO APLICARLOS EN LA EMPRESA",
+          category: "Medio ambiente",
+        },
+        {
+          id: 66,
+          title: "SISTEMAS INTEGRADOS DE GESTIÓN HSEQ (ISO 9001, 14001, 45001)",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 67,
+          title: "GESTIÓN DE CRISIS Y MANEJO DE CONFLICTOS EN AMBIENTES INDUSTRIALES",
+          category: "Legislación y normativa",
+        },
+        {
+          id: 68,
+          title: "PLANIFICACIÓN ESTRATÉGICA Y BALANCED SCORECARD",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 69,
+          title: "GESTIÓN DE LA ENERGÍA EN OPERACIONES MINERAS",
+          category: "Medio ambiente",
+        },
+        {
+          id: 70,
+          title: "GESTIÓN DE LA CADENA DE SUMINISTRO EN EMPRESAS MINERAS",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 71,
+          title: "SEGURIDAD Y NORMATIVA EN EL CONTROL DE INVENTARIO Y LOGÍSTICA MINERA",
+          category: "Logística y almacenes",
+        },
+        {
+          id: 72,
+          title: "SALUD MENTAL EN EL TRABAJO: DETECCIÓN Y PREVENCIÓN DE TRASTORNOS PSICOLÓGICOS",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 73,
+          title: "IMPLEMENTACIÓN DE LEAN MANUFACTURING EN PROCESOS INDUSTRIALES",
+          category: "Operaciones y procesos",
+        },
+        {
+          id: 74,
+          title: "ERGONOMÍA Y DISEÑO DE PUESTOS DE TRABAJO EN LA INDUSTRIA",
+          category: "Seguridad y prevención",
+        },
+        {
+          id: 75,
+          title: "GESTIÓN DE SEGURIDAD DURANTE LAS PARADAS DE PLANTA Y MANTENIMIENTO",
+          category: "Mantenimiento industrial",
+        },
+        {
+          id: 76,
+          title: "GESTIÓN DE RELAVES Y RESIDUOS MINEROS",
+          category: "Medio ambiente",
+        },
       ];
 
       const categories = ["Todos", "Seguridad y prevención", "Medio ambiente", "Inteligencia de datos", "Tecnología e innovación", "Logística y almacenes", "Mantenimiento industrial", "Operaciones y procesos", "Comercio exterior", "Legislación y normativa"];
@@ -721,6 +1123,7 @@
         const flexWrapper = document.getElementById("footerFlexWrapper");
 
         if (vistaId === "pantalla-cursos") {
+          initBirthdayBannerMarquee();
           if (marcaIzquierda) {
             marcaIzquierda.style.setProperty("display", "flex", "important");
             marcaIzquierda.classList.remove("hidden");
@@ -742,9 +1145,14 @@
         }
       }
 
+      function lockScroll() {
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+      }
+
       function unlockScroll() {
-        document.documentElement.style.overflow = "auto";
-        document.body.style.overflow = "auto";
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
       }
 
       function getClaimKey() {
@@ -763,7 +1171,11 @@
             saved = JSON.stringify(matched);
             localStorage.setItem(key, saved);
           } else if (titleStr) {
-            saved = JSON.stringify({ id: 0, title: titleStr, category: "Curso Registrado" });
+            saved = JSON.stringify({
+              id: 0,
+              title: titleStr,
+              category: "Curso Registrado",
+            });
             localStorage.setItem(key, saved);
           }
         }
@@ -834,9 +1246,9 @@
       function handleLogoError(img, context) {
         if (!img) return;
         if (context === "marquee") {
-          img.outerHTML = '<span class="inline-flex items-center h-6 sm:h-7 leading-none">EDUMIN</span>';
+          img.outerHTML = '<span class="inline-flex items-center h-6  leading-none">EDUMIN</span>';
         } else if (context === "hero") {
-          img.outerHTML = '<span class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-white h-10 sm:h-12 md:h-14 inline-flex items-center justify-center leading-none">EDUMIN</span>';
+          img.outerHTML = '<span class="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white h-10 md:h-12 lg:h-14 inline-flex items-center justify-center leading-none">EDUMIN</span>';
         } else {
           // Vista 1 (Pantalla de carga) y Vista 3 (Expirado): exactamente el diseño original
           img.outerHTML = '<span class="font-heading font-bold text-3xl sm:text-4xl text-white h-10 sm:h-12 inline-flex items-center justify-center leading-none">EDUMIN</span>';
@@ -854,7 +1266,7 @@
 
         const frases = ["BENEFICIO EXCLUSIVO DE CUMPLEAÑOS", "1 CURSO GRATIS A TU ELECCIÓN", "VÁLIDO POR TIEMPO LIMITADO"];
 
-        const logoHTML = `<img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20negro.png" alt="EDUMIN" class="h-6 sm:h-7 w-auto object-contain shrink-0" onerror="handleLogoError(this, 'marquee')" />`;
+        const logoHTML = `<img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20negro.png" alt="EDUMIN" class="h-6  w-auto object-contain shrink-0" onerror="handleLogoError(this, 'marquee')" />`;
         const sparkleHTML = `<i class="ph-bold ph-sparkle shrink-0"></i>`;
 
         // Generar una ronda con el patrón: [LOGO] [DESTEL] [FRASE] [DESTEL]
@@ -903,13 +1315,15 @@
         container.innerHTML = features
           .map(
             (item) => `
-              <div class="bg-brand-cardBg border border-slate-300 rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-3 sm:gap-4 text-center sm:text-left">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl border flex items-center justify-center text-lg sm:text-xl shrink-0 ${item.colorClass}">
+              <div class="bg-brand-cardBg border border-slate-300 -mt-px first:mt-0 first:rounded-t-xl last:rounded-b-xl sm:mt-0 sm:rounded-xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 flex flex-row sm:flex-col md:flex-row items-center justify-start sm:justify-center md:justify-start gap-4 sm:gap-2 md:gap-4 text-left sm:text-center md:text-left">
+                <!-- Columna 1: Icono -->
+                <div class="w-9  md:w-10 aspect-square rounded-lg md:rounded-xl border flex items-center justify-center text-5 md:text-6 shrink-0 ${item.colorClass}">
                   <i class="ph-bold ${item.icon}"></i>
                 </div>
-                <div class="flex flex-col items-center sm:items-start min-w-0">
-                  <span class="block text-xs sm:text-sm font-heading font-bold uppercase">${item.label}</span>
-                  <span class="block text-xs sm:text-base font-bold text-principal uppercase">${item.val}</span>
+                <!-- Columnas 2 y 3: Etiqueta y Valor -->
+                <div class="flex flex-row sm:flex-col items-center md:items-start gap-2 sm:gap-1 md:gap-0.5 min-w-0 flex-1 sm:w-full">
+                  <span class="block text-sm font-heading font-bold uppercase text-secundario shrink-0 w-20 sm:w-auto">${item.label}</span>
+                  <span class="block text-sm md:text-base font-bold text-principal uppercase truncate sm:whitespace-normal">${item.val}</span>
                 </div>
               </div>
             `,
@@ -917,44 +1331,62 @@
           .join("");
       }
 
-      // Lógica de verificación al cargar la página
-      document.addEventListener("DOMContentLoaded", () => {
-        initBirthdayBannerMarquee();
-        renderHeroFeatures();
-
-        urlParams = new URLSearchParams(window.location.search);
-        userToken = urlParams.get("token");
-
-        if (urlParams.has("reset")) {
+      /* ==========================================================================
+           SECCIÓN DE PRUEBAS / MODO DEMO (BORRAR O DESACTIVAR AL SUBIR A PRODUCCIÓN)
+           ========================================================================== */
+      function gestionarModoDemo(params, token) {
+        // 1. Resetear selección guardada en localStorage si la URL contiene ?reset=1
+        if (params.has("reset")) {
           localStorage.removeItem("edumin_claimed_demo");
-          if (userToken) localStorage.removeItem("edumin_claimed_" + userToken.trim());
+          if (token) localStorage.removeItem("edumin_claimed_" + token.trim());
         }
 
-        // Soporte para pruebas directas en la URL (?vista=1, ?vista=2, ?vista=3)
-        const vistaParam = urlParams.get("vista") || urlParams.get("view");
+        // 2. Forzar vista directa (?vista=1, ?vista=2, ?vista=3)
+        const vistaParam = params.get("vista") || params.get("view");
         if (vistaParam === "1") {
           mostrarVista("pantalla-carga");
-          return;
+          return true; // Interceptado por demo
         }
         if (vistaParam === "3") {
           mostrarVista("pantalla-expirado");
-          return;
+          return true; // Interceptado por demo
         }
         if (vistaParam === "2") {
           mostrarVista("pantalla-cursos");
           initCursosApp();
-          return;
+          return true; // Interceptado por demo
         }
 
+        // 3. Forzar modo demo (?demo=1, ?token=demo o apertura en archivo local file://)
         const isLocalFile = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-
-        // Permite pruebas locales con ?demo=1, ?token=demo o al abrir el archivo HTML directamente en local
-        if (urlParams.get("demo") === "1" || userToken === "demo" || (!userToken && isLocalFile)) {
+        if (params.get("demo") === "1" || token === "demo" || (!token && isLocalFile)) {
           localStorage.removeItem("edumin_claimed_demo");
           mostrarVista("pantalla-cursos");
           initCursosApp();
-          return;
+          return true; // Interceptado por demo
         }
+
+        return false; // No es demo, continuar con flujo de producción normal
+      }
+      /* ==========================================================================
+           FIN DE SECCIÓN DE PRUEBAS / MODO DEMO
+           ========================================================================== */
+
+      // Lógica de verificación al cargar la página
+      document.addEventListener("DOMContentLoaded", () => {
+        initBirthdayBannerMarquee();
+        renderHeroFeatures();
+        renderModalSteps();
+
+        urlParams = new URLSearchParams(window.location.search);
+        userToken = urlParams.get("token");
+
+        // Evaluar si la navegación es interceptada por el modo demo/pruebas
+        if (gestionarModoDemo(urlParams, userToken)) return;
+
+        // -------------------------------------------------------------
+        // FLUJO NORMAL DE PRODUCCIÓN:
+        // -------------------------------------------------------------
 
         // 1. Si NO hay token en la URL, mostrar Vista 3 (Expirado)
         if (!userToken) {
@@ -1096,7 +1528,9 @@
             confetti({
               particleCount: isClick ? 80 : 130,
               spread: isClick ? 75 : 85,
-              origin: originCoords || { y: 0.6 },
+              origin: originCoords || {
+                y: 0.6,
+              },
               ticks: 200,
               gravity: 1.1,
               decay: 0.94,
@@ -1114,12 +1548,44 @@
 
         const element = document.getElementById("catalogo");
         if (element && typeof element.scrollIntoView === "function") {
-          element.scrollIntoView({ behavior: "smooth" });
+          element.scrollIntoView({
+            behavior: "smooth",
+          });
+        }
+      }
+
+      let isCategoriasExpanded = false;
+
+      function toggleCategorias() {
+        if (window.innerWidth >= 640) return;
+
+        const container = document.getElementById("contenedorCategorias");
+        const textoBtn = document.getElementById("textoToggleCategorias");
+        const iconoBtn = document.getElementById("iconoToggleCategorias");
+
+        if (!container) return;
+
+        isCategoriasExpanded = !isCategoriasExpanded;
+
+        if (isCategoriasExpanded) {
+          container.classList.remove("hidden");
+          if (textoBtn) textoBtn.textContent = "Ocultar";
+          if (iconoBtn) iconoBtn.classList.add("rotate-180");
+        } else {
+          container.classList.add("hidden");
+          if (textoBtn) textoBtn.textContent = `Ver (${categories.length})`;
+          if (iconoBtn) iconoBtn.classList.remove("rotate-180");
         }
       }
 
       function renderCategories() {
         const container = document.getElementById("contenedorCategorias");
+        const badge = document.getElementById("insigniaCategoriaActiva");
+
+        if (badge) {
+          badge.textContent = activeCategory === "Todos" ? "Todos" : formatSentenceCase(activeCategory);
+        }
+
         if (!container) return;
 
         container.innerHTML = categories
@@ -1139,6 +1605,12 @@
 
       function selectCategory(cat) {
         activeCategory = cat;
+
+        // En móvil, colapsar automáticamente el acordeón tras elegir categoría
+        if (window.innerWidth < 640 && isCategoriasExpanded) {
+          toggleCategorias();
+        }
+
         filterCourses();
       }
 
@@ -1281,12 +1753,12 @@
         }
 
         if (modalCanje) modalCanje.classList.remove("hidden");
-        document.body.style.overflow = "hidden";
+        lockScroll();
       }
 
       let timerResetBoton = null;
 
-      function resetBotonRegistro() {
+      function resetBotonRegistro(esReintento = false) {
         if (timerResetBoton) {
           clearTimeout(timerResetBoton);
           timerResetBoton = null;
@@ -1294,8 +1766,9 @@
         const btn = document.getElementById("btnRegistrarCurso");
         if (btn) {
           btn.disabled = false;
-          btn.className = "flex-1 py-3 px-3.5 sm:px-5 bg-brand-blue hover:bg-brand-blueDark text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer whitespace-nowrap";
-          btn.innerHTML = `<i class="ph-bold ph-check-circle text-xl"></i><span>REGISTRAR CURSO</span>`;
+          btn.className = `${MODAL_CONFIG.estilos.botonBase} ${MODAL_CONFIG.paso1.colorBoton}`;
+          const texto = esReintento ? "REINTENTAR REGISTRO" : MODAL_CONFIG.paso1.textoBoton;
+          btn.innerHTML = `<i class="ph-bold ${MODAL_CONFIG.paso1.iconoBoton} ${MODAL_CONFIG.estilos.tamanoIconoBoton}"></i><span>${texto}</span>`;
         }
       }
 
@@ -1307,7 +1780,7 @@
 
         const modalCanje = document.getElementById("modalCanje");
         if (modalCanje) modalCanje.classList.add("hidden");
-        document.body.style.overflow = "auto";
+        unlockScroll();
       }
 
       // Cerrar modal al presionar la tecla Escape (solo si no está registrando)
@@ -1336,7 +1809,7 @@
 
         if (btn) {
           btn.disabled = true;
-          btn.innerHTML = `<i class="ph-bold ph-circle-notch animate-spin text-xl"></i><span>Guardando…</span>`;
+          btn.innerHTML = `<i class="ph-bold ph-circle-notch animate-spin ${MODAL_CONFIG.estilos.tamanoIconoBoton}"></i><span>REGISTRANDO CURSO…</span>`;
         }
 
         // Bloquear navegación mientras se guarda
@@ -1366,8 +1839,13 @@
         fetch(APPS_SCRIPT_URL, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: tokenUsuario, curso: cursoSeleccionado }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: tokenUsuario,
+            curso: cursoSeleccionado,
+          }),
           signal: controller.signal,
         })
           .then(() => {
@@ -1398,16 +1876,16 @@
           btnCerrar.classList.remove("opacity-50", "pointer-events-none");
         }
 
-        // Estado de error en el botón (cambia a rojo con aviso de error y luego regresa al azul)
+        // Estado de error en el botón (cambia a rojo con aviso de error y luego regresa al azul con "REINTENTAR REGISTRO")
         if (btn) {
           btn.disabled = false;
-          btn.className = "flex-1 py-3 px-3.5 sm:px-5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-heading font-bold text-base uppercase inline-flex items-center justify-center gap-2 shadow-md transition transform active:scale-95 cursor-pointer whitespace-nowrap";
-          btn.innerHTML = `<i class="ph-bold ph-warning-circle text-xl"></i><span>ERROR AL REGISTRAR</span>`;
+          btn.className = `${MODAL_CONFIG.estilos.botonBase} ${MODAL_CONFIG.paso1.colorBotonError}`;
+          btn.innerHTML = `<i class="ph-bold ph-warning-circle ${MODAL_CONFIG.estilos.tamanoIconoBoton}"></i><span>ERROR AL REGISTRAR</span>`;
 
-          // Regresar automáticamente al estado azul a los 2.5 segundos
+          // Regresar automáticamente al estado azul con el texto "REINTENTAR REGISTRO" a los 2.5 segundos
           if (timerResetBoton) clearTimeout(timerResetBoton);
           timerResetBoton = setTimeout(() => {
-            resetBotonRegistro();
+            resetBotonRegistro(true);
           }, 2500);
         }
       }
