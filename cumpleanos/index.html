@@ -351,31 +351,31 @@
           <!-- Capa 3: Textos y elementos del Hero -->
           <div class="max-w-5xl mx-auto text-center relative flex flex-col items-center my-auto w-full">
             <!-- 1. EDUMIN Official Logo -->
-            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 md:mb-4 inline-block shrink-0" title="Ir al sitio web de EDUMIN">
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 md:mb-4 lg:mb-5 inline-block shrink-0" title="Ir al sitio web de EDUMIN">
               <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-10 md:h-12 lg:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
             </a>
 
             <!-- Títulos del Hero con propiedades heredadas -->
             <div class="font-heading font-bold uppercase text-white text-balance">
               <!-- 2. Feliz Cumpleaños + Nombre -->
-              <h1 class="text-4xl md:text-5xl lg:text-6xl mb-1.5 md:mb-2 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
+              <h1 class="text-4xl md:text-5xl lg:text-6xl mb-1.5 md:mb-2 lg:mb-2.5 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
 
               <!-- 3. H2: Beneficio Especial -->
-              <h2 class="text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 !leading-none">Tu beneficio especial ya está disponible</h2>
+              <h2 class="text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 lg:mb-5 !leading-none">Tu beneficio especial ya está disponible</h2>
             </div>
 
             <!-- 4. Subtítulo (Opción 3) -->
-            <p class="text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial otorgándote acceso totalmente gratuito a <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong> a tu elección para seguir impulsando tu carrera profesional.</p>
+            <p class="px-4 sm:px-0 text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-7 lg:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
 
             <!-- 5. Botón de Acción -->
-            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 transform active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-8 whitespace-nowrap">
-              <i class="ph-bold ph-gift text-6 md:text-7 lg:text-8"></i>
-              <span>ELEGIR MI CURSO<span class="hidden md:inline-flex">&nbsp;DE REGALO</span></span>
+            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 transform active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
+              <i class="ph-bold ph-gift text-6 md:text-7 lg:text-9 leading-none"></i>
+              <span>ELEGIR MI CURSO <span class="hidden md:inline">DE REGALO</span></span>
             </button>
 
             <!-- General Course Details Bar (Clean White Style) -->
-            <div class="w-full max-w-4xl bg-white text-secundario rounded-2xl md:rounded-3xl p-3 md:p-4 shadow-2xl">
-              <div id="heroCaracteristicas" class="flex flex-col sm:grid sm:grid-cols-3 sm:gap-3 md:gap-4"></div>
+            <div class="w-full max-w-4xl bg-white text-secundario rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-5 shadow-2xl">
+              <div id="heroCaracteristicas" class="flex flex-col sm:grid sm:grid-cols-3 sm:gap-5"></div>
             </div>
           </div>
         </header>
@@ -1315,21 +1315,50 @@
         container.innerHTML = features
           .map(
             (item) => `
-              <div class="bg-brand-cardBg border border-slate-300 -mt-px first:mt-0 first:rounded-t-xl last:rounded-b-xl sm:mt-0 sm:rounded-xl md:rounded-2xl p-2.5 sm:p-3 md:p-4 flex flex-row sm:flex-col md:flex-row items-center justify-start sm:justify-center md:justify-start gap-4 sm:gap-2 md:gap-4 text-left sm:text-center md:text-left">
+              <div class="bg-brand-cardBg border border-slate-300 -mt-px first:mt-0 max-sm:first:rounded-t-lg max-sm:last:rounded-b-lg sm:mt-0 sm:rounded-xl md:rounded-2xl p-3 sm:p-4 flex flex-row sm:flex-col md:flex-row items-center justify-start sm:justify-center md:justify-start gap-4 sm:gap-3 md:gap-4 text-left sm:text-center md:text-left">
                 <!-- Columna 1: Icono -->
-                <div class="w-9  md:w-10 aspect-square rounded-lg md:rounded-xl border flex items-center justify-center text-5 md:text-6 shrink-0 ${item.colorClass}">
+                <div class="w-9 sm:w-10 md:w-11 aspect-square rounded-md sm:rounded-lg md:rounded-xl border flex items-center justify-center text-5 sm:text-6 md:text-7 shrink-0 ${item.colorClass}">
                   <i class="ph-bold ${item.icon}"></i>
                 </div>
                 <!-- Columnas 2 y 3: Etiqueta y Valor -->
-                <div class="flex flex-row sm:flex-col items-center md:items-start gap-2 sm:gap-1 md:gap-0.5 min-w-0 flex-1 sm:w-full">
-                  <span class="block text-sm font-heading font-bold uppercase text-secundario shrink-0 w-20 sm:w-auto">${item.label}</span>
-                  <span class="block text-sm md:text-base font-bold text-principal uppercase truncate sm:whitespace-normal">${item.val}</span>
+                <div class="flex flex-row sm:flex-col items-center md:items-start gap-4 sm:gap-1 min-w-0 flex-1 sm:w-full">
+                  <span class="block text-sm md:text-base !leading-none font-heading font-bold uppercase text-secundario shrink-0 w-20 sm:w-auto">${item.label}</span>
+                  <span class="block text-sm sm:text-base md:text-lg !leading-none font-bold text-principal uppercase truncate sm:whitespace-normal">${item.val}</span>
                 </div>
               </div>
             `,
           )
           .join("");
+
+        ajustarDisposicionHeroCaracteristicas();
       }
+
+      function ajustarDisposicionHeroCaracteristicas() {
+        const container = document.getElementById("heroCaracteristicas");
+        if (!container) return;
+
+        const cards = container.querySelectorAll(".bg-brand-cardBg");
+        if (!cards.length) return;
+
+        const esDesktop = window.innerWidth >= 768; // Aplica únicamente en md en adelante (>= 768px)
+
+        cards.forEach((card) => {
+          const textWrapper = card.querySelector(".min-w-0");
+          if (!textWrapper) return;
+
+          if (esDesktop && card.offsetWidth < 240) {
+            // Cuando la tarjeta mide menos de 240px en md, pasa a disposición columna centrada
+            card.classList.add("md:!flex-col", "md:!justify-center", "md:!text-center");
+            textWrapper.classList.add("md:!items-center");
+          } else {
+            // Restaurar clases responsivas nativas (remover la anulación)
+            card.classList.remove("md:!flex-col", "md:!justify-center", "md:!text-center");
+            textWrapper.classList.remove("md:!items-center");
+          }
+        });
+      }
+
+      window.addEventListener("resize", ajustarDisposicionHeroCaracteristicas);
 
       /* ==========================================================================
            SECCIÓN DE PRUEBAS / MODO DEMO (BORRAR O DESACTIVAR AL SUBIR A PRODUCCIÓN)
