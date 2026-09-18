@@ -88,19 +88,43 @@
         mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) 0%, rgb(0 0 0 / 100%) 70%, rgb(0 0 0 / 0%) 100%);
       }
 
-      /* Estilo para las tarjetas de curso */
+      /* Estilo Neobrutalista Responsivo para las tarjetas de curso */
       .course-card {
         background-color: #fafafa;
         color: #1d1d1b;
         border: 2px solid #1d1d1b;
-        border-bottom: 6px solid #1d1d1b;
-        transition: all 0.22s ease-in-out;
+        border-bottom: 4px solid #1d1d1b;
+        margin-bottom: 0px;
+        transition:
+          transform 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out,
+          border-bottom-width 0.15s ease-in-out,
+          margin-bottom 0.15s ease-in-out;
         cursor: pointer;
       }
 
       .course-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 26px -6px rgb(0 0 0 / 22%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px -2px rgba(245, 158, 11, 0.18);
+        border-color: #1d1d1b;
+      }
+
+      .course-card:active {
+        transform: translateY(2px);
+        border-bottom-width: 2px;
+        margin-bottom: 2px;
+        box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.12);
+      }
+
+      @media (min-width: 768px) {
+        .course-card {
+          border-bottom-width: 6px;
+          margin-bottom: 0px;
+        }
+        .course-card:active {
+          border-bottom-width: 4px;
+          margin-bottom: 2px;
+        }
       }
 
       /* Marquee continuo para el cintillo superior */
@@ -141,11 +165,24 @@
       @keyframes pulse-glow {
         0%,
         100% {
-          box-shadow: 0 0 16px -2px rgb(245 158 11 / 45%);
+          box-shadow: 0 0 12px -1px rgb(245 158 11 / 45%);
         }
 
         50% {
-          box-shadow: 0 0 24px 1px rgb(245 158 11 / 65%);
+          box-shadow: 0 0 16px 0px rgb(245 158 11 / 65%);
+        }
+      }
+
+      @media (min-width: 768px) {
+        @keyframes pulse-glow {
+          0%,
+          100% {
+            box-shadow: 0 0 16px -2px rgb(245 158 11 / 45%);
+          }
+
+          50% {
+            box-shadow: 0 0 24px 1px rgb(245 158 11 / 65%);
+          }
         }
       }
 
@@ -351,7 +388,7 @@
           <!-- Capa 3: Textos y elementos del Hero -->
           <div class="max-w-5xl mx-auto text-center relative flex flex-col items-center my-auto w-full">
             <!-- 1. EDUMIN Official Logo -->
-            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 md:mb-4 lg:mb-5 inline-block shrink-0" title="Ir al sitio web de EDUMIN">
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 md:mb-4 lg:mb-5 inline-block shrink-0" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web oficial de EDUMIN">
               <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-10 md:h-12 lg:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
             </a>
 
@@ -369,8 +406,8 @@
 
             <!-- 5. Botón de Acción -->
             <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 transform active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
-              <i class="ph-bold ph-gift text-6 md:text-7 lg:text-9 leading-none"></i>
-              <span>ELEGIR MI CURSO <span class="hidden md:inline">DE REGALO</span></span>
+              <i class="ph-bold ph-gift text-6 md:text-7 lg:text-9"></i>
+              <span>ELEGIR MI CURSO <span class="hidden sm:inline-flex">DE REGALO</span></span>
             </button>
 
             <!-- General Course Details Bar (Clean White Style) -->
@@ -382,9 +419,9 @@
       </div>
 
       <!-- Main Catalog Section -->
-      <main id="catalogo" class="scroll-mt-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-16 relative z-10">
+      <main id="catalogo" class="scroll-mt-10 w-full max-w-7xl mx-auto p-4 md:p-6 lg:p-8 pb-10 md:pb-14 lg:pb-20 relative z-10">
         <!-- White Container for Search, Categories, Grid & Empty State -->
-        <div class="bg-white rounded-3xl p-6 md:p-10 shadow-2xl w-full">
+        <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl p-4 md:p-8 lg:p-10 shadow-2xl w-full">
           <!-- Catalog Section Heading -->
           <div class="text-center mb-6 sm:mb-8">
             <h3 class="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-principal uppercase">Cursos de Alta Especialización</h3>
@@ -392,7 +429,7 @@
           </div>
 
           <!-- Search & Category Filters Box -->
-          <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-3xl p-5 border-2 border-brand-dark border-b-[6px] border-b-brand-dark mb-8 shadow-md">
+          <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark border-b-4 md:border-b-[6px] border-b-brand-dark mb-5 md:mb-6 shadow-md">
             <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-5 items-center justify-between pb-4 sm:pb-5 border-b border-slate-200">
               <!-- Search Input Wrapper (Flexbox Layout) -->
               <div class="w-full sm:flex-1 max-w-2xl flex items-center gap-3 px-4 py-2.5 bg-white border border-slate-300 focus-within:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-xl transition-all shadow-sm group">
@@ -411,17 +448,11 @@
             </div>
 
             <!-- Category Pills Accordion -->
-            <div class="mt-4 sm:mt-5">
-              <!-- Header & Mobile Toggle Controls -->
-              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 mb-3">
-                <!-- Row 1 (Mobile) / Left (Desktop): Label -->
-                <label class="text-xs sm:text-sm font-sans font-bold uppercase text-principal flex items-center gap-2 select-none">
-                  <i class="ph-bold ph-funnel text-brand-blue text-base sm:text-lg shrink-0"></i>
-                  <span>Filtrar por Categoría:</span>
-                </label>
-
-                <!-- Row 2 (Mobile) / Hidden on Desktop: Active Category Pill + Toggle Button -->
-                <div class="flex sm:hidden items-center justify-between gap-2 w-full pt-0.5">
+            <div class="mt-4 sm:mt-5 relative">
+              <!-- Mobile-Only Toggle Controls -->
+              <div class="flex sm:hidden flex-col gap-2.5 mb-3">
+                <div id="contenedorEtiquetaMovil"></div>
+                <div class="flex items-center justify-between gap-2 w-full pt-0.5">
                   <div class="flex items-center min-w-0">
                     <span id="insigniaCategoriaActiva" onclick="toggleCategorias()" class="font-sans font-bold text-white bg-brand-blue border border-brand-blue px-3.5 py-1.5 rounded-full shadow-sm truncate text-xs cursor-pointer">Todos</span>
                   </div>
@@ -432,15 +463,20 @@
                 </div>
               </div>
 
-              <!-- Category Pills Container -->
-              <div class="hidden sm:flex flex-wrap gap-2.5 pt-1" id="contenedorCategorias">
-                <!-- Categories dynamically rendered here -->
+              <!-- CONTENEDOR MÓVIL (Menú desplegable flotante estilo tabla) -->
+              <div id="contenedorCategoriasMovil" class="hidden sm:hidden absolute left-0 right-0 top-full mt-2 z-30 bg-white border-2 border-brand-dark border-b-4 border-b-brand-dark rounded-2xl shadow-2xl overflow-hidden divide-y divide-slate-100 max-h-[60vh] overflow-y-auto">
+                <!-- Categorías en formato tabla compacta de móvil -->
+              </div>
+
+              <!-- CONTENEDOR DESKTOP (Píldoras horizontales alineadas) -->
+              <div id="contenedorCategoriasDesktop" class="hidden sm:flex flex-row flex-wrap items-center gap-2.5">
+                <!-- Categorías en formato píldora de desktop -->
               </div>
             </div>
           </div>
 
           <!-- Courses Grid -->
-          <div id="grillaCursos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div id="grillaCursos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             <!-- Courses injected via Javascript -->
           </div>
 
@@ -476,7 +512,7 @@
 
           <!-- Empty Search State Container -->
           <div id="estadoVacio" class="hidden text-center py-16 bg-brand-cardBg rounded-3xl border-2 border-brand-dark border-b-[6px] border-b-brand-dark shadow-md">
-            <div class="w-20 h-20 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border border-brand-blue/20 shadow-sm">
+            <div class="w-20 h-20 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border border-brand-blue/30 shadow-sm">
               <i class="ph-bold ph-ghost"></i>
             </div>
             <h3 class="font-heading text-2xl font-bold text-principal mb-2 uppercase text-balance">No se encontraron cursos</h3>
@@ -1358,7 +1394,11 @@
         });
       }
 
-      window.addEventListener("resize", ajustarDisposicionHeroCaracteristicas);
+      let heroResizeFrameId;
+      window.addEventListener("resize", () => {
+        if (heroResizeFrameId) cancelAnimationFrame(heroResizeFrameId);
+        heroResizeFrameId = requestAnimationFrame(ajustarDisposicionHeroCaracteristicas);
+      });
 
       /* ==========================================================================
            SECCIÓN DE PRUEBAS / MODO DEMO (BORRAR O DESACTIVAR AL SUBIR A PRODUCCIÓN)
@@ -1588,7 +1628,7 @@
       function toggleCategorias() {
         if (window.innerWidth >= 640) return;
 
-        const container = document.getElementById("contenedorCategorias");
+        const container = document.getElementById("contenedorCategoriasMovil");
         const textoBtn = document.getElementById("textoToggleCategorias");
         const iconoBtn = document.getElementById("iconoToggleCategorias");
 
@@ -1607,29 +1647,78 @@
         }
       }
 
+      function crearEtiquetaFiltro(clasesExtra = "") {
+        return `
+          <label class="items-center gap-2 text-xs sm:text-sm !leading-none font-sans font-bold uppercase text-principal  shrink-0 ${clasesExtra}">
+            <i class="ph-bold ph-funnel text-brand-blue text-4 sm:text-5 shrink-0"></i>
+            <span>Filtrar por Categoría:</span>
+          </label>
+        `;
+      }
+
+      // =========================================================================
+      // 📱 1. PLANTILLA MÓVIL (Menú desplegable tipo lista/tabla compacta)
+      // =========================================================================
+      function renderItemCategoriaMovil(cat, isActive) {
+        const catLabel = cat === "Todos" ? "Todos" : formatSentenceCase(cat);
+
+        // Estilos para la fila en móvil
+        const estiloActivo = "bg-brand-blue text-white font-bold";
+        const estiloInactivo = "bg-white hover:bg-slate-50 text-secundario hover:text-principal font-semibold";
+
+        return `
+          <button onclick="selectCategory('${cat}')" 
+                  class="w-full px-4 py-2.5 text-left text-sm font-sans flex items-center justify-between transition cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
+            <span>${catLabel}</span>
+            ${isActive ? '<i class="ph-bold ph-check text-sm shrink-0"></i>' : ""}
+          </button>
+        `;
+      }
+
+      // =========================================================================
+      // 💻 2. PLANTILLA DESKTOP (Píldoras horizontales alineadas)
+      // =========================================================================
+      function renderItemCategoriaDesktop(cat, isActive) {
+        const catLabel = cat === "Todos" ? "Todos" : formatSentenceCase(cat);
+
+        // Estilos para la píldora en desktop
+        const estiloActivo = "bg-brand-blue hover:bg-brand-blueDark text-white  font-semibold shadow-sm";
+        const estiloInactivo = "bg-cuaternario text-secundario  hover:bg-slate-200  ring-1 ring-inset ring-terciario font-semibold";
+
+        return `
+          <button onclick="selectCategory('${cat}')" 
+                  class="px-4 py-3 !leading-none rounded-full font-sans text-sm sm:text-base shrink-0 transition transform active:scale-95 flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
+            <span>${catLabel}</span>
+          </button>
+        `;
+      }
+
       function renderCategories() {
-        const container = document.getElementById("contenedorCategorias");
         const badge = document.getElementById("insigniaCategoriaActiva");
+        const contenedorMovil = document.getElementById("contenedorCategoriasMovil");
+        const contenedorDesktop = document.getElementById("contenedorCategoriasDesktop");
+        const contenedorEtiquetaMovil = document.getElementById("contenedorEtiquetaMovil");
 
         if (badge) {
           badge.textContent = activeCategory === "Todos" ? "Todos" : formatSentenceCase(activeCategory);
         }
 
-        if (!container) return;
+        // Renderizar etiqueta en la barra superior móvil
+        if (contenedorEtiquetaMovil) {
+          contenedorEtiquetaMovil.innerHTML = crearEtiquetaFiltro("flex");
+        }
 
-        container.innerHTML = categories
-          .map((cat) => {
-            const isActive = activeCategory === cat;
-            const catLabel = cat === "Todos" ? "Todos" : formatSentenceCase(cat);
+        // Renderizar lista en móvil
+        if (contenedorMovil) {
+          contenedorMovil.innerHTML = categories.map((cat) => renderItemCategoriaMovil(cat, cat === activeCategory)).join("");
+        }
 
-            return `
-                    <button onclick="selectCategory('${cat}')" 
-                        class="px-4 py-1.5 rounded-full font-sans text-sm sm:text-base font-semibold transition transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer ${isActive ? "bg-brand-blue text-white border border-brand-blue font-bold shadow-sm" : "bg-slate-100 text-secundario hover:bg-slate-200 border border-slate-300"}">
-                        <span>${catLabel}</span>
-                    </button>
-                `;
-          })
-          .join("");
+        // Renderizar píldoras en desktop
+        if (contenedorDesktop) {
+          const desktopLabel = crearEtiquetaFiltro("hidden sm:inline-flex mr-1 py-1.5");
+          const desktopPills = categories.map((cat) => renderItemCategoriaDesktop(cat, cat === activeCategory)).join("");
+          contenedorDesktop.innerHTML = desktopLabel + desktopPills;
+        }
       }
 
       function selectCategory(cat) {
@@ -1687,12 +1776,36 @@
         return str;
       }
 
+      // Configuración centralizada de clases responsivas para las tarjetas de curso (en Español)
+      const ESTILOS_TARJETA = {
+        contenedorTarjeta: "course-card rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-md flex flex-col justify-between relative group overflow-hidden cursor-pointer",
+        insigniaBase: "font-heading !leading-none text-xs md:text-sm px-3 py-2",
+        encabezadoContenedor: "flex items-center justify-between mb-3 md:mb-4 gap-3",
+        get insigniaId() {
+          return `${this.insigniaBase} inline-block uppercase rounded-lg  md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0`;
+        },
+        get insigniaCategoria() {
+          return `${this.insigniaBase}  rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate hidden min-[300px]:inline-block`;
+        },
+        titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6  uppercase text-balance",
+        pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
+        get insigniaSeleccionar() {
+          return `${this.insigniaBase} inline-flex items-center uppercase rounded-full font-bold gap-2 text-brand-blue bg-brand-blue/10 border border-brand-blue/30 group-hover:bg-amber-400 group-hover:border-amber-400 group-hover:text-principal min-w-0 transition`;
+        },
+        iconoSeleccionar: "ph-bold ph-hand-tap text-4 md:text-5 text-brand-blue group-hover:text-principal transition shrink-0",
+        textoSeleccionar: "whitespace-nowrap transition truncate min-w-0",
+        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-400 text-4 md:text-5 group-hover:translate-x-1.5 transition transform shrink-0 hidden min-[300px]:block",
+      };
+
       function renderCourses(list) {
         const grid = document.getElementById("grillaCursos");
         const estadoVacio = document.getElementById("estadoVacio");
         const contadorCursos = document.getElementById("contadorCursos");
 
-        if (contadorCursos) contadorCursos.textContent = list.length;
+        if (contadorCursos) {
+          const totalCursos = ALL_COURSES.length;
+          contadorCursos.textContent = list.length < totalCursos ? `${list.length} de ${totalCursos}` : `${totalCursos}`;
+        }
 
         if (!grid) return;
 
@@ -1705,38 +1818,38 @@
         if (estadoVacio) estadoVacio.classList.add("hidden");
         grid.classList.remove("hidden");
 
-        // Render tarjetas
+        const e = ESTILOS_TARJETA;
+
+        // Render tarjetas dinámicas
         grid.innerHTML = list
           .map(
             (course) => `
-                <div onclick="openModal(${course.id})" class="course-card rounded-3xl p-5 shadow-md flex flex-col justify-between relative group overflow-hidden cursor-pointer">
-                    
+                <div onclick="openModal(${course.id})" class="${e.contenedorTarjeta}">
                     <div>
                         <!-- Category Badge & Course Number -->
-                        <div class="flex items-center justify-between mb-4 gap-2">
-                            <span class="text-sm font-heading font-bold bg-brand-blue text-white px-3 py-1 rounded-lg uppercase whitespace-nowrap shrink-0">
+                        <div class="${e.encabezadoContenedor}">
+                            <span class="${e.insigniaId}">
                                 Curso #${course.id}
                             </span>
-                            <span class="text-xs sm:text-sm font-heading font-semibold text-secundario bg-slate-100 border border-slate-300 px-3 py-1 rounded-lg truncate min-w-0">
+                            <span class="${e.insigniaCategoria}">
                                 ${formatSentenceCase(course.category)}
                             </span>
                         </div>
 
                         <!-- Course Title -->
-                        <h3 class="font-sans font-bold text-principal text-xl leading-[1.15] mb-6 uppercase text-balance">
+                        <h3 class="${e.titulo}">
                             ${course.title}
                         </h3>
                     </div>
 
                     <!-- Action Badge Footer -->
-                    <div class="pt-4 border-t border-slate-200 flex items-center justify-between gap-2">
-                        <span class="inline-flex items-center gap-1.5 text-brand-blue bg-brand-blue/10 border border-brand-blue/20 px-3 py-1 rounded-lg text-xs sm:text-sm font-heading font-bold uppercase min-w-0 max-w-[calc(100%-2rem)]">
-                            <i class="ph-bold ph-hand-tap text-base shrink-0"></i>
-                            <span class="whitespace-nowrap truncate min-w-0">Seleccionar curso</span>
+                    <div class="${e.pieContenedor}">
+                        <span class="${e.insigniaSeleccionar}">
+                            <i class="${e.iconoSeleccionar}"></i>
+                            <span class="${e.textoSeleccionar}">Seleccionar curso</span>
                         </span>
-                        <i class="ph-bold ph-arrow-right text-brand-blue text-base leading-4 sm:leading-5 group-hover:translate-x-1 transition transform shrink-0"></i>
+                        <i class="${e.iconoFlecha}"></i>
                     </div>
-
                 </div>
             `,
           )
