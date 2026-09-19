@@ -104,8 +104,10 @@
       }
 
       .course-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px -2px rgba(245, 158, 11, 0.18);
+        transform: translateY(-3px);
+        box-shadow:
+          0 10px 25px -3px rgb(245 158 11 / 45%),
+          0 4px 6px -2px rgb(245 158 11 / 30%);
         border-color: #1d1d1b;
       }
 
@@ -344,6 +346,18 @@
         color: #fbbf24;
         box-shadow: 0 0 25px -3px rgb(245 158 11 / 40%);
       }
+
+      /* Ocultar barra de desplazamiento manteniendo el scroll táctil fluido */
+      .no-scrollbar {
+        -ms-overflow-style: none; /* IE y Edge */
+        scrollbar-width: none; /* Firefox */
+        -webkit-overflow-scrolling: touch; /* Scroll inercial en iOS */
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge, Android */
+        width: 0;
+        height: 0;
+      }
     </style>
   </head>
 
@@ -430,46 +444,60 @@
 
           <!-- Search & Category Filters Box -->
           <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark border-b-4 md:border-b-[6px] border-b-brand-dark mb-5 md:mb-6 shadow-md">
-            <div class="flex flex-col sm:flex-row gap-2.5 sm:gap-5 items-center justify-between pb-4 sm:pb-5 border-b border-slate-200">
-              <!-- Search Input Wrapper (Flexbox Layout) -->
-              <div class="w-full sm:flex-1 max-w-2xl flex items-center gap-3 px-4 py-2.5 bg-white border border-slate-300 focus-within:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-xl transition-all shadow-sm group">
-                <i class="ph-bold ph-magnifying-glass text-secundario/50 group-focus-within:text-amber-500 text-xl w-5 h-5 flex items-center justify-center shrink-0 transition-colors"></i>
-                <input type="text" id="inputBusqueda" placeholder="Buscar curso por nombre…" class="w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 text-base font-sans font-medium placeholder:text-secundario/50 text-principal" />
-                <button id="btnLimpiarBusqueda" class="hidden w-6 h-6 rounded-lg bg-transparent hover:bg-slate-200/90 active:bg-slate-300 text-secundario/50 hover:text-secundario flex items-center justify-center shrink-0 transition-all active:scale-95 cursor-pointer">
-                  <i class="ph-bold ph-x text-xs leading-none"></i>
-                </button>
+            <div class="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch md:items-center justify-between pb-5 md:pb-6 border-b border-terciario">
+              <!-- Bloque Izquierdo: Etiqueta de Filtro y Contador de cursos (Insignia / Badge) -->
+              <div class="flex flex-wrap md:flex-nowrap items-center justify-between md:justify-start gap-4 shrink-0 order-2 md:order-1">
+                <span class="inline-flex items-center gap-2 text-xs md:text-sm !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">
+                  <i class="ph-bold ph-funnel text-brand-blue text-4 md:text-5 shrink-0"></i>
+                  <span>Filtrar<span class="hidden sm:inline"> por Categoría</span></span>
+                </span>
+
+                <span class="hidden md:inline-block w-px h-5 bg-terciario shrink-0" aria-hidden="true"></span>
+
+                <!-- Course Counter Indicator -->
+                <div class="hidden min-[330px]:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:w-44">
+                  <span>Mostrando </span>
+                  <strong id="contadorCursos" class="text-brand-blue font-bold">76</strong> cursos
+                </div>
               </div>
 
-              <!-- Course Counter Indicator -->
-              <div class="flex items-center justify-center gap-1.5 text-xs sm:text-sm font-sans font-medium text-secundario shrink-0 select-none">
-                <i class="ph-bold ph-sparkle text-amber-500 text-base sm:text-lg"></i>
-                <span><strong id="contadorCursos" class="text-principal font-bold">76</strong> cursos disponibles</span>
+              <!-- Search Input Wrapper (Flexbox Layout a la derecha) -->
+              <div id="wrapperBusqueda" class="w-full md:w-auto md:flex-1 md:max-w-md flex items-center gap-2.5 px-4 py-2.5 bg-white border border-terciario hover:border-slate-400 focus-within:border-amber-400 focus-within:hover:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-lg md:rounded-xl transition-all shadow-sm group order-1 md:order-2 cursor-text">
+                <i class="ph-bold ph-magnifying-glass text-slate-400 group-focus-within:text-amber-500 text-5 flex items-center justify-center shrink-0 transition-colors"></i>
+
+                <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 !leading-none text-base font-sans font-medium placeholder:text-slate-400 text-principal" />
+
+                <button type="button" id="btnLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden relative w-5 aspect-square flex items-center justify-center shrink-0 transition-all active:scale-95 cursor-pointer text-slate-400 hover:text-secundario group/btn">
+                  <span class="absolute -inset-1.5 rounded-full bg-transparent group-hover/btn:bg-slate-300 group-active/btn:bg-slate-300 transition-all pointer-events-none"></span>
+                  <i class="relative z-10 ph-bold ph-x text-4 leading-none"></i>
+                </button>
               </div>
             </div>
 
             <!-- Category Pills Accordion -->
-            <div class="mt-4 sm:mt-5 relative">
+            <div class="mt-4 relative">
               <!-- Mobile-Only Toggle Controls -->
-              <div class="flex sm:hidden flex-col gap-2.5 mb-3">
-                <div id="contenedorEtiquetaMovil"></div>
-                <div class="flex items-center justify-between gap-2 w-full pt-0.5">
-                  <div class="flex items-center min-w-0">
-                    <span id="insigniaCategoriaActiva" onclick="toggleCategorias()" class="font-sans font-bold text-white bg-brand-blue border border-brand-blue px-3.5 py-1.5 rounded-full shadow-sm truncate text-xs cursor-pointer">Todos</span>
-                  </div>
-                  <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" class="text-xs font-sans font-bold uppercase text-brand-blue hover:text-brand-blueDark bg-brand-blue/10 hover:bg-brand-blue/20 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shrink-0">
-                    <span id="textoToggleCategorias">Ver (10)</span>
-                    <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-sm transition-transform duration-200"></i>
-                  </button>
+              <div class="flex sm:hidden items-center justify-between gap-4 w-full">
+                <div class="flex items-center min-w-0">
+                  <span id="insigniaCategoriaActiva" onclick="toggleCategorias()" class="font-sans font-semibold text-white bg-brand-blue px-4 py-2 rounded-full !leading-none truncate text-xs cursor-pointer transition transform active:scale-95">Todos</span>
                 </div>
+                <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" class="text-xs !leading-none font-sans font-semibold text-brand-blue hover:text-brand-blueDark bg-brand-blue/10 hover:bg-brand-blue/20 px-4 py-2 rounded-full flex items-center gap-2 cursor-pointer shrink-0 ring-1 ring-inset ring-brand-blue/30 transition transform active:scale-95">
+                  <span id="textoToggleCategorias">Categorías</span>
+                  <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 transition-transform duration-200"></i>
+                </button>
               </div>
 
               <!-- CONTENEDOR MÓVIL (Menú desplegable flotante estilo tabla) -->
-              <div id="contenedorCategoriasMovil" class="hidden sm:hidden absolute left-0 right-0 top-full mt-2 z-30 bg-white border-2 border-brand-dark border-b-4 border-b-brand-dark rounded-2xl shadow-2xl overflow-hidden divide-y divide-slate-100 max-h-[60vh] overflow-y-auto">
-                <!-- Categorías en formato tabla compacta de móvil -->
+              <div id="contenedorCategoriasMovil" class="hidden sm:hidden absolute right-0 w-60 max-w-full top-full mt-2 z-30 bg-white border-2 border-brand-dark rounded-2xl shadow-2xl overflow-hidden">
+                <div id="listaCategoriasMovil" class="divide-y divide-terciario max-h-[40vh] overflow-y-auto no-scrollbar">
+                  <!-- Categorías en formato tabla compacta de móvil -->
+                </div>
+                <!-- Indicador de desvanecimiento suave para scroll continuo -->
+                <div id="fadeCategoriasMovil" class="pointer-events-none absolute bottom-0 inset-x-0 h-6 bg-gradient-to-t from-white to-transparent transition-opacity duration-200"></div>
               </div>
 
               <!-- CONTENEDOR DESKTOP (Píldoras horizontales alineadas) -->
-              <div id="contenedorCategoriasDesktop" class="hidden sm:flex flex-row flex-wrap items-center gap-2.5">
+              <div id="contenedorCategoriasDesktop" class="hidden sm:flex flex-row flex-wrap items-center gap-x-2 gap-y-2.5">
                 <!-- Categorías en formato píldora de desktop -->
               </div>
             </div>
@@ -751,392 +779,411 @@
       let activeCategory = "Todos";
       let selectedCourse = null;
       let isRegisteringCourse = false;
+      // ==========================================================================
+      // CATÁLOGO MAESTRO DE CATEGORÍAS (ID numérico único)
+      // Para cambiar una categoría a un curso solo cambia su número de category (1-9)
+      // ==========================================================================
+      const CATEGORIAS = {
+        1: "Seguridad y prevención",
+        2: "Medio ambiente",
+        3: "Inteligencia de datos",
+        4: "Tecnología e innovación",
+        5: "Logística y almacenes",
+        6: "Mantenimiento industrial",
+        7: "Operaciones y procesos",
+        8: "Comercio exterior",
+        9: "Legislación y normativa",
+      };
+
+      function getCategoryName(idOrName) {
+        return CATEGORIAS[idOrName] || idOrName || "";
+      }
 
       // Full catalog of 76 EDUMIN 2026 courses
       const ALL_COURSES = [
         {
           id: 1,
           title: "MANEJO DE EPPS SEGÚN LA NORMA TÉCNICA PERUANA LEY 29783",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 2,
           title: "IMPLEMENTACIÓN DE MEDIDAS DE CONTROL EN RIESGOS MINEROS",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 3,
           title: "ERGONOMÍA Y SALUD OCUPACIONAL EN EL SECTOR MINERO E INDUSTRIAL",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 4,
           title: "MARCO JURÍDICO Y NORMATIVO DE LA MINERÍA",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 5,
           title: "GESTIÓN DE PROVEEDORES EN MINERÍA",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 6,
           title: "CONTROL DE COSTOS EN ALMACENES MINEROS",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 7,
           title: "LOGÍSTICA Y DISTRIBUCIÓN EN LA INDUSTRIA Y MINERÍA",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 8,
           title: "CONTRATOS EN LA INDUSTRIA MINERA",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 9,
           title: "DERECHOS HUMANOS EN MINERÍA",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 10,
           title: "GESTIÓN DE TRABAJO EN ALTO RIESGO EN MINERÍA",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 11,
           title: "RESPONSABILIDAD PENAL EN MINERÍA",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 12,
           title: "DERECHO LABORAL EN MINERÍA",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 13,
           title: "TIPOS DE CONCESIONES MINERAS",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 14,
           title: "GESTIÓN DE CONTRATOS LOGÍSTICOS EN LA INDUSTRIA Y MINERÍA",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 15,
           title: "CURSO DE PREVENCIÓN DE RIESGOS",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 16,
           title: "IMPLEMENTACIÓN DE LA ISO 45001:2018",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 17,
           title: "GESTIÓN DE EMERGENCIAS EN INDUSTRIA Y MINERÍA",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 18,
           title: "GESTIÓN DE INVENTARIOS EN INDUSTRIA Y MINERÍA",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 19,
           title: "CONTROL FINANCIERO EN ALMACENES",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 20,
           title: "LOGÍSTICA INTERNA EN CONTROL DE ALMACENES",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 21,
           title: "FUNDAMENTOS DE BIG DATA",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 22,
           title: "MÉTODOS DE CAPTURA DE INFORMACIÓN EN BIG DATA",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 23,
           title: "TENDENCIAS 2025-2026: CLAVES DE BIG DATA",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 24,
           title: "BIG DATA: TRANSFORMACIÓN DE DATOS (PYTHON Y R)",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 25,
           title: "MINERÍA 4.0 ESSENTIALS (NUEVAS HERRAMIENTAS)",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 26,
           title: "INNOVACIÓN EN MINERÍA: APLICACIONES DE INTELIGENCIA ARTIFICIAL",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 27,
           title: "AUTOMATIZACIÓN 4.0 EN PROCESOS MINEROS",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 28,
           title: "CADENA DE SUMINISTRO LOGÍSTICA Y DISTRIBUCIÓN",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 29,
           title: "MEJORA DE LOS MÉTODOS Y MEDICIÓN DE LOS RECURSOS",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 30,
           title: "INTRODUCCIÓN A LA GESTIÓN DE PROYECTOS",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 31,
           title: "ARQUITECTURA DE DATOS: LA IMPORTANCIA DEL DISEÑO, COMPONENTES, FUNCIÓN, CONFIGURACIÓN Y PATRONES",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 32,
           title: "ECOSISTEMA BIG DATA: HERRAMIENTAS Y TECNOLOGÍAS ESENCIALES",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 33,
           title: "INTRODUCCIÓN A MACHINE LEARNING PARA BIG DATA",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 34,
           title: "PROYECTOS CON HERRAMIENTAS DIGITALES PARA MINERÍA",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 35,
           title: "INTRODUCCIÓN A MACHINE LEARNING EN MINERÍA",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 36,
           title: "TIPOS DE INTELIGENCIA ARTIFICIAL APLICADAS A LA MINERÍA",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 37,
           title: "HERRAMIENTAS DE BIG DATA APLICADA A MINERÍA",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 38,
           title: "GESTIÓN AVANZADA DE OPERACIONES INDUSTRIALES",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 39,
           title: "BIG DATA APLICADA A PROCESOS INDUSTRIALES",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 40,
           title: "CONTROL DE COSTOS EN PRODUCCIÓN INDUSTRIAL O EN ÁREAS DE PRODUCCIÓN",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 41,
           title: "IMPORTACIÓN Y EXPORTACIÓN DESDE 0: CLAVES PARA EL ÉXITO",
-          category: "Comercio exterior",
+          category: 8,
         },
         {
           id: 42,
           title: "IMPLEMENTACIÓN DE LA NORMA ISO 9001:2015",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 43,
           title: "ANÁLISIS DE MERCADOS INTERNACIONALES: ESTRATEGIAS DE IMPORTACIÓN Y EXPORTACIÓN 2025-2026",
-          category: "Comercio exterior",
+          category: 8,
         },
         {
           id: 44,
           title: "DE LA IMPORTACIÓN A LA VENTA ONLINE: IMPLEMENTA TU TIENDA VIRTUAL DESDE CERO",
-          category: "Comercio exterior",
+          category: 8,
         },
         {
           id: 45,
           title: "CONTROL Y SUPERVISIÓN DE PROCESOS CON SOFTWARE SCADA",
-          category: "Tecnología e innovación",
+          category: 4,
         },
         {
           id: 46,
           title: "GESTIÓN DE OPERACIONES Y PROCESOS EN LA MINERÍA",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 47,
           title: "PIRÁMIDE DE PROCESOS: TÉCNICAS DE CONTROL EN MINERÍA",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 48,
           title: "PROCESO DE OPTIMIZACIÓN DE MANTENIMIENTO A PARTIR DEL USO DE TÉCNICAS DE LA INDUSTRIA 4.0",
-          category: "Mantenimiento industrial",
+          category: 6,
         },
         {
           id: 49,
           title: "SISTEMAS INTEGRADOS PARA LA GESTIÓN DE MANTENIMIENTO",
-          category: "Mantenimiento industrial",
+          category: 6,
         },
         {
           id: 50,
           title: "ESTÁNDARES Y SISTEMA DE CALIDAD DEL MANTENIMIENTO",
-          category: "Mantenimiento industrial",
+          category: 6,
         },
         {
           id: 51,
           title: "DOCUMENTACIÓN Y TRÁMITES ADUANEROS",
-          category: "Comercio exterior",
+          category: 8,
         },
         {
           id: 52,
           title: "REVISIÓN DE PROVEEDORES PARA EVITAR ESTAFAS EN IMPORTACIONES CHINAS",
-          category: "Comercio exterior",
+          category: 8,
         },
         {
           id: 53,
           title: "PLANIFICACIÓN DE RIESGOS PARA IMPORTACIÓN Y EXPORTACIÓN",
-          category: "Comercio exterior",
+          category: 8,
         },
         {
           id: 54,
           title: "CONTROL DE CALIDAD EN PROCESOS MINEROS",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 55,
           title: "MONITOREO Y CONTROL EN LA OPERACIÓN DE PLANTAS MINERAS",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 56,
           title: "SOSTENIBILIDAD Y SEGURIDAD EN CAMPAMENTOS MINEROS",
-          category: "Medio ambiente",
+          category: 2,
         },
         {
           id: 57,
           title: "ANÁLISIS DE DATOS PARA OPTIMIZAR OPERACIONES MINERAS",
-          category: "Inteligencia de datos",
+          category: 3,
         },
         {
           id: 58,
           title: "SEGURIDAD Y CONTROL AMBIENTAL EN EL MANTENIMIENTO",
-          category: "Medio ambiente",
+          category: 2,
         },
         {
           id: 59,
           title: "GERENCIA DE PROYECTOS DEL MANTENIMIENTO",
-          category: "Mantenimiento industrial",
+          category: 6,
         },
         {
           id: 60,
           title: "GESTIÓN DE COSTOS DEL MANTENIMIENTO EN LA INDUSTRIA 4.0",
-          category: "Mantenimiento industrial",
+          category: 6,
         },
         {
           id: 61,
           title: "SOSTENIBILIDAD Y MINERÍA RESPONSABLE",
-          category: "Medio ambiente",
+          category: 2,
         },
         {
           id: 62,
           title: "PRIMEROS AUXILIOS EN MINERÍA",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 63,
           title: "INDICADORES CLAVE (KPIS) PARA LA CADENA DE ABASTECIMIENTOS",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 64,
           title: "EXPLORACIÓN MINERA Y EVALUACIÓN DE YACIMIENTOS",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 65,
           title: "REQUISITOS CLAVE DE ISO 14001 Y CÓMO APLICARLOS EN LA EMPRESA",
-          category: "Medio ambiente",
+          category: 2,
         },
         {
           id: 66,
           title: "SISTEMAS INTEGRADOS DE GESTIÓN HSEQ (ISO 9001, 14001, 45001)",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 67,
           title: "GESTIÓN DE CRISIS Y MANEJO DE CONFLICTOS EN AMBIENTES INDUSTRIALES",
-          category: "Legislación y normativa",
+          category: 9,
         },
         {
           id: 68,
           title: "PLANIFICACIÓN ESTRATÉGICA Y BALANCED SCORECARD",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 69,
           title: "GESTIÓN DE LA ENERGÍA EN OPERACIONES MINERAS",
-          category: "Medio ambiente",
+          category: 2,
         },
         {
           id: 70,
           title: "GESTIÓN DE LA CADENA DE SUMINISTRO EN EMPRESAS MINERAS",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 71,
           title: "SEGURIDAD Y NORMATIVA EN EL CONTROL DE INVENTARIO Y LOGÍSTICA MINERA",
-          category: "Logística y almacenes",
+          category: 5,
         },
         {
           id: 72,
           title: "SALUD MENTAL EN EL TRABAJO: DETECCIÓN Y PREVENCIÓN DE TRASTORNOS PSICOLÓGICOS",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 73,
           title: "IMPLEMENTACIÓN DE LEAN MANUFACTURING EN PROCESOS INDUSTRIALES",
-          category: "Operaciones y procesos",
+          category: 7,
         },
         {
           id: 74,
           title: "ERGONOMÍA Y DISEÑO DE PUESTOS DE TRABAJO EN LA INDUSTRIA",
-          category: "Seguridad y prevención",
+          category: 1,
         },
         {
           id: 75,
           title: "GESTIÓN DE SEGURIDAD DURANTE LAS PARADAS DE PLANTA Y MANTENIMIENTO",
-          category: "Mantenimiento industrial",
+          category: 6,
         },
         {
           id: 76,
           title: "GESTIÓN DE RELAVES Y RESIDUOS MINEROS",
-          category: "Medio ambiente",
+          category: 2,
         },
       ];
 
-      const categories = ["Todos", "Seguridad y prevención", "Medio ambiente", "Inteligencia de datos", "Tecnología e innovación", "Logística y almacenes", "Mantenimiento industrial", "Operaciones y procesos", "Comercio exterior", "Legislación y normativa"];
+      const categories = ["Todos", ...Object.values(CATEGORIAS)];
 
       // Función para alternar entre las 3 Vistas principales y adaptar el Footer
       function mostrarVista(vistaId) {
@@ -1239,8 +1286,8 @@
           if (estadoVacio) estadoVacio.classList.add("hidden");
 
           if (estadoCanjeado) estadoCanjeado.classList.remove("hidden");
-          if (tituloCursoCanjeado) tituloCursoCanjeado.textContent = claimedData.id ? `#${claimedData.id} - ${claimedData.title}` : claimedData.title;
-          if (insigniaCursoCanjeado) insigniaCursoCanjeado.textContent = claimedData.category || "Curso Seleccionado";
+          if (tituloCursoCanjeado) tituloCursoCanjeado.textContent = claimedData.id ? `#${claimedData.id} - ${formatCourseTitle(claimedData.title)}` : formatCourseTitle(claimedData.title);
+          if (insigniaCursoCanjeado) insigniaCursoCanjeado.textContent = getCategoryName(claimedData.category) || "Curso Seleccionado";
 
           return true;
         } catch (e) {
@@ -1525,8 +1572,18 @@
         checkClaimedState(apiData);
 
         // Listeners de búsqueda
+        const wrapperBusqueda = document.getElementById("wrapperBusqueda");
         const inputBusqueda = document.getElementById("inputBusqueda");
         const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
+
+        if (wrapperBusqueda && inputBusqueda) {
+          wrapperBusqueda.addEventListener("click", (e) => {
+            if (btnLimpiarBusqueda && (e.target === btnLimpiarBusqueda || btnLimpiarBusqueda.contains(e.target))) {
+              return;
+            }
+            inputBusqueda.focus();
+          });
+        }
 
         if (inputBusqueda) {
           inputBusqueda.addEventListener("input", (e) => {
@@ -1538,6 +1595,23 @@
             }
             filterCourses();
           });
+
+          inputBusqueda.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              inputBusqueda.blur();
+            }
+
+            if (e.key === "Escape") {
+              if (inputBusqueda.value !== "") {
+                inputBusqueda.value = "";
+                if (btnLimpiarBusqueda) btnLimpiarBusqueda.classList.add("hidden");
+                filterCourses();
+              } else {
+                inputBusqueda.blur();
+              }
+            }
+          });
         }
 
         if (btnLimpiarBusqueda) {
@@ -1545,6 +1619,7 @@
             inputBusqueda.value = "";
             btnLimpiarBusqueda.classList.add("hidden");
             filterCourses();
+            inputBusqueda.focus();
           });
         }
 
@@ -1624,6 +1699,7 @@
       }
 
       let isCategoriasExpanded = false;
+      let textoToggleOriginal = "";
 
       function toggleCategorias() {
         if (window.innerWidth >= 640) return;
@@ -1634,43 +1710,63 @@
 
         if (!container) return;
 
+        // Memoriza el texto del HTML para editarlo en un solo lugar
+        if (!textoToggleOriginal && textoBtn) {
+          textoToggleOriginal = textoBtn.textContent.trim();
+        }
+
         isCategoriasExpanded = !isCategoriasExpanded;
 
         if (isCategoriasExpanded) {
           container.classList.remove("hidden");
-          if (textoBtn) textoBtn.textContent = "Ocultar";
+          if (textoBtn) textoBtn.textContent = "Cerrar";
           if (iconoBtn) iconoBtn.classList.add("rotate-180");
+
+          // Resetear visibilidad del degradado inferior
+          const listaMovil = document.getElementById("listaCategoriasMovil");
+          const fadeMovil = document.getElementById("fadeCategoriasMovil");
+          if (listaMovil && fadeMovil) {
+            const hasOverflow = listaMovil.scrollHeight > listaMovil.clientHeight;
+            const isAtBottom = listaMovil.scrollHeight - listaMovil.scrollTop - listaMovil.clientHeight < 8;
+            fadeMovil.style.opacity = hasOverflow && !isAtBottom ? "1" : "0";
+          }
         } else {
           container.classList.add("hidden");
-          if (textoBtn) textoBtn.textContent = `Ver (${categories.length})`;
+          if (textoBtn) textoBtn.textContent = textoToggleOriginal;
           if (iconoBtn) iconoBtn.classList.remove("rotate-180");
         }
       }
 
-      function crearEtiquetaFiltro(clasesExtra = "") {
-        return `
-          <label class="items-center gap-2 text-xs sm:text-sm !leading-none font-sans font-bold uppercase text-principal  shrink-0 ${clasesExtra}">
-            <i class="ph-bold ph-funnel text-brand-blue text-4 sm:text-5 shrink-0"></i>
-            <span>Filtrar por Categoría:</span>
-          </label>
-        `;
-      }
+      // Cerrar el menú flotante de categorías en móvil al hacer clic o tocar fuera de él
+      document.addEventListener("click", (e) => {
+        if (!isCategoriasExpanded || window.innerWidth >= 640) return;
+
+        const container = document.getElementById("contenedorCategoriasMovil");
+        const btnToggle = document.getElementById("btnToggleCategorias");
+        const badge = document.getElementById("insigniaCategoriaActiva");
+
+        const clickedInside = (container && container.contains(e.target)) || (btnToggle && btnToggle.contains(e.target)) || (badge && badge.contains(e.target));
+
+        if (!clickedInside) {
+          toggleCategorias();
+        }
+      });
 
       // =========================================================================
       // 📱 1. PLANTILLA MÓVIL (Menú desplegable tipo lista/tabla compacta)
       // =========================================================================
       function renderItemCategoriaMovil(cat, isActive) {
-        const catLabel = cat === "Todos" ? "Todos" : formatSentenceCase(cat);
+        const catLabel = cat;
 
         // Estilos para la fila en móvil
-        const estiloActivo = "bg-brand-blue text-white font-bold";
-        const estiloInactivo = "bg-white hover:bg-slate-50 text-secundario hover:text-principal font-semibold";
+        const estiloActivo = "bg-brand-blue text-white font-semibold";
+        const estiloInactivo = "bg-cuaternario text-secundario font-semibold";
 
         return `
           <button onclick="selectCategory('${cat}')" 
-                  class="w-full px-4 py-2.5 text-left text-sm font-sans flex items-center justify-between transition cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
-            <span>${catLabel}</span>
-            ${isActive ? '<i class="ph-bold ph-check text-sm shrink-0"></i>' : ""}
+                  class="w-full px-4 py-3.5 text-left text-sm !leading-none font-sans flex items-center justify-between gap-3 transition cursor-pointer overflow-hidden ${isActive ? estiloActivo : estiloInactivo}">
+            <span class="truncate min-w-0 flex-1" title="${catLabel}">${catLabel}</span>
+            ${isActive ? '<i class="ph-bold ph-check text-3.5 shrink-0"></i>' : ""}
           </button>
         `;
       }
@@ -1679,7 +1775,7 @@
       // 💻 2. PLANTILLA DESKTOP (Píldoras horizontales alineadas)
       // =========================================================================
       function renderItemCategoriaDesktop(cat, isActive) {
-        const catLabel = cat === "Todos" ? "Todos" : formatSentenceCase(cat);
+        const catLabel = cat;
 
         // Estilos para la píldora en desktop
         const estiloActivo = "bg-brand-blue hover:bg-brand-blueDark text-white  font-semibold shadow-sm";
@@ -1687,7 +1783,7 @@
 
         return `
           <button onclick="selectCategory('${cat}')" 
-                  class="px-4 py-3 !leading-none rounded-full font-sans text-sm sm:text-base shrink-0 transition transform active:scale-95 flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
+                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs sm:text-sm shrink-0 transition transform active:scale-95 flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
             <span>${catLabel}</span>
           </button>
         `;
@@ -1697,27 +1793,29 @@
         const badge = document.getElementById("insigniaCategoriaActiva");
         const contenedorMovil = document.getElementById("contenedorCategoriasMovil");
         const contenedorDesktop = document.getElementById("contenedorCategoriasDesktop");
-        const contenedorEtiquetaMovil = document.getElementById("contenedorEtiquetaMovil");
 
         if (badge) {
-          badge.textContent = activeCategory === "Todos" ? "Todos" : formatSentenceCase(activeCategory);
-        }
-
-        // Renderizar etiqueta en la barra superior móvil
-        if (contenedorEtiquetaMovil) {
-          contenedorEtiquetaMovil.innerHTML = crearEtiquetaFiltro("flex");
+          badge.textContent = activeCategory;
         }
 
         // Renderizar lista en móvil
-        if (contenedorMovil) {
-          contenedorMovil.innerHTML = categories.map((cat) => renderItemCategoriaMovil(cat, cat === activeCategory)).join("");
+        const listaMovil = document.getElementById("listaCategoriasMovil") || contenedorMovil;
+        if (listaMovil) {
+          listaMovil.innerHTML = categories.map((cat) => renderItemCategoriaMovil(cat, cat === activeCategory)).join("");
+
+          const fadeMovil = document.getElementById("fadeCategoriasMovil");
+          if (fadeMovil && !listaMovil._hasScrollListener) {
+            listaMovil._hasScrollListener = true;
+            listaMovil.addEventListener("scroll", () => {
+              const isAtBottom = listaMovil.scrollHeight - listaMovil.scrollTop - listaMovil.clientHeight < 8;
+              fadeMovil.style.opacity = isAtBottom ? "0" : "1";
+            });
+          }
         }
 
-        // Renderizar píldoras en desktop
+        // Renderizar píldoras en desktop (alineadas desde la izquierda)
         if (contenedorDesktop) {
-          const desktopLabel = crearEtiquetaFiltro("hidden sm:inline-flex mr-1 py-1.5");
-          const desktopPills = categories.map((cat) => renderItemCategoriaDesktop(cat, cat === activeCategory)).join("");
-          contenedorDesktop.innerHTML = desktopLabel + desktopPills;
+          contenedorDesktop.innerHTML = categories.map((cat) => renderItemCategoriaDesktop(cat, cat === activeCategory)).join("");
         }
       }
 
@@ -1747,10 +1845,18 @@
 
         renderCategories();
 
+        const tokens = cleanQuery.split(/\s+/).filter(Boolean);
+        const searchId = rawQuery.replace(/^#/, "").trim();
+
         const filtered = ALL_COURSES.filter((course) => {
-          const matchesCategory = activeCategory === "Todos" || course.category === activeCategory;
+          const categoryName = getCategoryName(course.category);
+          const matchesCategory = activeCategory === "Todos" || categoryName === activeCategory;
           const courseTitleClean = removeAccents(course.title);
-          const matchesSearch = !cleanQuery || courseTitleClean.includes(cleanQuery) || course.id.toString() === rawQuery;
+          const courseCategoryClean = removeAccents(categoryName);
+          const fullSearchText = `${courseTitleClean} ${courseCategoryClean}`;
+
+          const matchesSearch = tokens.length === 0 || course.id.toString() === searchId || tokens.every((token) => fullSearchText.includes(token));
+
           return matchesCategory && matchesSearch;
         });
 
@@ -1766,6 +1872,13 @@
         activeCategory = "Todos";
         renderCategories();
         renderCourses(ALL_COURSES);
+      }
+
+      function formatCourseTitle(title) {
+        if (!title) return "";
+        // Une la conjunción "Y" (o "y") a la palabra anterior con un espacio de no separación (\u00A0)
+        // para evitar que pase sola a otra línea (ej: "MINERÍA Y\nOPERACIONES")
+        return title.replace(/(\S+)\s+([yY])\b/g, (m, p1, p2) => p1 + "\u00A0" + p2);
       }
 
       function formatSentenceCase(str) {
@@ -1785,7 +1898,7 @@
           return `${this.insigniaBase} inline-block uppercase rounded-lg  md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0`;
         },
         get insigniaCategoria() {
-          return `${this.insigniaBase}  rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate hidden min-[300px]:inline-block`;
+          return `${this.insigniaBase}  rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate hidden min-[350px]:inline-block`;
         },
         titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6  uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
@@ -1832,13 +1945,13 @@
                                 Curso #${course.id}
                             </span>
                             <span class="${e.insigniaCategoria}">
-                                ${formatSentenceCase(course.category)}
+                                ${getCategoryName(course.category)}
                             </span>
                         </div>
 
                         <!-- Course Title -->
                         <h3 class="${e.titulo}">
-                            ${course.title}
+                            ${formatCourseTitle(course.title)}
                         </h3>
                     </div>
 
@@ -1875,7 +1988,7 @@
         const btnVolver = document.getElementById("btnVolverModal");
         const btnCerrar = document.getElementById("btnCerrarModal");
 
-        if (modalTitle) modalTitle.textContent = `#${selectedCourse.id} - ${selectedCourse.title}`;
+        if (modalTitle) modalTitle.textContent = `#${selectedCourse.id} - ${formatCourseTitle(selectedCourse.title)}`;
 
         if (btnVolver) {
           btnVolver.disabled = false;
