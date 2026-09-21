@@ -43,6 +43,9 @@
       };
 
       tailwind.config = {
+        future: {
+          hoverOnlyWhenSupported: true,
+        },
         theme: {
           extend: {
             fontSize: ({ theme }) => ({
@@ -94,16 +97,12 @@
         color: #1d1d1b;
         border: 2px solid #1d1d1b;
         border-bottom: 4px solid #1d1d1b;
-        margin-bottom: 0px;
         transition:
           transform 0.15s ease-in-out,
-          box-shadow 0.15s ease-in-out,
-          border-bottom-width 0.15s ease-in-out,
-          margin-bottom 0.15s ease-in-out;
-        cursor: pointer;
+          box-shadow 0.15s ease-in-out;
       }
 
-      .course-card:hover {
+      .course-card:focus-visible {
         transform: translateY(-3px);
         box-shadow:
           0 10px 25px -3px rgb(245 158 11 / 45%),
@@ -111,21 +110,28 @@
         border-color: #1d1d1b;
       }
 
+      @media (hover: hover) {
+        .course-card:hover {
+          transform: translateY(-3px);
+          box-shadow:
+            0 10px 25px -3px rgb(245 158 11 / 45%),
+            0 4px 6px -2px rgb(245 158 11 / 30%);
+          border-color: #1d1d1b;
+        }
+
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      }
+
       .course-card:active {
         transform: translateY(2px);
-        border-bottom-width: 2px;
-        margin-bottom: 2px;
         box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.12);
       }
 
       @media (min-width: 768px) {
         .course-card {
           border-bottom-width: 6px;
-          margin-bottom: 0px;
-        }
-        .course-card:active {
-          border-bottom-width: 4px;
-          margin-bottom: 2px;
         }
       }
 
@@ -145,10 +151,6 @@
         width: max-content;
         will-change: transform;
         animation: marquee 25s linear infinite;
-      }
-
-      .animate-marquee:hover {
-        animation-play-state: paused;
       }
 
       /* Máscara de desvanecimiento suave en los bordes laterales (Fade Mask) */
@@ -419,7 +421,7 @@
             <p class="px-4 sm:px-0 text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-7 lg:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
 
             <!-- 5. Botón de Acción -->
-            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 transform active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
+            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
               <i class="ph-bold ph-gift text-6 md:text-7 lg:text-9"></i>
               <span>ELEGIR MI CURSO <span class="hidden sm:inline-flex">DE REGALO</span></span>
             </button>
@@ -437,32 +439,16 @@
         <!-- White Container for Search, Categories, Grid & Empty State -->
         <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl p-4 md:p-8 lg:p-10 shadow-2xl w-full">
           <!-- Catalog Section Heading -->
-          <div class="text-center mb-6 sm:mb-8">
-            <h3 class="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-principal uppercase">Cursos de Alta Especialización</h3>
-            <p class="text-secundario text-sm sm:text-base md:text-lg font-medium mt-2 max-w-2xl mx-auto text-balance">Explora el catálogo completo, filtra las opciones por categoría o utiliza el buscador para encontrar el curso de tu interés.</p>
+          <div class="text-center mb-5 md:mb-6">
+            <h2 class="font-heading font-extrabold text-3xl md:text-4xl !leading-none text-principal uppercase text-balance pt-2 md:pt-0">Cursos de Alta Especialización</h2>
+            <p class="text-secundario text-base md:text-lg font-medium mt-3 max-w-2xl mx-auto text-balance !leading-snug">Revisa todos los cursos disponibles para ti, filtra por tu categoría de interés o usa el buscador para elegir el que más te guste.</p>
           </div>
 
           <!-- Search & Category Filters Box -->
-          <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark border-b-4 md:border-b-[6px] border-b-brand-dark mb-5 md:mb-6 shadow-md">
-            <div class="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch md:items-center justify-between pb-5 md:pb-6 border-b border-terciario">
-              <!-- Bloque Izquierdo: Etiqueta de Filtro y Contador de cursos (Insignia / Badge) -->
-              <div class="flex flex-wrap md:flex-nowrap items-center justify-between md:justify-start gap-4 shrink-0 order-2 md:order-1">
-                <span class="inline-flex items-center gap-2 text-xs md:text-sm !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">
-                  <i class="ph-bold ph-funnel text-brand-blue text-4 md:text-5 shrink-0"></i>
-                  <span>Filtrar<span class="hidden sm:inline"> por Categoría</span></span>
-                </span>
-
-                <span class="hidden md:inline-block w-px h-5 bg-terciario shrink-0" aria-hidden="true"></span>
-
-                <!-- Course Counter Indicator -->
-                <div class="hidden min-[330px]:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:w-44">
-                  <span>Mostrando </span>
-                  <strong id="contadorCursos" class="text-brand-blue font-bold">76</strong> cursos
-                </div>
-              </div>
-
-              <!-- Search Input Wrapper (Flexbox Layout a la derecha) -->
-              <div id="wrapperBusqueda" class="w-full md:w-auto md:flex-1 md:max-w-md flex items-center gap-2.5 px-4 py-2.5 bg-white border border-terciario hover:border-slate-400 focus-within:border-amber-400 focus-within:hover:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-lg md:rounded-xl transition-all shadow-sm group order-1 md:order-2 cursor-text">
+          <div id="cajaFiltrosYBusqueda" class="bg-brand-cardBg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark border-b-4 md:border-b-[6px] mb-5 md:mb-6 shadow-md">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center justify-between pb-0 md:pb-4 border-b-0 md:border-b border-terciario divide-y md:divide-y-0 divide-terciario">
+              <!-- Search Input Wrapper (Flexbox Layout a la derecha en desktop, primero en móvil) -->
+              <label for="inputBusqueda" id="wrapperBusqueda" class="w-full md:w-auto md:flex-1 md:max-w-md flex items-center gap-2.5 px-4 py-2.5 bg-white border border-terciario hover:border-slate-400 focus-within:border-amber-400 focus-within:hover:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-lg md:rounded-xl transition-all shadow-sm group order-1 md:order-2 cursor-text">
                 <i class="ph-bold ph-magnifying-glass text-slate-400 group-focus-within:text-amber-500 text-5 flex items-center justify-center shrink-0 transition-colors"></i>
 
                 <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 !leading-none text-base font-sans font-medium placeholder:text-slate-400 text-principal" />
@@ -471,19 +457,31 @@
                   <span class="absolute -inset-1.5 rounded-full bg-transparent group-hover/btn:bg-slate-300 group-active/btn:bg-slate-300 transition-all pointer-events-none"></span>
                   <i class="relative z-10 ph-bold ph-x text-4 leading-none"></i>
                 </button>
+              </label>
+
+              <!-- Bloque Izquierdo: Etiqueta de Filtro y Contador de cursos (Insignia / Badge) -->
+              <div class="flex flex-wrap md:flex-nowrap items-center justify-between md:justify-start gap-4 shrink-0 order-2 md:order-1 pt-4 md:pt-0 md:divide-x md:divide-terciario">
+                <span class="inline-flex items-center gap-2 text-xs md:text-sm !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">
+                  <i class="ph-bold ph-funnel text-brand-blue text-4 md:text-5 shrink-0"></i>
+                  <span>Filtrar<span class="hidden sm:inline"> por Categoría</span></span>
+                </span>
+
+                <!-- Course Counter Indicator -->
+                <div class="hidden min-[330px]:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:pl-4 md:w-44" aria-live="polite">
+                  <span>Mostrando </span>
+                  <strong id="contadorCursos" class="text-brand-blue font-bold">76</strong> cursos
+                </div>
               </div>
             </div>
 
             <!-- Category Pills Accordion -->
-            <div class="mt-4 relative">
-              <!-- Mobile-Only Toggle Controls -->
+            <div class="mt-3 md:mt-4 relative">
+              <!-- Mobile-Only Toggle Controls (Opción B) -->
               <div class="flex sm:hidden items-center justify-between gap-4 w-full">
-                <div class="flex items-center min-w-0">
-                  <span id="insigniaCategoriaActiva" onclick="toggleCategorias()" class="font-sans font-semibold text-white bg-brand-blue px-4 py-2 rounded-full !leading-none truncate text-xs cursor-pointer transition transform active:scale-95">Todos</span>
-                </div>
-                <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" class="text-xs !leading-none font-sans font-semibold text-brand-blue hover:text-brand-blueDark bg-brand-blue/10 hover:bg-brand-blue/20 px-4 py-2 rounded-full flex items-center gap-2 cursor-pointer shrink-0 ring-1 ring-inset ring-brand-blue/30 transition transform active:scale-95">
-                  <span id="textoToggleCategorias">Categorías</span>
-                  <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 transition-transform duration-200"></i>
+                <span class="text-xs md:text-sm !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">Categoría:</span>
+                <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="font-sans font-semibold text-white bg-brand-blue hover:bg-brand-blueDark px-4 py-2 rounded-full !leading-none text-xs flex items-center gap-2 cursor-pointer transition active:scale-95">
+                  <span id="insigniaCategoriaActiva" class="truncate">Todos</span>
+                  <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 transition-transform duration-200 shrink-0"></i>
                 </button>
               </div>
 
@@ -510,7 +508,7 @@
 
           <!-- Claimed Course Single Gift Card State -->
           <div id="estadoCanjeado" class="hidden w-full">
-            <div class="bg-brand-cardBg rounded-3xl p-6 sm:p-8 md:p-10 border-2 border-brand-dark border-b-[6px] border-b-brand-dark shadow-md w-full text-center flex flex-col items-center justify-center gap-5">
+            <div class="bg-brand-cardBg rounded-3xl p-6 sm:p-8 md:p-10 border-2 border-brand-dark border-b-[6px] shadow-md w-full text-center flex flex-col items-center justify-center gap-5">
               <div class="w-20 h-20 bg-amber-500/10 text-amber-600 rounded-full flex items-center justify-center text-3xl border border-amber-500/20 shadow-sm shrink-0">
                 <i class="ph-bold ph-gift"></i>
               </div>
@@ -530,7 +528,7 @@
                   <h4 id="tituloCursoCanjeado" class="font-sans font-bold text-principal text-lg sm:text-xl uppercase leading-tight text-balance">Nombre del Curso</h4>
                 </div>
 
-                <button onclick="handleSendWhatsApp()" class="w-full sm:w-auto h-11 px-6 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-heading font-bold uppercase transition-all duration-200 transform active:scale-95 shadow-md inline-flex items-center justify-center gap-2.5 shrink-0 cursor-pointer">
+                <button onclick="handleSendWhatsApp()" class="w-full sm:w-auto h-11 px-6 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-heading font-bold uppercase transition-all duration-200 active:scale-95 shadow-md inline-flex items-center justify-center gap-2.5 shrink-0 cursor-pointer">
                   <i class="ph-bold ph-whatsapp-logo text-xl"></i>
                   <span>Confirmar por WhatsApp</span>
                 </button>
@@ -539,7 +537,7 @@
           </div>
 
           <!-- Empty Search State Container -->
-          <div id="estadoVacio" class="hidden text-center py-16 bg-brand-cardBg rounded-3xl border-2 border-brand-dark border-b-[6px] border-b-brand-dark shadow-md">
+          <div id="estadoVacio" class="hidden text-center py-16 bg-brand-cardBg rounded-3xl border-2 border-brand-dark border-b-[6px] shadow-md">
             <div class="w-20 h-20 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border border-brand-blue/30 shadow-sm">
               <i class="ph-bold ph-ghost"></i>
             </div>
@@ -1567,23 +1565,21 @@
         cargarNombreEstudiante(apiData);
         renderHeroFeatures();
 
+        // Pre-calcular índice de búsqueda sin acentos (una sola vez al iniciar)
+        ALL_COURSES.forEach((course) => {
+          if (!course._searchIndex) {
+            const catName = getCategoryName(course.category);
+            course._searchIndex = `${course.id} ${removeAccents(course.title)} ${removeAccents(catName)}`;
+          }
+        });
+
         renderCategories();
         renderCourses(ALL_COURSES);
         checkClaimedState(apiData);
 
         // Listeners de búsqueda
-        const wrapperBusqueda = document.getElementById("wrapperBusqueda");
         const inputBusqueda = document.getElementById("inputBusqueda");
         const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
-
-        if (wrapperBusqueda && inputBusqueda) {
-          wrapperBusqueda.addEventListener("click", (e) => {
-            if (btnLimpiarBusqueda && (e.target === btnLimpiarBusqueda || btnLimpiarBusqueda.contains(e.target))) {
-              return;
-            }
-            inputBusqueda.focus();
-          });
-        }
 
         if (inputBusqueda) {
           inputBusqueda.addEventListener("input", (e) => {
@@ -1615,11 +1611,43 @@
         }
 
         if (btnLimpiarBusqueda) {
-          btnLimpiarBusqueda.addEventListener("click", () => {
+          btnLimpiarBusqueda.addEventListener("click", (e) => {
+            e.stopPropagation();
             inputBusqueda.value = "";
             btnLimpiarBusqueda.classList.add("hidden");
             filterCourses();
             inputBusqueda.focus();
+          });
+        }
+
+        // Listener de scroll para el degradado en categorías móviles (una sola vez)
+        const listaMovil = document.getElementById("listaCategoriasMovil");
+        const fadeMovil = document.getElementById("fadeCategoriasMovil");
+        if (listaMovil && fadeMovil) {
+          listaMovil.addEventListener("scroll", () => {
+            const isAtBottom = listaMovil.scrollHeight - listaMovil.scrollTop - listaMovil.clientHeight < 8;
+            fadeMovil.style.opacity = isAtBottom ? "0" : "1";
+          });
+        }
+
+        // Delegación de eventos centralizada para las tarjetas de cursos (clic y teclado)
+        const grillaCursos = document.getElementById("grillaCursos");
+        if (grillaCursos) {
+          grillaCursos.addEventListener("click", (e) => {
+            const card = e.target.closest("[data-course-id]");
+            if (card && card.dataset.courseId) {
+              openModal(Number(card.dataset.courseId));
+            }
+          });
+
+          grillaCursos.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              const card = e.target.closest("[data-course-id]");
+              if (card && card.dataset.courseId) {
+                e.preventDefault();
+                openModal(Number(card.dataset.courseId));
+              }
+            }
           });
         }
 
@@ -1717,6 +1745,11 @@
 
         isCategoriasExpanded = !isCategoriasExpanded;
 
+        const btnToggle = document.getElementById("btnToggleCategorias");
+        if (btnToggle) {
+          btnToggle.setAttribute("aria-expanded", isCategoriasExpanded ? "true" : "false");
+        }
+
         if (isCategoriasExpanded) {
           container.classList.remove("hidden");
           if (textoBtn) textoBtn.textContent = "Cerrar";
@@ -1764,7 +1797,8 @@
 
         return `
           <button onclick="selectCategory('${cat}')" 
-                  class="w-full px-4 py-3.5 text-left text-sm !leading-none font-sans flex items-center justify-between gap-3 transition cursor-pointer overflow-hidden ${isActive ? estiloActivo : estiloInactivo}">
+                  aria-selected="${isActive}"
+                  class="w-full px-4 py-3.5 text-left text-sm !leading-none font-sans flex items-center justify-between gap-4 transition cursor-pointer overflow-hidden ${isActive ? estiloActivo : estiloInactivo}">
             <span class="truncate min-w-0 flex-1" title="${catLabel}">${catLabel}</span>
             ${isActive ? '<i class="ph-bold ph-check text-3.5 shrink-0"></i>' : ""}
           </button>
@@ -1778,12 +1812,13 @@
         const catLabel = cat;
 
         // Estilos para la píldora en desktop
-        const estiloActivo = "bg-brand-blue hover:bg-brand-blueDark text-white  font-semibold shadow-sm";
-        const estiloInactivo = "bg-cuaternario text-secundario  hover:bg-slate-200  ring-1 ring-inset ring-terciario font-semibold";
+        const estiloActivo = "bg-brand-blue hover:bg-brand-blueDark text-white font-semibold shadow-sm";
+        const estiloInactivo = "bg-cuaternario text-secundario hover:bg-slate-200 ring-1 ring-inset ring-terciario font-semibold";
 
         return `
           <button onclick="selectCategory('${cat}')" 
-                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs sm:text-sm shrink-0 transition transform active:scale-95 flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
+                  aria-pressed="${isActive}"
+                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs md:text-sm shrink-0 transition active:scale-95 flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
             <span>${catLabel}</span>
           </button>
         `;
@@ -1802,15 +1837,6 @@
         const listaMovil = document.getElementById("listaCategoriasMovil") || contenedorMovil;
         if (listaMovil) {
           listaMovil.innerHTML = categories.map((cat) => renderItemCategoriaMovil(cat, cat === activeCategory)).join("");
-
-          const fadeMovil = document.getElementById("fadeCategoriasMovil");
-          if (fadeMovil && !listaMovil._hasScrollListener) {
-            listaMovil._hasScrollListener = true;
-            listaMovil.addEventListener("scroll", () => {
-              const isAtBottom = listaMovil.scrollHeight - listaMovil.scrollTop - listaMovil.clientHeight < 8;
-              fadeMovil.style.opacity = isAtBottom ? "0" : "1";
-            });
-          }
         }
 
         // Renderizar píldoras en desktop (alineadas desde la izquierda)
@@ -1821,6 +1847,7 @@
 
       function selectCategory(cat) {
         activeCategory = cat;
+        renderCategories();
 
         // En móvil, colapsar automáticamente el acordeón tras elegir categoría
         if (window.innerWidth < 640 && isCategoriasExpanded) {
@@ -1843,19 +1870,15 @@
         const rawQuery = inputBusqueda ? inputBusqueda.value.trim() : "";
         const cleanQuery = removeAccents(rawQuery);
 
-        renderCategories();
-
         const tokens = cleanQuery.split(/\s+/).filter(Boolean);
         const searchId = rawQuery.replace(/^#/, "").trim();
 
         const filtered = ALL_COURSES.filter((course) => {
           const categoryName = getCategoryName(course.category);
           const matchesCategory = activeCategory === "Todos" || categoryName === activeCategory;
-          const courseTitleClean = removeAccents(course.title);
-          const courseCategoryClean = removeAccents(categoryName);
-          const fullSearchText = `${courseTitleClean} ${courseCategoryClean}`;
 
-          const matchesSearch = tokens.length === 0 || course.id.toString() === searchId || tokens.every((token) => fullSearchText.includes(token));
+          const searchIndex = course._searchIndex || `${course.id} ${removeAccents(course.title)} ${removeAccents(categoryName)}`;
+          const matchesSearch = tokens.length === 0 || course.id.toString() === searchId || tokens.every((token) => searchIndex.includes(token));
 
           return matchesCategory && matchesSearch;
         });
@@ -1881,33 +1904,25 @@
         return title.replace(/(\S+)\s+([yY])\b/g, (m, p1, p2) => p1 + "\u00A0" + p2);
       }
 
-      function formatSentenceCase(str) {
-        if (!str) return "";
-        if (str === str.toUpperCase()) {
-          return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-        }
-        return str;
-      }
-
       // Configuración centralizada de clases responsivas para las tarjetas de curso (en Español)
       const ESTILOS_TARJETA = {
-        contenedorTarjeta: "course-card rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-md flex flex-col justify-between relative group overflow-hidden cursor-pointer",
+        contenedorTarjeta: "course-card rounded-2xl md:rounded-3xl p-5 md:p-6 shadow-md flex flex-col justify-between relative group overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-amber-400 focus-visible:ring-offset-2",
         insigniaBase: "font-heading !leading-none text-xs md:text-sm px-3 py-2",
         encabezadoContenedor: "flex items-center justify-between mb-3 md:mb-4 gap-3",
         get insigniaId() {
-          return `${this.insigniaBase} inline-block uppercase rounded-lg  md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0`;
+          return `${this.insigniaBase} inline-block uppercase rounded-lg md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0`;
         },
         get insigniaCategoria() {
-          return `${this.insigniaBase}  rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate hidden min-[350px]:inline-block`;
+          return `${this.insigniaBase} rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate hidden min-[350px]:inline-block`;
         },
-        titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6  uppercase text-balance",
+        titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6 uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
         get insigniaSeleccionar() {
           return `${this.insigniaBase} inline-flex items-center uppercase rounded-full font-bold gap-2 text-brand-blue bg-brand-blue/10 border border-brand-blue/30 group-hover:bg-amber-400 group-hover:border-amber-400 group-hover:text-principal min-w-0 transition`;
         },
         iconoSeleccionar: "ph-bold ph-hand-tap text-4 md:text-5 text-brand-blue group-hover:text-principal transition shrink-0",
         textoSeleccionar: "whitespace-nowrap transition truncate min-w-0",
-        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-400 text-4 md:text-5 group-hover:translate-x-1.5 transition transform shrink-0 hidden min-[300px]:block",
+        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-400 text-4 md:text-5 group-hover:translate-x-1.5 transition shrink-0 hidden min-[300px]:block",
       };
 
       function renderCourses(list) {
@@ -1937,7 +1952,11 @@
         grid.innerHTML = list
           .map(
             (course) => `
-                <div onclick="openModal(${course.id})" class="${e.contenedorTarjeta}">
+                <div data-course-id="${course.id}" 
+                     tabindex="0" 
+                     role="button" 
+                     aria-label="Seleccionar curso #${course.id}: ${course.title}" 
+                     class="${e.contenedorTarjeta}">
                     <div>
                         <!-- Category Badge & Course Number -->
                         <div class="${e.encabezadoContenedor}">
