@@ -272,6 +272,23 @@
         animation: modal-scale-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
 
+      /* Animación suave de salida para el modal */
+      @keyframes modal-scale-out {
+        from {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+
+        to {
+          opacity: 0;
+          transform: scale(0.96) translateY(8px);
+        }
+      }
+
+      .animate-modal-out {
+        animation: modal-scale-out 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
       /* ==========================================================================
          Estilos CSS en Español para Vistas de Estado (Vista 1 y Vista 3)
          ========================================================================== */
@@ -599,7 +616,7 @@
       <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 min-h-svh min-h-dvh bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-6 md:p-8 overscroll-contain">
         <div class="rounded-2xl md:rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden my-auto animate-modal-in max-h-[90dvh] flex flex-col">
           <!-- Modal Header (Hero Style with Confetti Pattern & Radial Glow) -->
-          <div class="relative bg-brand-dark p-5 pb-6 md:p-6 md:pb-8 text-white shrink-0 overflow-hidden">
+          <div class="relative bg-brand-dark p-5 md:p-6 text-white shrink-0 overflow-hidden">
             <!-- Background Confetti Pattern -->
             <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
 
@@ -608,13 +625,13 @@
 
             <!-- Content Container -->
             <div class="relative z-10">
-              <div class="flex items-center justify-between gap-4 mb-4">
+              <div class="flex items-center justify-between gap-4 mb-6">
                 <div class="inline-flex items-center gap-2 bg-amber-400 text-principal font-heading font-bold text-xs md:text-sm px-3 py-1.5 rounded-full uppercase !leading-none select-none">
                   <i class="ph-bold ph-gift text-4 md:text-5 shrink-0"></i>
                   <span>Selección de Curso</span>
                 </div>
 
-                <button type="button" id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-8 md:w-9 aspect-square shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-terciario hover:text-cuaternario transition-colors active:scale-95 cursor-pointer !leading-none">
+                <button type="button" id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-8 md:w-9 aspect-square shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors active:scale-95 cursor-pointer !leading-none">
                   <i class="ph-bold ph-x text-4 md:text-5"></i>
                 </button>
               </div>
@@ -727,8 +744,8 @@
         cabeceraTexto: "flex flex-col gap-2 max-w-2xl mx-auto",
         titulo: "font-heading text-2xl md:text-3xl font-bold text-principal uppercase text-balance !leading-[1.15]",
         subtitulo: "text-secundario text-base md:text-lg font-medium text-balance !leading-snug",
-        botonBase: "font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none  px-4 md:px-5  py-3 md:py-4 rounded-lg md:rounded-xl transition active:scale-95 shadow-md cursor-pointer whitespace-nowrap",
-        iconoBoton: "ph-bold text-6 md:text-7 shrink-0",
+        botonBase: "font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none    py-4 px-6 rounded-lg md:rounded-xl transition active:scale-95 shadow-md cursor-pointer whitespace-nowrap",
+        iconoBoton: "ph-bold text-5 md:text-6 shrink-0",
       };
 
       function aplicarEstilosEstado() {
@@ -803,33 +820,35 @@
       // ==========================================================================
       const MODAL_CONFIG = {
         estilos: {
-          cajaAlerta: "border rounded-2xl p-3.5 md:p-4 text-center flex flex-col items-center justify-center gap-2",
-          icono: "ph-bold text-8 md:text-9",
-          titulo: "font-heading font-bold text-lg md:text-xl uppercase text-balance",
-          parrafo: "font-medium text-sm md:text-base text-principal text-balance",
+          cajaAlerta: "border rounded-xl md:rounded-2xl p-4 md:p-5 text-center flex flex-col items-center justify-center",
+          icono: "ph-bold text-10 md:text-12 mb-3",
+          titulo: "font-heading font-bold text-lg md:text-xl uppercase text-balance mb-1",
+          parrafo: "font-medium text-sm md:text-base !leading-snug text-balance",
           tamanoIconoBoton: "text-5 md:text-6",
-          botonBase: "py-3.5 md:py-4 px-3.5 md:px-5 rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none transition active:scale-95 cursor-pointer whitespace-nowrap",
+          botonBase: "py-4 px-6 rounded-lg md:rounded-xl  font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none transition active:scale-95 cursor-pointer whitespace-nowrap",
           colorBotonVolver: "ring-1 ring-inset ring-slate-300 text-secundario hover:bg-slate-100 shrink-0",
         },
         paso1: {
           colorCaja: "bg-blue-50/80 border-blue-200/80 text-blue-950",
           iconoPaso: "ph-seal-question text-brand-blue",
           colorTitulo: "text-brand-blue",
+          colorParrafo: "text-blue-950",
           colorBoton: "flex-1 bg-brand-blue hover:bg-brand-blueDark text-white shadow-md",
           colorBotonError: "flex-1 bg-rose-600 hover:bg-rose-700 text-white shadow-md",
           titulo: "Confirma tu curso de regalo",
-          parrafo: "Asegúrate de que este sea el curso que deseas llevar. Si no estás seguro puedes <strong>volver</strong> y elegir otro; de lo contrario, haz clic en <strong>REGISTRAR CURSO</strong> para guardar tu selección.",
+          parrafo: "Revisa tu selección antes de continuar. Puedes volver a la lista para elegir otro o hacer clic en <strong>REGISTRAR CURSO</strong> para guardarlo.",
           textoBoton: "REGISTRAR CURSO",
           iconoBoton: "ph-paper-plane-tilt",
         },
         paso2: {
           colorCaja: "bg-emerald-50/80 border-emerald-200/80 text-emerald-950",
           iconoPaso: "ph-seal-check text-emerald-600",
-          colorTitulo: "text-emerald-900",
+          colorTitulo: "text-emerald-600",
+          colorParrafo: "text-emerald-950",
           colorBoton: "w-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md",
           titulo: "¡Curso Registrado con Éxito!",
-          parrafo: "Tu curso ya fue guardado en el sistema. Se habilitará en <strong>1 día hábil</strong> y te notificaremos por <strong>correo y WhatsApp</strong> en cuanto tu acceso se encuentre completamente disponible.",
-          textoBoton: "NOTIFICAR POR WHATSAPP",
+          parrafo: "Tu curso estará disponible en un plazo máximo de <strong>1 día hábil</strong>. Te notificaremos por correo en cuanto ya puedas ingresar.",
+          textoBoton: "CONFIRMAR POR WHATSAPP",
           iconoBoton: "ph-whatsapp-logo",
         },
       };
@@ -846,19 +865,19 @@
               <h4 class="${estilos.titulo} ${paso1.colorTitulo}">
                 ${paso1.titulo}
               </h4>
-              <p class="${estilos.parrafo}">
+              <p class="${estilos.parrafo} ${paso1.colorParrafo}">
                 ${paso1.parrafo}
               </p>
             </div>
 
-            <div class="flex items-center gap-2.5 md:gap-3">
+            <div class="flex items-center gap-3">
               <button
                 type="button"
                 id="btnVolverModal"
                 onclick="closeModal()"
                 aria-label="Volver"
                 title="Volver"
-                class="${estilos.botonBase} ${estilos.colorBotonVolver}">
+                class="${estilos.botonBase} max-md:!px-4 ${estilos.colorBotonVolver}">
                 <i class="ph-bold ph-arrow-left ${estilos.tamanoIconoBoton}"></i>
                 <span class="hidden md:inline">Volver</span>
               </button>
@@ -881,7 +900,7 @@
               <h4 class="${estilos.titulo} ${paso2.colorTitulo}">
                 ${paso2.titulo}
               </h4>
-              <p class="${estilos.parrafo}">
+              <p class="${estilos.parrafo} ${paso2.colorParrafo}">
                 ${paso2.parrafo}
               </p>
             </div>
@@ -2179,6 +2198,11 @@
         isRegisteringCourse = false;
         resetBotonRegistro();
 
+        if (timerAutoCierrePaso2) {
+          clearTimeout(timerAutoCierrePaso2);
+          timerAutoCierrePaso2 = null;
+        }
+
         const modalTitle = document.getElementById("modalTituloCurso");
         const modalCanje = document.getElementById("modalCanje");
         const step1 = document.getElementById("modalPaso1");
@@ -2207,9 +2231,15 @@
 
         if (modalCanje) modalCanje.classList.remove("hidden");
         lockScroll();
+
+        // Enfoque automático en el botón de cierre al abrir
+        setTimeout(() => {
+          if (btnCerrar) btnCerrar.focus();
+        }, 50);
       }
 
       let timerResetBoton = null;
+      let timerAutoCierrePaso2 = null;
 
       function resetBotonRegistro(esReintento = false) {
         if (timerResetBoton) {
@@ -2229,16 +2259,40 @@
         // Bloquear salida si el registro está en proceso
         if (isRegisteringCourse) return;
 
+        if (timerAutoCierrePaso2) {
+          clearTimeout(timerAutoCierrePaso2);
+          timerAutoCierrePaso2 = null;
+        }
+
         resetBotonRegistro();
 
         const modalCanje = document.getElementById("modalCanje");
-        if (modalCanje) modalCanje.classList.add("hidden");
-        unlockScroll();
+        const modalContainer = modalCanje?.firstElementChild;
+
+        if (modalCanje && !modalCanje.classList.contains("hidden") && modalContainer) {
+          modalContainer.classList.remove("animate-modal-in");
+          modalContainer.classList.add("animate-modal-out");
+
+          setTimeout(() => {
+            modalCanje.classList.add("hidden");
+            modalContainer.classList.remove("animate-modal-out");
+            modalContainer.classList.add("animate-modal-in");
+            unlockScroll();
+          }, 180);
+        } else if (modalCanje) {
+          modalCanje.classList.add("hidden");
+          unlockScroll();
+        }
       }
 
-      // Cerrar modal al presionar la tecla Escape (solo si no está registrando)
+      // Cerrar modal al presionar la tecla Escape (solo si el modal está visible y no está registrando)
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeModal();
+        if (e.key === "Escape") {
+          const modalCanje = document.getElementById("modalCanje");
+          if (modalCanje && !modalCanje.classList.contains("hidden")) {
+            closeModal();
+          }
+        }
       });
 
       // Registro de elección en Google Sheets vía POST (no-cors) con control de timeout y reintento
@@ -2373,10 +2427,21 @@
 
         // Bloquear catálogo de fondo
         checkClaimedState();
+
+        // Auto-cierre automático tras 5 segundos de permanencia en el Paso 2 si el usuario no presiona WhatsApp
+        if (timerAutoCierrePaso2) clearTimeout(timerAutoCierrePaso2);
+        timerAutoCierrePaso2 = setTimeout(() => {
+          closeModal();
+        }, 5000);
       }
 
       function handleSendWhatsApp() {
         if (!selectedCourse) return;
+
+        if (timerAutoCierrePaso2) {
+          clearTimeout(timerAutoCierrePaso2);
+          timerAutoCierrePaso2 = null;
+        }
 
         const message = `¡Hola, EDUMIN! Acabo de elegir mi curso de regalo por mi cumpleaños: *"${selectedCourse.title}"*. Quedo a la espera de las indicaciones para acceder a la plataforma educativa. ¡Saludos!`;
         const encodedMessage = encodeURIComponent(message);
