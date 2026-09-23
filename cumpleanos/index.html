@@ -276,7 +276,7 @@
          Estilos CSS en Español para Vistas de Estado (Vista 1 y Vista 3)
          ========================================================================== */
       .pantalla-estado {
-        flex: 1 0 auto;
+        flex: 1 1 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -399,7 +399,7 @@
     </style>
   </head>
 
-  <body class="bg-brand-dark text-cuaternario font-sans font-medium min-h-screen flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
+  <body class="bg-brand-dark text-cuaternario font-sans font-medium min-h-screen min-h-svh min-h-dvh flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
     <!-- VISTA 1: Pantalla de Carga (Inicialmente Visible) -->
     <div id="pantalla-carga" class="pantalla-estado tema-estado-carga">
       <!-- Fondo continuo de confeti sutil -->
@@ -420,7 +420,7 @@
     </div>
 
     <!-- VISTA 2: Selección de Curso (Inicialmente Oculta) -->
-    <div id="pantalla-cursos" class="hidden flex-col justify-between min-h-screen relative">
+    <div id="pantalla-cursos" class="hidden flex-col justify-between min-h-screen min-h-svh min-h-dvh relative">
       <!-- Fondo continuo de confeti sutil para toda la página -->
       <div class="bg-pattern fixed inset-0 opacity-40 pointer-events-none"></div>
 
@@ -554,20 +554,24 @@
                 <p>Tu beneficio de cumpleaños ha sido registrado con éxito. Te notificaremos cuando tu curso esté disponible. Revisa los detalles de tu elección a continuación.</p>
               </div>
 
-              <!-- Selected Course Card Box -->
-              <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm text-left w-full max-w-2xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div class="space-y-1.5 flex-1 min-w-0">
-                  <div class="flex items-center gap-2 flex-wrap mb-2 md:mb-2.5">
-                    <span id="insigniaNumeroCursoCanjeado" class="font-heading !leading-none text-xs md:text-sm px-3 py-2 inline-block uppercase rounded-lg md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0">Curso #1</span>
-                    <span id="insigniaCategoriaCursoCanjeado" class="font-heading !leading-none text-xs md:text-sm px-3 py-2 rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate inline-block">Categoría</span>
-                  </div>
-                  <h4 id="tituloCursoCanjeado" class="font-sans font-bold text-principal text-lg md:text-xl uppercase leading-tight text-balance">Nombre del Curso</h4>
+              <!-- Selected Course Card Box (Tarjeta limpia con insignias de la grilla) -->
+              <div class="bg-white p-5 md:p-6 rounded-2xl border border-slate-200 shadow-sm text-left w-full max-w-2xl mx-auto space-y-4">
+                <!-- Badges de curso y categoría idénticos a la grilla -->
+                <div class="flex items-center gap-2 flex-wrap min-w-0">
+                  <span id="insigniaNumeroCursoCanjeado" class="font-heading !leading-none text-xs md:text-sm px-3 py-2 inline-block uppercase rounded-lg md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0">Curso #1</span>
+                  <span id="insigniaCategoriaCursoCanjeado" class="font-heading !leading-none text-xs md:text-sm px-3 py-2 rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario ring-1 ring-inset ring-terciario shrink min-w-0 truncate inline-block">Categoría</span>
                 </div>
 
-                <button onclick="handleSendWhatsApp()">
-                  <i></i>
-                  <span>Confirmar por WhatsApp</span>
-                </button>
+                <!-- Título del Curso -->
+                <h4 id="tituloCursoCanjeado" class="font-sans font-bold text-principal text-xl md:text-2xl uppercase leading-tight text-balance">Nombre del Curso</h4>
+
+                <!-- Fila dedicada independiente para el Botón de WhatsApp (Tamaño Auto) -->
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-center sm:justify-end">
+                  <button onclick="handleSendWhatsApp()" class="font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition active:scale-95 shadow-md cursor-pointer whitespace-nowrap">
+                    <i class="ph-bold ph-whatsapp-logo text-6 md:text-7 shrink-0"></i>
+                    <span>Confirmar por WhatsApp</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -592,10 +596,10 @@
       </main>
 
       <!-- Direct Confirmation Modal (2-Step Registration + WhatsApp) -->
-      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-6 md:p-8 overscroll-contain">
-        <div class="bg-brand-cardBg rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden my-auto animate-modal-in max-h-[90vh] flex flex-col">
+      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 min-h-svh min-h-dvh bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-6 md:p-8 overscroll-contain">
+        <div class="rounded-2xl md:rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden my-auto animate-modal-in max-h-[90dvh] flex flex-col">
           <!-- Modal Header (Hero Style with Confetti Pattern & Radial Glow) -->
-          <div class="relative bg-brand-dark p-4 md:p-5 text-white shrink-0 overflow-hidden">
+          <div class="relative bg-brand-dark p-5 pb-6 md:p-6 md:pb-8 text-white shrink-0 overflow-hidden">
             <!-- Background Confetti Pattern -->
             <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
 
@@ -604,13 +608,14 @@
 
             <!-- Content Container -->
             <div class="relative z-10">
-              <div class="flex items-center justify-between gap-3 mb-4">
-                <div class="inline-flex items-center gap-1.5 bg-amber-400 text-principal font-heading font-bold text-xs md:text-sm px-3 md:px-3.5 py-1.5 md:py-2 rounded-full uppercase !leading-none select-none">
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <div class="inline-flex items-center gap-2 bg-amber-400 text-principal font-heading font-bold text-xs md:text-sm px-3 py-1.5 rounded-full uppercase !leading-none select-none">
                   <i class="ph-bold ph-gift text-4 md:text-5 shrink-0"></i>
                   <span>Selección de Curso</span>
                 </div>
-                <button id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-9 aspect-square shrink-0 inline-flex items-center justify-center rounded-full text-terciario hover:text-white hover:bg-white/10 transition-colors duration-150 cursor-pointer leading-none">
-                  <i class="ph-bold ph-x text-5"></i>
+
+                <button type="button" id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="w-8 md:w-9 aspect-square shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-terciario hover:text-cuaternario transition-colors active:scale-95 cursor-pointer !leading-none">
+                  <i class="ph-bold ph-x text-4 md:text-5"></i>
                 </button>
               </div>
 
@@ -619,7 +624,7 @@
           </div>
 
           <!-- Modal Body -->
-          <div class="p-4 md:p-5 flex flex-col gap-4 overflow-y-auto overscroll-contain">
+          <div class="bg-brand-cardBg flex-1 p-5 md:p-6 flex flex-col gap-4 overflow-y-auto overscroll-contain">
             <!-- Step 1: Initial Action View (Inyectado por script vía MODAL_CONFIG) -->
             <div id="modalPaso1" class="flex flex-col gap-4"></div>
 
@@ -675,7 +680,7 @@
             <!-- WhatsApp Support Block -->
             <div class="flex flex-col items-center sm:items-start gap-2">
               <span class="text-xs font-sans font-bold uppercase">Contáctanos:</span>
-              <a href="https://wa.me/51980694497" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 px-3.5 rounded-xl transition-colors duration-150 shadow-sm">
+              <a href="https://wa.me/51980694497" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 px-3.5 rounded-xl transition-colors shadow-sm">
                 <i class="ph-bold ph-whatsapp-logo text-lg text-emerald-400"></i>
                 <span>980 694 497</span>
               </a>
@@ -685,19 +690,19 @@
             <div class="flex flex-col items-center sm:items-start gap-2 text-terciario">
               <span class="text-xs font-sans font-bold uppercase">Síguenos en:</span>
               <div class="flex items-center gap-2">
-                <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-instagram-logo"></i>
                 </a>
-                <a href="https://www.facebook.com/edumin.pe" target="_blank" aria-label="Facebook" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                <a href="https://www.facebook.com/edumin.pe" target="_blank" aria-label="Facebook" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-facebook-logo"></i>
                 </a>
-                <a href="https://www.tiktok.com/@edumin_pe" target="_blank" aria-label="TikTok" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                <a href="https://www.tiktok.com/@edumin_pe" target="_blank" aria-label="TikTok" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-tiktok-logo"></i>
                 </a>
-                <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-linkedin-logo"></i>
                 </a>
-                <a href="https://www.edumin.pe/" target="_blank" aria-label="Sitio Web EDUMIN" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors duration-150">
+                <a href="https://www.edumin.pe/" target="_blank" aria-label="Sitio Web EDUMIN" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-globe"></i>
                 </a>
               </div>
@@ -1409,7 +1414,6 @@
             tituloCursoCanjeado.innerHTML = formatCourseTitle(claimedData.title);
           }
 
-          // Aplicar dinámicamente las clases de ESTILOS_TARJETA para mantener 100% de coherencia visual
           if (insigniaNumeroCursoCanjeado) {
             insigniaNumeroCursoCanjeado.className = ESTILOS_TARJETA.insigniaId;
             insigniaNumeroCursoCanjeado.textContent = claimedData.id ? `Curso #${claimedData.id}` : "Curso Seleccionado";
