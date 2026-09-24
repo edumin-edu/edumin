@@ -290,67 +290,113 @@
       }
 
       /* ==========================================================================
-         Estilos CSS en Español para Vistas de Estado (Vista 1 y Vista 3)
+         Estilos CSS para Vistas de Estado (Vista 1 y Vista 3)
+         Estandarizados con Tokens Tailwind y Breakpoints (Móvil y MD)
          ========================================================================== */
+
+      /* Tailwind Móvil & MD: flex-1 flex flex-col justify-between bg-brand-dark relative z-50 w-full */
       .pantalla-estado {
         flex: 1 1 auto;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 5rem 1.5rem 2.5rem;
-        text-align: center;
+        justify-content: space-between;
         background-color: #1d1d1b;
         position: relative;
         z-index: 50;
+        width: 100%;
       }
 
-      .logo-superior-pantalla {
-        position: absolute;
-        top: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: inline-block;
-        cursor: pointer;
+      /* Tailwind Móvil: w-full flex items-center justify-center pt-4 px-4 pb-0 shrink-0 relative z-10 */
+      /* Tailwind MD: md:pt-6 md:px-6 md:pb-0 */
+      .encabezado-pantalla-estado {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 1rem 0;
+        flex-shrink: 0;
+        position: relative;
         z-index: 10;
       }
 
+      @media (min-width: 768px) {
+        .encabezado-pantalla-estado {
+          padding: 1.5rem 1.5rem 0;
+        }
+      }
+
+      /* Tailwind Móvil: inline-flex items-center justify-center cursor-pointer */
+      .logo-superior-pantalla {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      /* Tailwind Móvil: h-10 w-auto object-contain */
       .logo-superior-pantalla img {
         height: 2.5rem;
         width: auto;
         object-fit: contain;
       }
 
-      @media (width >=640px) {
-        .logo-superior-pantalla {
-          top: 2.5rem;
-        }
-
+      /* Tailwind MD: (img: md:h-12) */
+      @media (min-width: 768px) {
         .logo-superior-pantalla img {
           height: 3rem;
         }
       }
 
+      /* Tailwind Móvil: flex-1 w-full flex items-center justify-center p-4 shrink-0 relative z-10 */
+      /* Tailwind MD: md:p-6 */
+      .cuerpo-pantalla-estado {
+        flex: 1 1 auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+        z-index: 10;
+      }
+
+      @media (min-width: 768px) {
+        .cuerpo-pantalla-estado {
+          padding: 1.5rem;
+        }
+      }
+
+      /* Tailwind Móvil: max-w-sm w-full bg-[#121210] text-white rounded-2xl p-6 border-2 border-white/10 shadow-card-lift relative overflow-hidden flex flex-col items-center text-center */
       .tarjeta-estado {
-        max-width: 28rem;
+        max-width: 24rem;
         width: 100%;
         background-color: #121210;
-        color: #fff;
-        border-radius: 1.5rem;
-        padding: 2.25rem 2rem 2rem;
-        border: 1px solid rgb(255 255 255 / 10%);
+        color: #ffffff;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 2px solid rgb(255 255 255 / 12%);
         box-shadow: 0 12px 30px -5px rgb(0 0 0 / 35%);
         position: relative;
         overflow: hidden;
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
       }
 
+      /* Tailwind MD: md:rounded-3xl md:p-8 */
+      @media (min-width: 768px) {
+        .tarjeta-estado {
+          border-radius: 1.5rem;
+          padding: 2rem;
+        }
+      }
+
+      /* Tailwind Móvil: w-14 h-14 rounded-xl flex items-center justify-center mb-4 shrink-0 */
       .caja-icono-estado {
-        width: 4rem;
-        height: 4rem;
-        border-radius: 0.875rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 0.75rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -358,35 +404,69 @@
         flex-shrink: 0;
       }
 
+      /* Tailwind Móvil: text-6 leading-none */
       .caja-icono-estado i {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         line-height: 1;
       }
 
+      /* Tailwind MD: md:w-16 md:h-16 md:rounded-2xl (icono: md:text-7) */
+      @media (min-width: 768px) {
+        .caja-icono-estado {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 1rem;
+        }
+
+        .caja-icono-estado i {
+          font-size: 1.75rem;
+        }
+      }
+
+      /* Tailwind Móvil: font-heading font-bold text-2xl leading-[1.15] uppercase text-white mt-0 mb-3 text-center text-balance */
       .titulo-estado {
         font-family: "Barlow Condensed", sans-serif;
         font-weight: 700;
-        font-size: 1.75rem;
-        line-height: 1.25;
+        font-size: 1.5rem;
+        line-height: 1.15;
         text-transform: uppercase;
-        color: #fff;
+        color: #ffffff;
         margin-top: 0;
         margin-bottom: 0.75rem;
+        text-align: center;
         text-wrap: balance;
       }
 
+      /* Tailwind MD: md:text-3xl (1.75rem / 28px) */
+      @media (min-width: 768px) {
+        .titulo-estado {
+          font-size: 1.75rem;
+        }
+      }
+
+      /* Tailwind Móvil: font-sans font-medium text-sm leading-snug text-terciario m-0 max-w-xs text-center text-balance */
       .subtitulo-estado {
         font-family: "Barlow Semi Condensed", sans-serif;
         font-weight: 500;
-        font-size: 1rem;
-        line-height: 1.5rem;
+        font-size: 0.875rem;
+        line-height: 1.35rem;
         color: #cbd5e1;
         margin: 0;
         max-width: 22rem;
+        text-align: center;
         text-wrap: balance;
       }
 
+      /* Tailwind MD: md:text-base md:leading-normal md:max-w-sm */
+      @media (min-width: 768px) {
+        .subtitulo-estado {
+          font-size: 1rem;
+          line-height: 1.5rem;
+        }
+      }
+
       /* Vista 1: Carga (Azul EDUMIN Resplandeciente) */
+      /* Tailwind Móvil & MD: bg-brand-blue/15 border border-brand-blue/35 text-blue-500 shadow-glow */
       .tema-estado-carga .caja-icono-estado {
         background-color: rgb(2 74 223 / 15%);
         border: 1px solid rgb(2 74 223 / 35%);
@@ -395,6 +475,7 @@
       }
 
       /* Vista 3: Expirado (Ámbar Dorado Resplandeciente) */
+      /* Tailwind Móvil & MD: bg-amber-500/15 border border-amber-500/35 text-amber-400 shadow-gold-glow */
       .tema-estado-expirado .caja-icono-estado {
         background-color: rgb(245 158 11 / 15%);
         border: 1px solid rgb(245 158 11 / 35%);
@@ -419,21 +500,26 @@
   <body class="bg-brand-dark text-cuaternario font-sans font-medium min-h-screen min-h-svh min-h-dvh flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
     <!-- VISTA 1: Pantalla de Carga (Inicialmente Visible) -->
     <div id="pantalla-carga" class="pantalla-estado tema-estado-carga">
-      <!-- Fondo continuo de confeti sutil -->
+      <!-- Fondo continuo de confeti sutil (Capa inferior) -->
       <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
 
-      <!-- Logo Oficial EDUMIN superior centrado -->
-      <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN">
-        <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" onerror="handleLogoError(this)" />
-      </a>
+      <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
+      <header class="encabezado-pantalla-estado">
+        <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web oficial de EDUMIN">
+          <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" onerror="handleLogoError(this)" />
+        </a>
+      </header>
 
-      <div class="tarjeta-estado">
-        <div class="caja-icono-estado">
-          <i class="ph-bold ph-circle-notch animate-spin"></i>
+      <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
+      <main class="cuerpo-pantalla-estado">
+        <div class="tarjeta-estado">
+          <div class="caja-icono-estado">
+            <i class="ph-bold ph-circle-notch animate-spin"></i>
+          </div>
+          <h2 class="titulo-estado">VERIFICANDO TU ENLACE DE REGALO…</h2>
+          <p class="subtitulo-estado">Por favor, espera un momento mientras validamos la vigencia de tu beneficio de cumpleaños.</p>
         </div>
-        <h2 class="titulo-estado">VERIFICANDO TU ENLACE DE REGALO…</h2>
-        <p class="subtitulo-estado">Por favor, espera un momento mientras validamos la vigencia de tu beneficio de cumpleaños.</p>
-      </div>
+      </main>
     </div>
 
     <!-- VISTA 2: Selección de Curso (Inicialmente Oculta) -->
@@ -636,17 +722,14 @@
                 </button>
               </div>
 
-              <h3 class="font-sans font-bold text-xl md:text-2xl text-white leading-[1.15] uppercase text-balance line-clamp-3 overflow-hidden drop-shadow-sm" id="modalTituloCurso">Nombre del Curso</h3>
+              <h3 class="font-sans font-bold text-xl md:text-2xl text-white leading-[1.15] uppercase text-balance line-clamp-3 overflow-hidden drop-shadow-sm" id="modalTituloCurso"></h3>
             </div>
           </div>
 
           <!-- Modal Body -->
-          <div class="bg-brand-cardBg flex-1 p-5 md:p-6 flex flex-col gap-4 overflow-y-auto overscroll-contain">
-            <!-- Step 1: Initial Action View (Inyectado por script vía MODAL_CONFIG) -->
-            <div id="modalPaso1" class="flex flex-col gap-4"></div>
-
-            <!-- Step 2: Registered Success View & WhatsApp Send (Inyectado por script vía MODAL_CONFIG) -->
-            <div id="modalPaso2" class="hidden [&:not(.hidden)]:flex flex-col gap-4"></div>
+          <div class="bg-brand-cardBg flex-1 p-5 md:p-6 overflow-y-auto overscroll-contain">
+            <!-- Dynamic Action View (Paso 1 o Paso 2 inyectado vía renderModalStep) -->
+            <div id="modalContenidoPaso" class="flex flex-col gap-4"></div>
           </div>
         </div>
       </div>
@@ -655,29 +738,34 @@
 
     <!-- VISTA 3: Enlace Expirado (Inicialmente Oculta) -->
     <div id="pantalla-expirado" class="pantalla-estado tema-estado-expirado hidden">
-      <!-- Fondo continuo de confeti sutil -->
+      <!-- Fondo continuo de confeti sutil (Capa inferior) -->
       <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
 
-      <!-- Logo Oficial EDUMIN superior centrado -->
-      <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN">
-        <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" onerror="handleLogoError(this)" />
-      </a>
+      <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
+      <header class="encabezado-pantalla-estado">
+        <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web oficial de EDUMIN">
+          <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" onerror="handleLogoError(this)" />
+        </a>
+      </header>
 
-      <div class="tarjeta-estado">
-        <div class="caja-icono-estado">
-          <i class="ph-bold ph-clock-countdown"></i>
+      <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
+      <main class="cuerpo-pantalla-estado">
+        <div class="tarjeta-estado">
+          <div class="caja-icono-estado">
+            <i class="ph-bold ph-clock-countdown"></i>
+          </div>
+          <h2 class="titulo-estado">¡ENLACE EXPIRADO O NO VÁLIDO!</h2>
+          <p class="subtitulo-estado">El plazo límite para reclamar tu curso ha finalizado o el enlace ingresado ya no está disponible.</p>
         </div>
-        <h2 class="titulo-estado">¡ENLACE EXPIRADO O NO VÁLIDO!</h2>
-        <p class="subtitulo-estado">El plazo límite para reclamar tu curso ha finalizado o el enlace ingresado ya no está disponible.</p>
-      </div>
+      </main>
     </div>
 
-    <!-- Footer General Compartido (Vistas 1, 2 y 3) -->
-    <footer id="footerGeneral" class="bg-black/90 text-cuaternario py-4 sm:py-6 px-4 sm:px-6 border-t border-white/10 text-sm relative z-10 w-full shrink-0">
+    <!-- Footer General Compartido (Vistas 1, 2 y 3) - Estandarizado a Móvil y MD -->
+    <footer id="footerGeneral" class="bg-black/90 text-cuaternario p-4 md:p-6 border-t border-white/10 text-sm relative z-10 w-full shrink-0">
       <div class="max-w-7xl mx-auto">
-        <div id="footerFlexWrapper" class="flex flex-col lg:flex-row items-center justify-center gap-6">
+        <div id="footerFlexWrapper" class="flex flex-col md:flex-row items-center justify-center gap-6">
           <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
-          <div id="footerMarcaIzquierda" class="hidden flex-col sm:flex-row items-center gap-3.5 text-center sm:text-left" style="display: none !important">
+          <div id="footerMarcaIzquierda" class="hidden flex-col md:flex-row items-center gap-3.5 text-center md:text-left" style="display: none !important">
             <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer" title="Ir al sitio web de EDUMIN">
               <img
                 src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png"
@@ -689,24 +777,24 @@
                 "
               />
             </a>
-            <span class="text-xs sm:text-sm font-sans font-bold uppercase text-balance max-w-[250px] inline-block leading-tight sm:pl-3.5 sm:border-l sm:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
+            <span class="text-xs md:text-sm font-sans font-bold uppercase text-balance max-w-[250px] inline-block leading-tight md:pl-3.5 md:border-l md:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
           </div>
 
-          <!-- Right: Contact & Social Media (Visible en Vistas 1, 2 y 3) -->
-          <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-            <!-- WhatsApp Support Block -->
-            <div class="flex flex-col items-center sm:items-start gap-2">
-              <span class="text-xs font-sans font-bold uppercase">Contáctanos:</span>
-              <a href="https://wa.me/51980694497" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 px-3.5 rounded-xl transition-colors shadow-sm">
-                <i class="ph-bold ph-whatsapp-logo text-lg text-emerald-400"></i>
-                <span>980 694 497</span>
+          <!-- Right: Website, Social Media & Contact (Visible en Vistas 1, 2 y 3) -->
+          <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+            <!-- Website Block -->
+            <div class="flex flex-col items-center md:items-start gap-2">
+              <span class="text-xs font-sans font-bold uppercase">Visítanos:</span>
+              <a href="https://www.edumin.pe/" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-blue-400 bg-blue-950/60 hover:bg-blue-900/80 border border-blue-700/60 px-3.5 rounded-xl transition-colors shadow-sm">
+                <i class="ph-bold ph-globe text-lg text-blue-400"></i>
+                <span>edumin.pe</span>
               </a>
             </div>
 
             <!-- Social Media Block -->
-            <div class="flex flex-col items-center sm:items-start gap-2 text-terciario">
+            <div class="flex flex-col items-center md:items-start gap-2">
               <span class="text-xs font-sans font-bold uppercase">Síguenos en:</span>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 text-terciario">
                 <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-instagram-logo"></i>
                 </a>
@@ -719,10 +807,16 @@
                 <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
                   <i class="ph-bold ph-linkedin-logo"></i>
                 </a>
-                <a href="https://www.edumin.pe/" target="_blank" aria-label="Sitio Web EDUMIN" class="w-9 h-9 shrink-0 inline-flex items-center justify-center rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white text-lg transition-colors">
-                  <i class="ph-bold ph-globe"></i>
-                </a>
               </div>
+            </div>
+
+            <!-- WhatsApp Support Block -->
+            <div class="flex flex-col items-center md:items-start gap-2">
+              <span class="text-xs font-sans font-bold uppercase">Contáctanos:</span>
+              <a href="https://wa.me/51980694497" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 px-3.5 rounded-xl transition-colors shadow-sm">
+                <i class="ph-bold ph-whatsapp-logo text-lg text-emerald-400"></i>
+                <span>980 694 497</span>
+              </a>
             </div>
           </div>
         </div>
@@ -735,16 +829,21 @@
       const WHATSAPP_PHONE = "51980694497";
 
       // ==========================================================================
+      // ESTILOS BASE COMPARTIDOS (100% DRY)
+      // ==========================================================================
+      const ESTILOS_BOTON_BASE = "py-4 px-6 rounded-lg md:rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none transition active:scale-95 cursor-pointer whitespace-nowrap";
+
+      // ==========================================================================
       // ESTILOS CENTRALIZADOS PARA VISTAS DE ESTADO (estadoCanjeado y estadoVacio)
       // ==========================================================================
       const ESTILOS_ESTADO = {
         tarjetaContenedora: "bg-brand-cardBg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark shadow-neo-sm md:shadow-neo w-full text-center flex flex-col items-center justify-center gap-5 md:gap-6",
-        cajaIconoBase: "w-16  md:w-20  aspect-square rounded-full flex items-center justify-center shrink-0 ring-1 ring-inset shadow-sm",
+        cajaIconoBase: "w-16 md:w-20 aspect-square rounded-full flex items-center justify-center shrink-0 ring-1 ring-inset shadow-sm",
         iconoEstado: "ph-bold text-8 md:text-10",
         cabeceraTexto: "flex flex-col gap-2 max-w-2xl mx-auto",
         titulo: "font-heading text-2xl md:text-3xl font-bold text-principal uppercase text-balance !leading-[1.15]",
         subtitulo: "text-secundario text-base md:text-lg font-medium text-balance !leading-snug",
-        botonBase: "font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none    py-4 px-6 rounded-lg md:rounded-xl transition active:scale-95 shadow-md cursor-pointer whitespace-nowrap",
+        botonBase: `${ESTILOS_BOTON_BASE} shadow-md`,
         iconoBoton: "ph-bold text-5 md:text-6 shrink-0",
       };
 
@@ -825,7 +924,7 @@
           titulo: "font-heading font-bold text-lg md:text-xl uppercase text-balance mb-1",
           parrafo: "font-medium text-sm md:text-base !leading-snug text-balance",
           tamanoIconoBoton: "text-5 md:text-6",
-          botonBase: "py-4 px-6 rounded-lg md:rounded-xl  font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none transition active:scale-95 cursor-pointer whitespace-nowrap",
+          botonBase: ESTILOS_BOTON_BASE,
           colorBotonVolver: "ring-1 ring-inset ring-slate-300 text-secundario hover:bg-slate-100 shrink-0",
         },
         paso1: {
@@ -853,22 +952,29 @@
         },
       };
 
-      function renderModalSteps() {
-        const p1 = document.getElementById("modalPaso1");
-        const p2 = document.getElementById("modalPaso2");
+      // Generador de plantilla reutilizable para cajas informativas del modal (100% DRY)
+      function renderAlertaModal(paso, estilos) {
+        return `
+          <div class="${estilos.cajaAlerta} ${paso.colorCaja}">
+            <i class="${estilos.icono} ${paso.iconoPaso}"></i>
+            <h4 class="${estilos.titulo} ${paso.colorTitulo}">
+              ${paso.titulo}
+            </h4>
+            <p class="${estilos.parrafo} ${paso.colorParrafo}">
+              ${paso.parrafo}
+            </p>
+          </div>
+        `;
+      }
+
+      function renderModalStep(paso = 1) {
+        const container = document.getElementById("modalContenidoPaso");
+        if (!container) return;
         const { estilos, paso1, paso2 } = MODAL_CONFIG;
 
-        if (p1) {
-          p1.innerHTML = `
-            <div class="${estilos.cajaAlerta} ${paso1.colorCaja}">
-              <i class="${estilos.icono} ${paso1.iconoPaso}"></i>
-              <h4 class="${estilos.titulo} ${paso1.colorTitulo}">
-                ${paso1.titulo}
-              </h4>
-              <p class="${estilos.parrafo} ${paso1.colorParrafo}">
-                ${paso1.parrafo}
-              </p>
-            </div>
+        if (paso === 1) {
+          container.innerHTML = `
+            ${renderAlertaModal(paso1, estilos)}
 
             <div class="flex items-center gap-3">
               <button
@@ -877,9 +983,9 @@
                 onclick="closeModal()"
                 aria-label="Volver"
                 title="Volver"
-                class="${estilos.botonBase} max-md:!px-4 ${estilos.colorBotonVolver}">
+                class="${estilos.botonBase} max-sm:!px-4 ${estilos.colorBotonVolver}">
                 <i class="ph-bold ph-arrow-left ${estilos.tamanoIconoBoton}"></i>
-                <span class="hidden md:inline">Volver</span>
+                <span class="hidden sm:inline">Volver</span>
               </button>
               <button
                 type="button"
@@ -891,19 +997,9 @@
               </button>
             </div>
           `;
-        }
-
-        if (p2) {
-          p2.innerHTML = `
-            <div class="${estilos.cajaAlerta} ${paso2.colorCaja}">
-              <i class="${estilos.icono} ${paso2.iconoPaso}"></i>
-              <h4 class="${estilos.titulo} ${paso2.colorTitulo}">
-                ${paso2.titulo}
-              </h4>
-              <p class="${estilos.parrafo} ${paso2.colorParrafo}">
-                ${paso2.parrafo}
-              </p>
-            </div>
+        } else if (paso === 2) {
+          container.innerHTML = `
+            ${renderAlertaModal(paso2, estilos)}
 
             <button
               type="button"
@@ -1677,7 +1773,7 @@
       document.addEventListener("DOMContentLoaded", () => {
         initBirthdayBannerMarquee();
         renderHeroFeatures();
-        renderModalSteps();
+        renderModalStep(1);
         aplicarEstilosEstado();
         actualizarPlaceholderBusqueda();
 
@@ -2120,7 +2216,7 @@
         },
         iconoSeleccionar: "ph-bold ph-hand-tap text-4 md:text-5 text-brand-blue group-hover:text-principal transition shrink-0",
         textoSeleccionar: "whitespace-nowrap transition truncate min-w-0",
-        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-400 text-4 md:text-5 group-hover:translate-x-1.5 transition shrink-0 hidden min-[300px]:block",
+        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-500 text-4 md:text-5 group-hover:translate-x-1.5 transition shrink-0 hidden min-[300px]:block",
       };
 
       function renderCourses(list) {
@@ -2205,12 +2301,12 @@
 
         const modalTitle = document.getElementById("modalTituloCurso");
         const modalCanje = document.getElementById("modalCanje");
-        const step1 = document.getElementById("modalPaso1");
-        const step2 = document.getElementById("modalPaso2");
         const btnVolver = document.getElementById("btnVolverModal");
         const btnCerrar = document.getElementById("btnCerrarModal");
 
         if (modalTitle) modalTitle.textContent = `#${selectedCourse.id} - ${formatCourseTitle(selectedCourse.title)}`;
+
+        renderModalStep(1);
 
         if (btnVolver) {
           btnVolver.disabled = false;
@@ -2220,13 +2316,6 @@
         if (btnCerrar) {
           btnCerrar.disabled = false;
           btnCerrar.classList.remove("opacity-50", "pointer-events-none");
-        }
-
-        if (step1) {
-          step1.classList.remove("hidden");
-        }
-        if (step2) {
-          step2.classList.add("hidden");
         }
 
         if (modalCanje) modalCanje.classList.remove("hidden");
@@ -2415,15 +2504,7 @@
         localStorage.setItem(getClaimKey(), JSON.stringify(selectedCourse));
 
         // Transición en Modal
-        const step1 = document.getElementById("modalPaso1");
-        const step2 = document.getElementById("modalPaso2");
-
-        if (step1) {
-          step1.classList.add("hidden");
-        }
-        if (step2) {
-          step2.classList.remove("hidden");
-        }
+        renderModalStep(2);
 
         // Bloquear catálogo de fondo
         checkClaimedState();
