@@ -8,16 +8,36 @@
     <link rel="icon" type="image/png" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
     <link rel="apple-touch-icon" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
 
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3/dist/index.global.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/index.js" defer></script>
+
+    <link rel="dns-prefetch" href="https://script.google.com" />
+    <link rel="preconnect" href="https://script.google.com" crossorigin />
+    <link rel="dns-prefetch" href="https://script.googleusercontent.com" />
+    <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin />
+
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Disparo anticipado de validación de token en paralelo (Early Fetch) -->
+    <script>
+      (function () {
+        try {
+          var p = new URLSearchParams(window.location.search);
+          var t = p.get("token");
+          if (t && t !== "demo") {
+            var url = "https://script.google.com/macros/s/AKfycbwFibwSnti14GeBPiO06VomGLKjt1N3LRRr8st6t0eLkwLeQC3JJ8IWbf8CqJ-xa1F4/exec?token=" + encodeURIComponent(t.trim());
+            window._earlyTokenPromise = fetch(url).then(function (r) {
+              return r.text();
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
@@ -31,14 +51,11 @@
         --color-terciario: var(--color-slate-300);
         --color-cuaternario: var(--color-slate-100);
 
-        /* Colores de marca (kebab-case estándar de CSS y Tailwind v4) */
         --color-brand-blue: #024adf;
         --color-brand-blue-dark: #013bb5;
         --color-brand-dark: #1d1d1b;
         --color-brand-dark-secondary: #121210;
         --color-brand-card-bg: #fafafa;
-        --color-brand-gold: var(--color-amber-500);
-        --color-brand-gold-hover: var(--color-amber-600);
 
         /* Sombras personalizadas */
 
@@ -1641,9 +1658,9 @@
         }
 
         const fetchUrl = `${APPS_SCRIPT_URL}?token=${encodeURIComponent(userToken)}`;
+        const tokenPromise = window._earlyTokenPromise || fetch(fetchUrl).then((res) => res.text());
 
-        fetch(fetchUrl)
-          .then((res) => res.text())
+        tokenPromise
           .then((text) => {
             let data = {};
             try {
