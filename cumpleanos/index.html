@@ -316,12 +316,46 @@
 
       /* Vista 1: Carga (Azul EDUMIN Resplandeciente) */
       .tema-estado-carga .caja-icono-estado {
-        @apply bg-blue-500/15 inset-ring inset-ring-blue-500/30 text-blue-500;
+        @apply bg-blue-950/60 inset-ring inset-ring-blue-700/60 text-blue-400;
       }
 
       /* Vista 3: Expirado (Ámbar Dorado Resplandeciente) */
       .tema-estado-expirado .caja-icono-estado {
-        @apply bg-amber-500/15 inset-ring inset-ring-amber-500/30 text-amber-500;
+        @apply bg-amber-950/60 inset-ring inset-ring-amber-700/60 text-amber-400;
+      }
+
+      /* ==========================================================================
+         Estilos CSS para el Footer General Compartido (Tailwind v4 @apply)
+         ========================================================================== */
+
+      .footer-bloque {
+        @apply flex flex-col items-center md:items-start gap-2;
+      }
+
+      .footer-etiqueta {
+        @apply text-xs font-sans font-bold uppercase;
+      }
+
+      .footer-icono {
+        @apply text-4 md:text-5;
+      }
+
+      /* Botón base tipo píldora (Web y WhatsApp) */
+      .footer-btn-pildora {
+        @apply h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase px-3 rounded-lg inset-ring transition-colors;
+      }
+
+      .footer-btn-web {
+        @apply text-blue-400 bg-blue-950/60 hover:bg-blue-900/80 inset-ring-blue-700/60;
+      }
+
+      .footer-btn-whatsapp {
+        @apply text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 inset-ring-emerald-700/60;
+      }
+
+      /* Botones cuadrados de Redes Sociales */
+      .footer-btn-social {
+        @apply size-9 shrink-0 inline-flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/15 inset-ring inset-ring-white/10 transition-colors;
       }
 
       /* Ocultar barra de desplazamiento manteniendo el scroll táctil fluido */
@@ -603,52 +637,50 @@
 
     <!-- Footer General Compartido (Vistas 1, 2 y 3) - Estandarizado a Móvil y MD -->
     <footer id="footerGeneral" class="bg-black/90 text-cuaternario p-4 md:p-6 border-t border-white/10 text-sm relative z-10 w-full shrink-0">
-      <div class="max-w-7xl mx-auto">
-        <div id="footerFlexWrapper" class="flex flex-col md:flex-row items-center justify-center gap-6">
-          <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
-          <div id="footerMarcaIzquierda" class="hidden flex-col md:flex-row items-center gap-3.5 text-center md:text-left">
-            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer" title="Ir al sitio web de EDUMIN">
-              <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-8 object-contain" onerror="handleLogoError(this, 'footer')" />
+      <div id="footerFlexWrapper" class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6">
+        <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
+        <div id="footerMarcaIzquierda" class="hidden flex-col md:flex-row items-center gap-3.5 text-center md:text-left">
+          <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer" title="Ir al sitio web de EDUMIN">
+            <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-8 object-contain" onerror="handleLogoError(this, 'footer')" />
+          </a>
+          <span class="text-xs md:text-sm font-sans font-bold uppercase text-balance max-w-64 inline-block !leading-[1.15] md:pl-3.5 md:border-l md:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
+        </div>
+
+        <!-- Right: Website, WhatsApp & Social Media (Visible en Vistas 1, 2 y 3) -->
+        <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+          <!-- Website Block -->
+          <div class="footer-bloque">
+            <span class="footer-etiqueta">Visítanos:</span>
+            <a href="https://www.edumin.pe/" target="_blank" class="footer-btn-pildora footer-btn-web">
+              <i class="ph-bold ph-globe footer-icono"></i>
+              <span>edumin.pe</span>
             </a>
-            <span class="text-xs md:text-sm font-sans font-bold uppercase text-balance max-w-[250px] inline-block !leading-tight md:pl-3.5 md:border-l md:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
           </div>
 
-          <!-- Right: Website, Social Media & Contact (Visible en Vistas 1, 2 y 3) -->
-          <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
-            <!-- Website Block -->
-            <div class="flex flex-col items-center md:items-start gap-2">
-              <span class="text-xs font-sans font-bold uppercase">Visítanos:</span>
-              <a href="https://www.edumin.pe/" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-blue-400 bg-blue-950/60 hover:bg-blue-900/80 border border-blue-700/60 px-3.5 rounded-lg md:rounded-xl transition-colors shadow-sm">
-                <i class="ph-bold ph-globe text-4 md:text-5 text-blue-400"></i>
-                <span>edumin.pe</span>
+          <!-- WhatsApp Support Block -->
+          <div class="footer-bloque">
+            <span class="footer-etiqueta">Contáctanos:</span>
+            <a href="https://wa.me/51980694497" target="_blank" class="footer-btn-pildora footer-btn-whatsapp">
+              <i class="ph-bold ph-whatsapp-logo footer-icono"></i>
+              <span>980 694 497</span>
+            </a>
+          </div>
+
+          <!-- Social Media Block -->
+          <div class="footer-bloque">
+            <span class="footer-etiqueta">Síguenos en:</span>
+            <div class="flex items-center gap-2 text-terciario">
+              <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="footer-btn-social">
+                <i class="ph-bold ph-instagram-logo footer-icono"></i>
               </a>
-            </div>
-
-            <!-- Social Media Block -->
-            <div class="flex flex-col items-center md:items-start gap-2">
-              <span class="text-xs font-sans font-bold uppercase">Síguenos en:</span>
-              <div class="flex items-center gap-2 text-terciario">
-                <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="size-9 shrink-0 inline-flex items-center justify-center rounded-lg md:rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white transition-colors">
-                  <i class="ph-bold ph-instagram-logo text-4 md:text-5"></i>
-                </a>
-                <a href="https://www.facebook.com/edumin.pe" target="_blank" aria-label="Facebook" class="size-9 shrink-0 inline-flex items-center justify-center rounded-lg md:rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white transition-colors">
-                  <i class="ph-bold ph-facebook-logo text-4 md:text-5"></i>
-                </a>
-                <a href="https://www.tiktok.com/@edumin_pe" target="_blank" aria-label="TikTok" class="size-9 shrink-0 inline-flex items-center justify-center rounded-lg md:rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white transition-colors">
-                  <i class="ph-bold ph-tiktok-logo text-4 md:text-5"></i>
-                </a>
-                <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="size-9 shrink-0 inline-flex items-center justify-center rounded-lg md:rounded-xl bg-white/5 hover:bg-brand-blue/30 border border-white/10 hover:border-brand-blue/50 hover:text-white transition-colors">
-                  <i class="ph-bold ph-linkedin-logo text-4 md:text-5"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- WhatsApp Support Block -->
-            <div class="flex flex-col items-center md:items-start gap-2">
-              <span class="text-xs font-sans font-bold uppercase">Contáctanos:</span>
-              <a href="https://wa.me/51980694497" target="_blank" class="h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 px-3.5 rounded-lg md:rounded-xl transition-colors shadow-sm">
-                <i class="ph-bold ph-whatsapp-logo text-4 md:text-5 text-emerald-400"></i>
-                <span>980 694 497</span>
+              <a href="https://www.facebook.com/edumin.pe" target="_blank" aria-label="Facebook" class="footer-btn-social">
+                <i class="ph-bold ph-facebook-logo footer-icono"></i>
+              </a>
+              <a href="https://www.tiktok.com/@edumin_pe" target="_blank" aria-label="TikTok" class="footer-btn-social">
+                <i class="ph-bold ph-tiktok-logo footer-icono"></i>
+              </a>
+              <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="footer-btn-social">
+                <i class="ph-bold ph-linkedin-logo footer-icono"></i>
               </a>
             </div>
           </div>
@@ -1387,29 +1419,7 @@
       }
 
       function isTokenValido(data) {
-        if (!data) return false;
-
-        const rawStr = JSON.stringify(data)
-          .toUpperCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-
-        // Si indica explícitamente error o expiración
-        if (rawStr.includes("EXPIRAD") || rawStr.includes("INVALID") || rawStr.includes("NO ENCONTRADO") || rawStr.includes("INEXISTENTE")) {
-          return false;
-        }
-
-        // Si contiene cualquier palabra de éxito/disponibilidad
-        if (rawStr.includes("VALID") || rawStr.includes("DISPONIBLE") || rawStr.includes("ACTIVO") || rawStr.includes("HABILITAD") || rawStr.includes("OK") || rawStr.includes("TRUE") || rawStr.includes("SUCCESS") || rawStr.includes("REGISTRAD") || data.valid === true) {
-          return true;
-        }
-
-        // Si devolvió un objeto válido sin errores
-        if (typeof data === "object" && Object.keys(data).length > 0 && !data.error) {
-          return true;
-        }
-
-        return false;
+        return Boolean(data && data.valid === true);
       }
 
       // Manejo unificado de error de carga del logo (mantiene 100% el diseño original de cada vista)
@@ -1510,7 +1520,10 @@
         // 1. Resetear selección guardada en localStorage si la URL contiene ?reset=1
         if (params.has("reset")) {
           localStorage.removeItem("edumin_claimed_demo");
-          if (token) localStorage.removeItem("edumin_claimed_" + token.trim());
+          if (token) {
+            localStorage.removeItem("edumin_claimed_" + token.trim());
+            localStorage.removeItem("edumin_val_" + token.trim());
+          }
         }
 
         // 2. Forzar vista directa (?vista=1, ?vista=2, ?vista=3)
@@ -1596,10 +1609,34 @@
           return;
         }
 
-        // 2. Si SÍ hay token, verificar GET vía fetch() a Apps Script (si está configurado)
+        const tokenKey = "edumin_val_" + userToken.trim();
+        const cachedVal = localStorage.getItem(tokenKey);
+        let cargadoDesdeCache = false;
+
+        // 2. Comprobar si ya fue validado previamente Y sigue dentro del plazo vigente
+        if (cachedVal) {
+          try {
+            const parsed = JSON.parse(cachedVal);
+            const ahora = Date.now();
+            const esVigente = !parsed.fechaLimite || ahora <= parsed.fechaLimite;
+            if (parsed.valid && esVigente) {
+              mostrarVista("pantalla-cursos");
+              initCursosApp(parsed);
+              cargadoDesdeCache = true;
+            } else if (!esVigente) {
+              localStorage.removeItem(tokenKey);
+            }
+          } catch (e) {
+            localStorage.removeItem(tokenKey);
+          }
+        }
+
+        // 3. Si APPS_SCRIPT_URL no está configurado
         if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
-          mostrarVista("pantalla-cursos");
-          initCursosApp();
+          if (!cargadoDesdeCache) {
+            mostrarVista("pantalla-cursos");
+            initCursosApp();
+          }
           return;
         }
 
@@ -1618,16 +1655,20 @@
             console.log("Resultado de Verificación de Token en Apps Script:", data);
 
             if (isTokenValido(data)) {
+              localStorage.setItem(tokenKey, JSON.stringify(data));
               mostrarVista("pantalla-cursos");
               initCursosApp(data);
             } else {
+              localStorage.removeItem(tokenKey);
               mostrarVista("pantalla-expirado");
             }
           })
           .catch((err) => {
             console.error("Error en la conexión con Apps Script:", err);
-            mostrarVista("pantalla-cursos");
-            initCursosApp();
+            // FALLBACK SEGURO: Si no se cargó con caché válida, mandar a Vista 3 (no abrir cursos por error)
+            if (!cargadoDesdeCache) {
+              mostrarVista("pantalla-expirado");
+            }
           });
       });
 
