@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1d1d1b" />
     <title>¡Feliz cumpleaños! | EDUMIN</title>
 
     <link rel="icon" type="image/png" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
@@ -76,12 +77,12 @@
         --text-12: calc(var(--spacing) * 12);
       }
 
-      .bg-pattern {
+      @utility bg-pattern {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg opacity='0.45'%3E%3Crect x='20' y='25' width='7' height='7' rx='1.5' transform='rotate(25 23.5 28.5)' fill='%23f59e0b'/%3E%3Crect x='75' y='18' width='12' height='5' rx='2' transform='rotate(-35 81 20.5)' fill='%23024adf'/%3E%3Ccircle cx='130' cy='35' r='3.5' fill='%23ec4899'/%3E%3Crect x='45' y='70' width='9' height='5' rx='2' transform='rotate(45 49.5 72.5)' fill='%2310b981'/%3E%3Crect x='110' y='80' width='6' height='6' rx='1.5' transform='rotate(-15 113 83)' fill='%238b5cf6'/%3E%3Ccircle cx='18' cy='115' r='3' fill='%23ffffff'/%3E%3Crect x='85' y='125' width='7' height='7' rx='1.5' transform='rotate(60 88.5 128.5)' fill='%23024adf'/%3E%3Crect x='140' y='135' width='10' height='4.5' rx='2' transform='rotate(-20 145 137.25)' fill='%23f59e0b'/%3E%3Ccircle cx='60' cy='145' r='3.5' fill='%2310b981'/%3E%3C/g%3E%3C/svg%3E");
         background-size: 160px 160px;
       }
 
-      .hero-glow {
+      @utility hero-glow {
         background: radial-gradient(circle at 50% 18%, rgb(2 74 223 / 38%) 0%, transparent 65%), radial-gradient(circle at 50% 32%, rgb(236 72 153 / 18%) 0%, transparent 55%), radial-gradient(circle at 50% 62%, rgb(245 158 11 / 22%) 0%, transparent 50%);
         mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) 0%, rgb(0 0 0 / 100%) 70%, rgb(0 0 0 / 0%) 100%);
       }
@@ -183,13 +184,11 @@
       }
 
       /* Máscara de desvanecimiento suave en los bordes laterales (Fade Mask) */
-      .cintillo-fade-mask {
+      @utility cintillo-fade-mask {
         -webkit-mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
         mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
-      }
 
-      @media (min-width: 640px) {
-        .cintillo-fade-mask {
+        @media (min-width: 640px) {
           -webkit-mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
           mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
         }
@@ -230,22 +229,22 @@
         }
       }
 
-      .btn-cta-hero {
+      @utility btn-cta-hero {
         position: relative;
         overflow: hidden;
         animation: pulse-glow 2.5s infinite ease-in-out;
-      }
 
-      .btn-cta-hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        width: 60%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgb(255 255 255 / 35%), transparent);
-        transform: translateX(-150%) skewX(-20deg);
-        animation: btn-shimmer 3.5s infinite ease-in-out;
-        pointer-events: none;
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          width: 60%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgb(255 255 255 / 35%), transparent);
+          transform: translateX(-150%) skewX(-20deg);
+          animation: btn-shimmer 3.5s infinite ease-in-out;
+          pointer-events: none;
+        }
       }
 
       /* Animación suave de entrada para el modal */
@@ -278,8 +277,9 @@
         }
       }
 
-      .animate-modal-out {
-        animation: modal-scale-out 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      /* Utilidad global para microinteracción táctil / clic */
+      @utility presionar {
+        @apply transition-transform active:scale-95;
       }
 
       /* ==========================================================================
@@ -288,7 +288,7 @@
          ========================================================================== */
 
       .pantalla-estado {
-        @apply flex-1 flex-col justify-between bg-brand-dark relative z-50 w-full;
+        @apply flex-1 flex-col relative z-50 w-full;
       }
 
       .pantalla-estado:not(.hidden) {
@@ -296,7 +296,7 @@
       }
 
       .encabezado-pantalla-estado {
-        @apply w-full flex items-center justify-center pt-4 px-4 pb-0 md:pt-6 md:px-6 md:pb-0 shrink-0 relative z-10;
+        @apply w-full flex items-center justify-center pt-4 px-4 md:pt-6 md:px-6 shrink-0 relative z-10;
       }
 
       .logo-superior-pantalla {
@@ -324,11 +324,11 @@
       }
 
       .titulo-estado {
-        @apply font-heading font-bold text-2xl md:text-3xl uppercase text-white mt-0 mb-2 text-center text-balance !leading-[1.15];
+        @apply font-heading font-bold text-2xl md:text-3xl uppercase text-white mb-2 text-center text-balance !leading-[1.15];
       }
 
       .subtitulo-estado {
-        @apply font-sans font-medium text-base md:text-lg text-terciario m-0 text-center text-balance !leading-snug;
+        @apply font-sans font-medium text-base md:text-lg text-terciario text-center text-balance !leading-snug;
       }
 
       /* Vista 1: Carga (Azul EDUMIN Resplandeciente) */
@@ -339,6 +339,34 @@
       /* Vista 3: Expirado (Ámbar Dorado Resplandeciente) */
       .tema-estado-expirado .caja-icono-estado {
         @apply bg-amber-950/60 inset-ring inset-ring-amber-700/60 text-amber-400;
+      }
+
+      /* ==========================================================================
+         Estilos CSS para Vistas de Aviso en Catálogo (Canjeado y Vacío)
+         ========================================================================== */
+
+      .tarjeta-aviso {
+        @apply bg-brand-card-bg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark shadow-neo-sm md:shadow-neo w-full text-center flex flex-col items-center justify-center gap-5 md:gap-6;
+      }
+
+      .caja-icono-aviso {
+        @apply size-16 md:size-20 rounded-full flex items-center justify-center shrink-0 inset-ring;
+      }
+
+      .icono-aviso {
+        @apply text-8 md:text-10;
+      }
+
+      .cabecera-texto-aviso {
+        @apply flex flex-col gap-2 max-w-2xl mx-auto;
+      }
+
+      .titulo-aviso {
+        @apply font-heading text-2xl md:text-3xl font-bold text-principal uppercase text-balance !leading-[1.15];
+      }
+
+      .subtitulo-aviso {
+        @apply text-secundario text-base md:text-lg font-medium text-balance !leading-snug;
       }
 
       /* ==========================================================================
@@ -359,7 +387,7 @@
 
       /* Botón base tipo píldora (Web y WhatsApp) */
       .footer-btn-pildora {
-        @apply h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase px-3 rounded-lg inset-ring transition-colors;
+        @apply h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase px-3 rounded-lg inset-ring presionar;
       }
 
       .footer-btn-web {
@@ -372,38 +400,35 @@
 
       /* Botones cuadrados de Redes Sociales */
       .footer-btn-social {
-        @apply size-9 shrink-0 inline-flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/15 inset-ring inset-ring-white/10 transition-colors;
+        @apply size-9 shrink-0 inline-flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/15 inset-ring inset-ring-white/10 presionar;
       }
 
       /* Ocultar barra de desplazamiento manteniendo el scroll táctil fluido */
-      .no-scrollbar {
+      @utility no-scrollbar {
         -ms-overflow-style: none; /* IE y Edge */
         scrollbar-width: none; /* Firefox */
         -webkit-overflow-scrolling: touch; /* Scroll inercial en iOS */
-      }
-      .no-scrollbar::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Edge, Android */
-        width: 0;
-        height: 0;
+
+        &::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, Edge, Android */
+          width: 0;
+          height: 0;
+        }
       }
     </style>
   </head>
 
   <body class="bg-brand-dark text-terciario font-sans font-medium min-h-screen min-h-svh min-h-dvh flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
+    <div class="bg-pattern fixed inset-0 opacity-40 pointer-events-none"></div>
     <!-- VISTA 1: Pantalla de Carga (Inicialmente Visible) -->
     <div id="pantalla-carga" class="pantalla-estado tema-estado-carga">
-      <!-- Fondo continuo de confeti sutil (Capa inferior) -->
-      <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
-
-      <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
       <header class="encabezado-pantalla-estado">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
           <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="" onerror="handleLogoError(this)" />
         </a>
       </header>
 
-      <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
-      <section role="status" aria-live="polite" class="cuerpo-pantalla-estado">
+      <main role="status" aria-live="polite" class="cuerpo-pantalla-estado">
         <div class="tarjeta-estado">
           <div class="caja-icono-estado">
             <i class="ph-bold ph-circle-notch animate-spin" aria-hidden="true"></i>
@@ -411,15 +436,11 @@
           <h1 class="titulo-estado">VERIFICANDO TU ENLACE DE REGALO…</h1>
           <p class="subtitulo-estado">Por favor, espera un momento mientras validamos la vigencia de tu beneficio de cumpleaños.</p>
         </div>
-      </section>
+      </main>
     </div>
 
     <!-- VISTA 2: Selección de Curso (Inicialmente Oculta) -->
     <div id="pantalla-cursos" class="hidden flex-col justify-between min-h-screen min-h-svh min-h-dvh relative">
-      <!-- Fondo continuo de confeti sutil para toda la página -->
-      <div class="bg-pattern fixed inset-0 opacity-40 pointer-events-none"></div>
-
-      <!-- Fixed Top Birthday Banner (Continuous Infinite Marquee with Fade Mask) -->
       <div id="cintilloCumpleanos" class="fixed inset-x-0 top-0 z-50 h-10 overflow-hidden bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-principal font-heading font-bold text-lg !leading-none flex items-center uppercase shadow-sm select-none border-b border-amber-600/20">
         <div class="cintillo-fade-mask w-full h-full overflow-hidden flex items-center">
           <div class="animate-marquee flex items-center h-full"></div>
@@ -452,7 +473,7 @@
             <p class="px-4 sm:px-0 text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-7 lg:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
 
             <!-- 5. Botón de Acción -->
-            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl transition-all duration-200 active:scale-95 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
+            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl presionar duration-200 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
               <i class="ph-bold ph-gift text-6 md:text-7 lg:text-9"></i>
               <span>ELEGIR MI CURSO <span class="hidden sm:inline-flex">DE REGALO</span></span>
             </button>
@@ -466,7 +487,7 @@
       </div>
 
       <!-- Main Catalog Section -->
-      <main id="catalogo" class="scroll-mt-10 w-full max-w-7xl mx-auto p-4 md:p-6 lg:p-8 pb-10 md:pb-14 lg:pb-20 relative z-10">
+      <main id="catalogo" class="scroll-mt-10 w-full max-w-7xl mx-auto px-4 py-6 md:p-6 lg:p-8 pb-10 md:pb-14 lg:pb-20 relative z-10">
         <!-- White Container for Search, Categories, Grid & Empty State -->
         <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl px-4 py-6 md:p-8 lg:p-10 shadow-2xl w-full">
           <!-- Catalog Section Heading -->
@@ -484,7 +505,7 @@
 
                 <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="min-w-0 flex-1 w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 !leading-none text-base font-sans font-medium placeholder:text-slate-400 text-principal truncate placeholder:truncate" />
 
-                <button type="button" id="btnLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden relative size-5 flex items-center justify-center shrink-0 transition-all active:scale-95 cursor-pointer text-slate-400 hover:text-secundario group/btn">
+                <button type="button" id="btnLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden relative size-5 flex items-center justify-center shrink-0 presionar cursor-pointer text-slate-400 hover:text-secundario group/btn">
                   <span class="absolute -inset-1.5 rounded-full bg-transparent group-hover/btn:bg-slate-300 group-active/btn:bg-slate-300 transition-all pointer-events-none"></span>
                   <i class="relative z-10 ph-bold ph-x text-4"></i>
                 </button>
@@ -510,7 +531,7 @@
               <!-- Mobile-Only Toggle Controls (Opción B) -->
               <div class="flex sm:hidden items-center justify-between gap-5 w-full">
                 <span class="hidden min-[330px]:inline-block text-xs !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">Categoría:</span>
-                <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="font-sans font-semibold text-white bg-brand-blue hover:bg-brand-blue-dark px-3.5 rounded-full !leading-none text-xs flex items-center justify-center gap-2 cursor-pointer transition active:scale-95 min-w-0 max-w-full">
+                <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="font-sans font-semibold text-white bg-brand-blue hover:bg-brand-blue-dark px-3.5 rounded-full !leading-none text-xs flex items-center justify-center gap-2 cursor-pointer presionar min-w-0 max-w-full">
                   <span id="insigniaCategoriaActiva" class="truncate py-2.5 min-w-0">Todos</span>
                   <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 transition-transform duration-200 shrink-0"></i>
                 </button>
@@ -539,14 +560,14 @@
 
           <!-- Claimed Course Single Gift Card State -->
           <div id="estadoCanjeado" class="hidden w-full">
-            <div>
-              <div>
-                <i></i>
+            <div class="tarjeta-aviso">
+              <div class="caja-icono-aviso inset-ring-amber-500/30 bg-amber-500/15 text-amber-600">
+                <i class="ph-bold ph-confetti icono-aviso"></i>
               </div>
 
-              <div class="cabecera-texto">
-                <h3>¡YA REGISTRASTE TU CURSO!</h3>
-                <p>Tu beneficio de cumpleaños ha sido registrado con éxito. Te notificaremos cuando tu curso esté disponible. Revisa los detalles de tu elección a continuación.</p>
+              <div class="cabecera-texto-aviso">
+                <h3 class="titulo-aviso">¡YA REGISTRASTE TU CURSO!</h3>
+                <p class="subtitulo-aviso">Tu beneficio de cumpleaños ha sido registrado con éxito. Te notificaremos cuando tu curso esté disponible. Revisa los detalles de tu elección a continuación.</p>
               </div>
 
               <!-- Selected Course Card Box (Tarjeta limpia con insignias de la grilla) -->
@@ -562,7 +583,7 @@
 
                 <!-- Fila dedicada independiente para el Botón de WhatsApp (Tamaño Auto) -->
                 <div class="pt-3 border-t border-slate-100 flex items-center justify-center sm:justify-end">
-                  <button onclick="handleSendWhatsApp()" class="font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition active:scale-95 shadow-md cursor-pointer whitespace-nowrap">
+                  <button onclick="handleSendWhatsApp()" class="font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white presionar shadow-md cursor-pointer whitespace-nowrap">
                     <i class="ph-bold ph-whatsapp-logo text-6 md:text-7 shrink-0"></i>
                     <span>Confirmar por WhatsApp</span>
                   </button>
@@ -573,16 +594,16 @@
 
           <!-- Empty Search State Container -->
           <div id="estadoVacio" class="hidden w-full">
-            <div>
-              <div>
-                <i></i>
+            <div class="tarjeta-aviso py-12 md:py-16">
+              <div class="caja-icono-aviso inset-ring-blue-500/30 bg-blue-500/15 text-brand-blue">
+                <i class="ph-bold ph-ghost icono-aviso"></i>
               </div>
-              <div class="cabecera-texto">
-                <h3>NO ENCONTRAMOS RESULTADOS</h3>
-                <p>Intenta con otra palabra o restablece la lista completa de cursos.</p>
+              <div class="cabecera-texto-aviso">
+                <h3 class="titulo-aviso">NO ENCONTRAMOS RESULTADOS</h3>
+                <p class="subtitulo-aviso">Intenta con otra palabra o restablece la lista completa de cursos.</p>
               </div>
-              <button onclick="resetFilters()">
-                <i></i>
+              <button onclick="resetFilters()" class="py-4 px-6 rounded-lg md:rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none presionar cursor-pointer whitespace-nowrap shadow-md bg-brand-blue hover:bg-brand-blue-dark text-white shrink-0">
+                <i class="ph-bold ph-arrows-counter-clockwise text-5 md:text-6 shrink-0"></i>
                 <span>Ver todos los cursos</span>
               </button>
             </div>
@@ -609,7 +630,7 @@
                   <span>Selección de Curso</span>
                 </div>
 
-                <button type="button" id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="size-8 md:size-9 shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors active:scale-95 cursor-pointer">
+                <button type="button" id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="size-8 md:size-9 shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors presionar cursor-pointer">
                   <i class="ph-bold ph-x text-4 md:text-5"></i>
                 </button>
               </div>
@@ -630,9 +651,6 @@
 
     <!-- VISTA 3: Enlace Expirado (Inicialmente Oculta) -->
     <div id="pantalla-expirado" class="pantalla-estado tema-estado-expirado hidden">
-      <!-- Fondo continuo de confeti sutil (Capa inferior) -->
-      <div class="bg-pattern absolute inset-0 opacity-40 pointer-events-none"></div>
-
       <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
       <header class="encabezado-pantalla-estado">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
@@ -641,7 +659,7 @@
       </header>
 
       <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
-      <section role="alert" class="cuerpo-pantalla-estado">
+      <main role="alert" class="cuerpo-pantalla-estado">
         <div class="tarjeta-estado">
           <div class="caja-icono-estado">
             <i class="ph-bold ph-clock-countdown" aria-hidden="true"></i>
@@ -649,26 +667,26 @@
           <h1 class="titulo-estado">¡TU ENLACE EXPIRÓ O NO ES VÁLIDO!</h1>
           <p class="subtitulo-estado">El plazo límite para reclamar tu curso ha finalizado o el enlace ingresado ya no está disponible.</p>
         </div>
-      </section>
+      </main>
     </div>
 
     <!-- Footer General Compartido (Vistas 1, 2 y 3) - Estandarizado a Móvil y MD -->
-    <footer id="footerGeneral" class="bg-black/90 text-cuaternario p-4 md:p-6 border-t border-white/10 text-sm relative z-10 w-full shrink-0">
-      <div id="footerFlexWrapper" class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-6">
+    <footer id="footerGeneral" class="bg-black/90 text-cuaternario py-6 border-t border-white/10 text-sm relative z-10 w-full shrink-0">
+      <div id="footerFlexWrapper" class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-center gap-5 md:gap-10">
         <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
-        <div id="footerMarcaIzquierda" class="hidden flex-col md:flex-row items-center gap-3.5 text-center md:text-left">
+        <div id="footerMarcaIzquierda" class="hidden flex-col md:flex-row items-center gap-2 md:gap-4 text-center md:text-left min-w-0">
           <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer" title="Ir al sitio web de EDUMIN">
             <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-8 object-contain" onerror="handleLogoError(this, 'footer')" />
           </a>
-          <span class="text-xs md:text-sm font-sans font-bold uppercase text-balance max-w-64 inline-block !leading-[1.15] md:pl-3.5 md:border-l md:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
+          <span class="text-sm font-sans font-bold uppercase text-balance max-w-64 min-w-0 inline-block !leading-[1.15] md:pl-4 md:border-l md:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
         </div>
 
         <!-- Right: Website, WhatsApp & Social Media (Visible en Vistas 1, 2 y 3) -->
-        <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+        <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-4 gap-y-3 md:gap-6 lg:gap-8 shrink-0">
           <!-- Website Block -->
           <div class="footer-bloque">
             <span class="footer-etiqueta">Visítanos:</span>
-            <a href="https://www.edumin.pe/" target="_blank" class="footer-btn-pildora footer-btn-web">
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" title="Visitar edumin.pe" class="footer-btn-pildora footer-btn-web">
               <i class="ph-bold ph-globe footer-icono"></i>
               <span>edumin.pe</span>
             </a>
@@ -677,7 +695,7 @@
           <!-- WhatsApp Support Block -->
           <div class="footer-bloque">
             <span class="footer-etiqueta">Contáctanos:</span>
-            <a href="https://wa.me/51980694497" target="_blank" class="footer-btn-pildora footer-btn-whatsapp">
+            <a href="https://wa.me/51980694497" target="_blank" rel="noopener noreferrer" title="Contactar por WhatsApp" class="footer-btn-pildora footer-btn-whatsapp">
               <i class="ph-bold ph-whatsapp-logo footer-icono"></i>
               <span>980 694 497</span>
             </a>
@@ -687,16 +705,16 @@
           <div class="footer-bloque">
             <span class="footer-etiqueta">Síguenos en:</span>
             <div class="flex items-center gap-2 text-terciario">
-              <a href="https://www.instagram.com/edumin.pe/" target="_blank" aria-label="Instagram" class="footer-btn-social">
+              <a href="https://www.instagram.com/edumin.pe/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="footer-btn-social">
                 <i class="ph-bold ph-instagram-logo footer-icono"></i>
               </a>
-              <a href="https://www.facebook.com/edumin.pe" target="_blank" aria-label="Facebook" class="footer-btn-social">
+              <a href="https://www.facebook.com/edumin.pe" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="footer-btn-social">
                 <i class="ph-bold ph-facebook-logo footer-icono"></i>
               </a>
-              <a href="https://www.tiktok.com/@edumin_pe" target="_blank" aria-label="TikTok" class="footer-btn-social">
+              <a href="https://www.tiktok.com/@edumin_pe" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok" class="footer-btn-social">
                 <i class="ph-bold ph-tiktok-logo footer-icono"></i>
               </a>
-              <a href="https://www.linkedin.com/company/edumin/" target="_blank" aria-label="LinkedIn" class="footer-btn-social">
+              <a href="https://www.linkedin.com/company/edumin/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="footer-btn-social">
                 <i class="ph-bold ph-linkedin-logo footer-icono"></i>
               </a>
             </div>
@@ -713,87 +731,7 @@
       // ==========================================================================
       // ESTILOS BASE COMPARTIDOS (100% DRY)
       // ==========================================================================
-      const ESTILOS_BOTON_BASE = "py-4 px-6 rounded-lg md:rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none transition active:scale-95 cursor-pointer whitespace-nowrap";
-
-      // ==========================================================================
-      // ESTILOS CENTRALIZADOS PARA VISTAS DE ESTADO (estadoCanjeado y estadoVacio)
-      // ==========================================================================
-      const ESTILOS_ESTADO = {
-        tarjetaContenedora: "bg-brand-card-bg rounded-2xl md:rounded-3xl p-5 md:p-6 border-2 border-brand-dark shadow-neo-sm md:shadow-neo w-full text-center flex flex-col items-center justify-center gap-5 md:gap-6",
-        cajaIconoBase: "size-16 md:size-20 rounded-full flex items-center justify-center shrink-0 inset-ring",
-        iconoEstado: "ph-bold text-8 md:text-10",
-        cabeceraTexto: "flex flex-col gap-2 max-w-2xl mx-auto",
-        titulo: "font-heading text-2xl md:text-3xl font-bold text-principal uppercase text-balance !leading-[1.15]",
-        subtitulo: "text-secundario text-base md:text-lg font-medium text-balance !leading-snug",
-        botonBase: `${ESTILOS_BOTON_BASE} shadow-md`,
-        iconoBoton: "ph-bold text-5 md:text-6 shrink-0",
-      };
-
-      function aplicarEstilosEstado() {
-        const canjeado = document.getElementById("estadoCanjeado");
-        const vacio = document.getElementById("estadoVacio");
-        const { tarjetaContenedora, cajaIconoBase, iconoEstado, cabeceraTexto, titulo, subtitulo, botonBase, iconoBoton } = ESTILOS_ESTADO;
-
-        if (canjeado) {
-          const card = canjeado.querySelector("div");
-          if (card) {
-            card.className = tarjetaContenedora;
-
-            const iconBox = card.querySelector("div");
-            if (iconBox) {
-              iconBox.className = `${cajaIconoBase} inset-ring-amber-500/30 bg-amber-500/15 text-amber-600`;
-              const icon = iconBox.querySelector("i");
-              if (icon) icon.className = `ph-bold ph-confetti ${iconoEstado}`;
-            }
-
-            const header = card.querySelector(".cabecera-texto");
-            if (header) header.className = cabeceraTexto;
-
-            const h3 = card.querySelector("h3");
-            if (h3) h3.className = titulo;
-
-            const p = card.querySelector("p");
-            if (p) p.className = subtitulo;
-
-            const btn = card.querySelector("button");
-            if (btn) {
-              btn.className = `${botonBase} bg-emerald-600 hover:bg-emerald-700 text-white shrink-0`;
-              const btnIcon = btn.querySelector("i");
-              if (btnIcon) btnIcon.className = `ph-bold ph-whatsapp-logo ${iconoBoton}`;
-            }
-          }
-        }
-
-        if (vacio) {
-          const card = vacio.querySelector("div");
-          if (card) {
-            card.className = `${tarjetaContenedora} py-12 md:py-16`;
-
-            const iconBox = card.querySelector("div");
-            if (iconBox) {
-              iconBox.className = `${cajaIconoBase} inset-ring-blue-500/30 bg-blue-500/15 text-brand-blue`;
-              const icon = iconBox.querySelector("i");
-              if (icon) icon.className = `ph-bold ph-ghost ${iconoEstado}`;
-            }
-
-            const header = card.querySelector(".cabecera-texto");
-            if (header) header.className = cabeceraTexto;
-
-            const h3 = card.querySelector("h3");
-            if (h3) h3.className = titulo;
-
-            const p = card.querySelector("p");
-            if (p) p.className = subtitulo;
-
-            const btn = card.querySelector("button");
-            if (btn) {
-              btn.className = `${botonBase} bg-brand-blue hover:bg-brand-blue-dark text-white shrink-0`;
-              const btnIcon = btn.querySelector("i");
-              if (btnIcon) btnIcon.className = `ph-bold ph-arrows-counter-clockwise ${iconoBoton}`;
-            }
-          }
-        }
-      }
+      const ESTILOS_BOTON_BASE = "py-4 px-6 rounded-lg md:rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none presionar cursor-pointer whitespace-nowrap";
 
       // ==========================================================================
       // CONFIGURACIÓN Y ESTILOS UNIFICADOS DEL MODAL (100% DRY)
@@ -1607,7 +1545,6 @@
         initBirthdayBannerMarquee();
         renderHeroFeatures();
         renderModalStep(1);
-        aplicarEstilosEstado();
         actualizarPlaceholderBusqueda();
 
         urlParams = new URLSearchParams(window.location.search);
@@ -1963,7 +1900,7 @@
         return `
           <button onclick="selectCategory('${cat}')" 
                   aria-pressed="${isActive}"
-                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs md:text-sm shrink-0 transition active:scale-95 flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
+                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs md:text-sm shrink-0 presionar flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
             <span>${catLabel}</span>
           </button>
         `;
