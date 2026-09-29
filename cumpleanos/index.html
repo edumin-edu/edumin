@@ -58,27 +58,21 @@
         --color-brand-dark-secondary: #121210;
         --color-brand-card-bg: #fafafa;
 
-        /* ==========================================================================
-           SISTEMA DE SOMBRAS NEOBRUTALISTAS CALIBRADO (Borde 2px + Sombra)
-           ========================================================================== */
-
+        /* Sombras Neobrutalistas personalizadas */
         --shadow-neo-sm: 0 2px 0 0 var(--color-brand-dark);
         --shadow-neo: 0 4px 0 0 var(--color-brand-dark);
 
-        /* 2. HOVER (Mantiene sombra sólida + Glow dorado sutil al 22%)
-           - Móvil: 2px sombra (+ 2px borde = 4px total) + glow suave
-           - Desktop: 4px sombra (+ 2px borde = 6px total) + glow sutil */
-        --shadow-neo-glow-sm: 0 2px 0 0 var(--color-brand-dark), 0 6px 14px -2px rgb(245 158 11 / 20%);
-        --shadow-neo-glow: 0 4px 0 0 var(--color-brand-dark), 0 10px 20px -3px rgb(245 158 11 / 22%);
+        --ring-amber: 0 0 0 3px var(--color-amber-500);
+        --glow-amber: 0 8px 16px -2px color-mix(in srgb, var(--color-amber-500) 20%, transparent);
 
-        /* 3. ACTIVE (Se le quitan 2px a la sombra)
-           - Móvil: 0px sombra (+ 2px borde = 2px total)
-           - Desktop: 2px sombra (+ 2px borde = 4px total) */
+        --shadow-neo-glow-sm: var(--shadow-neo-sm), var(--glow-amber);
+        --shadow-neo-glow: var(--shadow-neo), var(--glow-amber);
+
         --shadow-neo-press-sm: 0 0 0 0 var(--color-brand-dark);
-        --shadow-neo-press: 0 2px 0 0 var(--color-brand-dark);
+        --shadow-neo-press: var(--shadow-neo-sm);
 
-        /* 4. FOCUS (Teclado y accesibilidad con anillo dorado definido) */
-        --shadow-neo-focus: 0 4px 0 0 var(--color-brand-dark), 0 0 0 3px #f59e0b, 0 8px 16px -2px rgb(245 158 11 / 25%);
+        --shadow-neo-focus-sm: var(--shadow-neo-sm), var(--ring-amber), 0 2px 0 3px var(--color-amber-500), var(--glow-amber);
+        --shadow-neo-focus: var(--shadow-neo), var(--ring-amber), 0 4px 0 3px var(--color-amber-500), var(--glow-amber);
       }
 
       @utility text-* {
@@ -97,10 +91,10 @@
 
       /* ⚡ 2. Utilidad Interactiva: Física 3D, cursor y feedback táctil */
       @utility card-neo-interactive {
-        @apply cursor-pointer select-none transition-[transform,box-shadow] duration-150 ease-out;
+        @apply cursor-pointer select-none transition;
         @apply hover:-translate-y-0.5 hover:shadow-neo-glow-sm md:hover:shadow-neo-glow;
         @apply active:translate-y-0.5 active:shadow-neo-press-sm md:active:shadow-neo-press;
-        @apply focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:shadow-neo-focus;
+        @apply focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:shadow-neo-focus-sm md:focus-visible:shadow-neo-focus;
       }
 
       @utility bg-pattern {
