@@ -44,6 +44,9 @@
 
     <style type="text/tailwindcss">
       @theme {
+        --breakpoint-2xs: 340px;
+        --breakpoint-xs: 500px;
+
         --font-sans: "Barlow Semi Condensed", sans-serif;
         --font-heading: "Barlow Condensed", sans-serif;
 
@@ -318,6 +321,42 @@
       }
 
       /* ==========================================================================
+         Estilos CSS para la Barra de Características Generales del Curso
+         ========================================================================== */
+
+      .tarjeta-caracteristica {
+        @apply bg-brand-card-bg border border-terciario min-w-0;
+        @apply -mt-px first:mt-0 xs:mt-0;
+        @apply max-xs:first:rounded-t-lg max-xs:last:rounded-b-lg xs:rounded-lg sm:rounded-lg md:rounded-xl;
+        @apply p-3 md:p-4;
+        @apply flex flex-row xs:flex-col md:flex-row items-center justify-start xs:justify-center md:justify-start gap-3 xs:gap-2 md:gap-3;
+        @apply text-left xs:text-center md:text-left;
+      }
+
+      .caja-icono-caracteristica {
+        @apply size-8 md:size-10 shrink-0;
+        @apply rounded-md md:rounded-lg;
+        @apply flex items-center justify-center;
+        @apply text-5 md:text-6;
+      }
+
+      .caja-textos-caracteristica {
+        @apply flex flex-row xs:flex-col items-center justify-between xs:justify-center md:items-start;
+        @apply gap-2 xs:gap-0.5 uppercase font-heading;
+        @apply min-w-0 flex-1 xs:w-full md:flex-1 max-w-full;
+      }
+
+      .etiqueta-caracteristica {
+        @apply hidden 2xs:inline-block shrink min-w-0 max-w-full truncate;
+        @apply font-semibold text-sm md:text-base !leading-none text-secundario;
+      }
+
+      .detalle-caracteristica {
+        @apply shrink-0 min-w-0 max-w-full truncate text-right xs:text-center md:text-left;
+        @apply font-bold text-sm md:text-base !leading-none text-principal;
+      }
+
+      /* ==========================================================================
          Estilos CSS para el Footer General Compartido (Tailwind v4 @apply)
          ========================================================================== */
 
@@ -411,7 +450,7 @@
             <!-- Títulos del Hero con propiedades heredadas -->
             <div class="font-heading font-bold uppercase text-white text-balance">
               <!-- 2. Feliz Cumpleaños + Nombre -->
-              <h1 class="text-4xl md:text-5xl lg:text-6xl mb-1.5 md:mb-2 lg:mb-2.5 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
+              <h1 class="font-extrabold text-4xl md:text-5xl lg:text-6xl mb-1.5 md:mb-2 lg:mb-2.5 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
 
               <!-- 3. H2: Beneficio Especial -->
               <h2 class="text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 lg:mb-5 !leading-[1.15]">Tu beneficio especial ya está disponible</h2>
@@ -421,14 +460,14 @@
             <p class="px-4 sm:px-0 text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-7 lg:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
 
             <!-- 5. Botón de Acción -->
-            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl lg:text-3xl px-5 md:px-7 lg:px-9 py-3 md:py-4 lg:py-5 rounded-2xl presionar duration-200 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 lg:gap-5 uppercase mb-6 md:mb-7 lg:mb-8 whitespace-nowrap">
-              <i class="ph-bold ph-gift text-6 md:text-7 lg:text-9"></i>
-              <span>ELEGIR MI CURSO <span class="hidden sm:inline-flex">DE REGALO</span></span>
+            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl py-4 px-6 rounded-lg md:rounded-xl presionar duration-200 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 uppercase mb-6 md:mb-7 whitespace-nowrap">
+              <i class="ph-bold ph-hand-tap text-6 md:text-7"></i>
+              <span>ELEGIR MI CURSO <span class="hidden 2xs:inline-flex">DE REGALO</span></span>
             </button>
 
             <!-- General Course Details Bar (Clean White Style) -->
-            <div class="w-full max-w-4xl bg-white text-secundario rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-5 shadow-2xl">
-              <div id="heroCaracteristicas" class="flex flex-col sm:grid sm:grid-cols-3 sm:gap-5"></div>
+            <div class="w-full max-w-3xl bg-white text-secundario rounded-xl md:rounded-2xl p-3 md:p-4 shadow-2xl">
+              <div id="heroCaracteristicas" class="flex flex-col xs:grid xs:grid-cols-3 xs:gap-2 md:gap-3"></div>
             </div>
           </div>
         </header>
@@ -467,7 +506,7 @@
                 </span>
 
                 <!-- Course Counter Indicator -->
-                <div class="hidden min-[330px]:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:pl-4" aria-live="polite">
+                <div class="hidden 2xs:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:pl-4" aria-live="polite">
                   <span>Mostrando </span>
                   <strong id="contadorCursos" class="text-brand-blue font-bold"></strong> cursos
                 </div>
@@ -478,7 +517,7 @@
             <div class="mt-3 md:mt-4 relative">
               <!-- Mobile-Only Toggle Controls (Opción B) -->
               <div class="flex sm:hidden items-center justify-between gap-5 w-full">
-                <span class="hidden min-[330px]:inline-block text-xs !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">Categoría:</span>
+                <span class="hidden 2xs:inline-block text-xs !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">Categoría:</span>
                 <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="font-sans font-semibold text-white bg-brand-blue hover:bg-brand-blue-dark px-3.5 rounded-full !leading-none text-xs flex items-center justify-center gap-2 cursor-pointer presionar min-w-0 max-w-full">
                   <span id="insigniaCategoriaActiva" class="truncate py-2.5 min-w-0">Todos</span>
                   <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 transition-transform duration-200 shrink-0"></i>
@@ -1304,7 +1343,7 @@
           }
 
           if (insigniaCategoriaCursoCanjeado) {
-            const clasesCategoria = ESTILOS_TARJETA.insigniaCategoria.replace("hidden min-[350px]:", "");
+            const clasesCategoria = ESTILOS_TARJETA.insigniaCategoria.replace("hidden 2xs:", "");
             insigniaCategoriaCursoCanjeado.className = clasesCategoria;
             const nombreCategoria = getCategoryName(claimedData.category);
             insigniaCategoriaCursoCanjeado.textContent = nombreCategoria || "";
@@ -1400,15 +1439,15 @@
         container.innerHTML = features
           .map(
             (item) => `
-              <div class="@container bg-brand-card-bg border border-terciario -mt-px first:mt-0 max-sm:first:rounded-t-lg max-sm:last:rounded-b-lg sm:mt-0 sm:rounded-xl md:rounded-2xl p-3 sm:p-4 flex flex-row sm:flex-col @[240px]:flex-row items-center justify-start sm:justify-center @[240px]:justify-start gap-4 sm:gap-3 @[240px]:gap-4 text-left sm:text-center @[240px]:text-left">
+              <div class="tarjeta-caracteristica">
                 <!-- Columna 1: Icono -->
-                <div class="size-9 sm:size-10 md:size-11 rounded-md sm:rounded-lg md:rounded-xl flex items-center justify-center text-5 sm:text-6 md:text-7 shrink-0 ${item.colorClass}">
+                <div class="caja-icono-caracteristica ${item.colorClass}">
                   <i class="ph-bold ${item.icon}"></i>
                 </div>
-                <!-- Columnas 2 y 3: Etiqueta y Valor -->
-                <div class="flex flex-row sm:flex-col @[240px]:flex-row items-center sm:items-center @[240px]:items-start gap-4 sm:gap-1 min-w-0 flex-1 sm:w-full">
-                  <span class="block text-sm md:text-base !leading-none font-heading font-bold uppercase text-secundario shrink-0 w-20 sm:w-auto">${item.label}</span>
-                  <span class="block text-sm sm:text-base md:text-lg !leading-none font-bold text-principal uppercase truncate sm:whitespace-normal">${item.val}</span>
+                <!-- Columna 2: Etiqueta y Valor -->
+                <div class="caja-textos-caracteristica">
+                  <span class="etiqueta-caracteristica">${item.label}</span>
+                  <span class="detalle-caracteristica">${item.val}</span>
                 </div>
               </div>
             `,
@@ -1943,7 +1982,7 @@
           return `${this.insigniaBase} inline-block uppercase rounded-lg md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0`;
         },
         get insigniaCategoria() {
-          return `${this.insigniaBase} rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario inset-ring inset-ring-terciario shrink min-w-0 truncate hidden min-[350px]:inline-block`;
+          return `${this.insigniaBase} rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario inset-ring inset-ring-terciario shrink min-w-0 truncate hidden 2xs:inline-block`;
         },
         titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6 uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
@@ -1952,7 +1991,7 @@
         },
         iconoSeleccionar: "ph-bold ph-hand-tap text-4 md:text-5 text-brand-blue group-hover:text-principal transition shrink-0",
         textoSeleccionar: "whitespace-nowrap transition truncate min-w-0",
-        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-500 text-4 md:text-5 group-hover:translate-x-1.5 transition shrink-0 hidden min-[300px]:block",
+        iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-500 text-4 md:text-5 group-hover:translate-x-1.5 transition shrink-0 hidden 2xs:block",
       };
 
       function renderCourses(list) {
