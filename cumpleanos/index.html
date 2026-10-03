@@ -12,17 +12,22 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
+    <!-- Carga inmediata y prioritaria de iconos Phosphor Bold (Preload de la fuente woff2 + CSS directo) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/Phosphor-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3/dist/index.global.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/index.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link rel="dns-prefetch" href="https://script.google.com" />
     <link rel="preconnect" href="https://script.google.com" crossorigin />
     <link rel="dns-prefetch" href="https://script.googleusercontent.com" />
     <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin />
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Disparo anticipado de validación de token en paralelo (Early Fetch) -->
     <script>
@@ -44,8 +49,8 @@
 
     <style type="text/tailwindcss">
       @theme {
-        --breakpoint-2xs: 340px;
-        --breakpoint-xs: 500px;
+        --breakpoint-2xs: 22rem;
+        --breakpoint-xs: 32rem;
 
         --font-sans: "Barlow Semi Condensed", sans-serif;
         --font-heading: "Barlow Condensed", sans-serif;
@@ -78,26 +83,251 @@
         --shadow-neo-focus: var(--shadow-neo), var(--ring-amber), 0 4px 0 3px var(--color-amber-500), var(--glow-amber);
       }
 
+      @keyframes cintillo {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      @keyframes modal-scale-in {
+        from {
+          opacity: 0;
+          transform: scale(0.96) translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @keyframes modal-scale-out {
+        from {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: scale(0.96) translateY(8px);
+        }
+      }
+
+      @keyframes boton-shimmer {
+        0% {
+          transform: translateX(-150%) skewX(-20deg);
+        }
+        30%,
+        100% {
+          transform: translateX(250%) skewX(-20deg);
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 var(--glow-min, 12px) var(--glow-spread-min, -1px) color-mix(in srgb, var(--color-amber-500) 45%, transparent);
+        }
+        50% {
+          box-shadow: 0 0 var(--glow-max, 16px) var(--glow-spread-max, 0px) color-mix(in srgb, var(--color-amber-500) 65%, transparent);
+        }
+      }
+
+      @utility animate-cintillo {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: cintillo 25s linear infinite;
+      }
+
+      @utility animate-modal-in {
+        animation: modal-scale-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @utility animate-modal-out {
+        animation: modal-scale-out 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
       @utility text-* {
         font-size: calc(var(--spacing) * --value(integer));
       }
 
-      /* ==========================================================================
-         Utilidades Neobrutalistas Modulares (Tailwind v4)
-         ========================================================================== */
+      @utility efecto-presionar {
+        @apply transition-transform active:scale-95;
+      }
 
-      /* 📦 1. Utilidad Base: Estilo visual neobrutalista (fondo, borde, sombra, radio y padding) */
-      @utility card-neo {
+      @utility boton-base {
+        @apply py-4 px-6 rounded-lg md:rounded-xl;
+        @apply font-heading font-bold text-base md:text-lg uppercase !leading-none;
+        @apply inline-flex items-center justify-center gap-2.5;
+        @apply efecto-presionar cursor-pointer whitespace-nowrap select-none min-w-0 truncate;
+        @apply transition;
+
+        & > span {
+          @apply truncate min-w-0;
+        }
+
+        & > i {
+          @apply shrink-0 text-5 md:text-6;
+        }
+      }
+
+      @utility insignia-base {
+        @apply px-3 py-2 rounded-lg md:rounded-xl;
+        @apply font-heading font-bold text-xs md:text-sm uppercase !leading-none;
+        @apply inline-flex items-center justify-center select-none whitespace-nowrap min-w-0;
+
+        & > span {
+          @apply truncate min-w-0;
+        }
+
+        & > i {
+          @apply shrink-0 text-4 md:text-5;
+        }
+      }
+
+      @utility tarjeta-neo {
         @apply bg-brand-card-bg text-brand-dark border-2 border-brand-dark shadow-neo-sm md:shadow-neo;
         @apply rounded-2xl md:rounded-3xl p-5 md:p-6;
       }
 
-      /* ⚡ 2. Utilidad Interactiva: Física 3D, cursor y feedback táctil */
-      @utility card-neo-interactive {
+      @utility tarjeta-neo-interactiva {
         @apply cursor-pointer select-none transition;
         @apply hover:-translate-y-0.5 hover:shadow-neo-glow-sm md:hover:shadow-neo-glow;
         @apply active:translate-y-0.5 active:shadow-neo-press-sm md:active:shadow-neo-press;
         @apply focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:shadow-neo-focus-sm md:focus-visible:shadow-neo-focus;
+      }
+
+      /* Layout y Componentes de Pantallas de Estado (Carga y Expirado) */
+      @utility pantalla-estado {
+        @apply flex flex-col flex-1 relative z-50 w-full;
+      }
+
+      @utility encabezado-pantalla-estado {
+        @apply w-full flex items-center justify-center pt-4 px-4 md:pt-6 md:px-6 shrink-0 relative z-10;
+      }
+
+      @utility logo-superior-pantalla {
+        @apply inline-flex items-center justify-center cursor-pointer;
+
+        & > img {
+          @apply h-10 md:h-12 w-auto object-contain;
+        }
+      }
+
+      @utility cuerpo-pantalla-estado {
+        @apply flex-1 w-full flex items-center justify-center p-8 md:p-6 relative z-10;
+      }
+
+      @utility tarjeta-estado {
+        @apply max-w-sm w-full bg-brand-dark-secondary text-white rounded-2xl md:rounded-3xl p-6 md:p-8 border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col items-center text-center;
+
+        & > h1 {
+          @apply font-heading font-bold text-2xl md:text-3xl uppercase text-white mb-2 text-center text-balance !leading-[1.15];
+        }
+
+        & > p {
+          @apply font-sans font-medium text-base md:text-lg text-terciario text-center text-balance !leading-snug;
+        }
+      }
+
+      @utility caja-icono-estado {
+        @apply size-14 md:size-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-5 shrink-0;
+
+        & > i {
+          @apply text-7 md:text-8;
+        }
+
+        & > svg {
+          @apply size-7 md:size-8;
+        }
+      }
+
+      @utility tarjeta-aviso {
+        @apply tarjeta-neo w-full text-center flex flex-col items-center justify-center gap-5 md:gap-6;
+      }
+
+      @utility caja-icono-aviso {
+        @apply size-16 md:size-20 rounded-full flex items-center justify-center shrink-0 inset-ring;
+
+        & > i {
+          @apply text-8 md:text-10;
+        }
+      }
+
+      @utility cabecera-texto-aviso {
+        @apply flex flex-col gap-2 max-w-2xl mx-auto;
+
+        & > h3 {
+          @apply font-heading text-2xl md:text-3xl font-bold text-principal uppercase text-balance !leading-[1.15];
+        }
+
+        & > p {
+          @apply text-secundario text-base md:text-lg font-medium text-balance !leading-snug;
+        }
+      }
+
+      /* Tarjeta y Textos de Beneficios del Hero */
+      @utility tarjeta-beneficio {
+        @apply bg-brand-card-bg border border-terciario min-w-0;
+        @apply -mt-px first:mt-0 xs:mt-0;
+        @apply max-xs:first:rounded-t-lg max-xs:last:rounded-b-lg xs:rounded-lg sm:rounded-lg md:rounded-xl;
+        @apply p-3 md:p-4;
+        @apply flex flex-row xs:flex-col md:flex-row items-center justify-start xs:justify-center md:justify-start gap-3 xs:gap-2 md:gap-3;
+        @apply text-left xs:text-center md:text-left;
+      }
+
+      @utility caja-icono-beneficio {
+        @apply size-8 md:size-10 shrink-0 rounded-md md:rounded-lg flex items-center justify-center;
+
+        & > i {
+          @apply text-5 md:text-6;
+        }
+      }
+
+      @utility caja-textos-beneficio {
+        @apply flex flex-row xs:flex-col items-center justify-between xs:justify-center md:items-start;
+        @apply gap-2 xs:gap-0.5 uppercase font-heading;
+        @apply min-w-0 flex-1 xs:w-full md:flex-1 max-w-full;
+
+        & > span:first-child {
+          @apply hidden 2xs:inline-block shrink min-w-0 max-w-full truncate;
+          @apply font-semibold text-sm md:text-base !leading-none text-secundario;
+        }
+
+        & > span:last-child {
+          @apply shrink-0 min-w-0 max-w-full truncate text-right xs:text-center md:text-left;
+          @apply font-bold text-sm md:text-base !leading-none text-principal;
+        }
+      }
+
+      @utility footer-contacto {
+        @apply flex flex-wrap items-center justify-center gap-4 gap-y-3 md:gap-6 lg:gap-8 shrink-0;
+
+        & > div {
+          @apply flex flex-col items-center md:items-start gap-2;
+
+          & > span {
+            @apply text-xs font-sans font-bold uppercase;
+          }
+        }
+      }
+
+      @utility footer-boton-pildora {
+        @apply h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-semibold uppercase px-3 rounded-lg inset-ring efecto-presionar select-none whitespace-nowrap;
+
+        & > i {
+          @apply text-4 md:text-5;
+        }
+      }
+
+      @utility footer-boton-social {
+        @apply size-9 shrink-0 inline-flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/15 inset-ring inset-ring-white/10 efecto-presionar select-none;
+
+        & > i {
+          @apply text-4 md:text-5;
+        }
       }
 
       @utility bg-pattern {
@@ -105,36 +335,23 @@
         background-size: 160px 160px;
       }
 
+      @utility texto-degradado-cumpleanos {
+        @apply inline-block empty:hidden;
+
+        @supports (-webkit-background-clip: text) or (background-clip: text) {
+          background-image: linear-gradient(to right, var(--color-blue-400), var(--color-fuchsia-400), var(--color-amber-300));
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+      }
+
       @utility hero-glow {
-        background: radial-gradient(circle at 50% 18%, rgb(2 74 223 / 38%) 0%, transparent 65%), radial-gradient(circle at 50% 32%, rgb(236 72 153 / 18%) 0%, transparent 55%), radial-gradient(circle at 50% 62%, rgb(245 158 11 / 22%) 0%, transparent 50%);
-        mask-image: linear-gradient(to bottom, rgb(0 0 0 / 100%) 0%, rgb(0 0 0 / 100%) 70%, rgb(0 0 0 / 0%) 100%);
+        background: radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--color-brand-blue) 38%, transparent) 0%, transparent 65%), radial-gradient(circle at 50% 32%, color-mix(in srgb, var(--color-pink-500) 18%, transparent) 0%, transparent 55%), radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--color-amber-500) 22%, transparent) 0%, transparent 50%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
       }
 
-      /* Marquee continuo para el cintillo superior */
-      @keyframes marquee {
-        0% {
-          transform: translateX(0%);
-        }
-
-        100% {
-          transform: translateX(-50%);
-        }
-      }
-
-      .animate-marquee {
-        display: flex;
-        width: max-content;
-        will-change: transform;
-        animation: marquee 25s linear infinite;
-
-        @media (hover: hover) {
-          &:hover {
-            animation-play-state: paused;
-          }
-        }
-      }
-
-      /* Máscara de desvanecimiento suave en los bordes laterales (Fade Mask) */
       @utility cintillo-fade-mask {
         -webkit-mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
         mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
@@ -145,42 +362,19 @@
         }
       }
 
-      @keyframes pulse-glow {
-        0%,
-        100% {
-          box-shadow: 0 0 12px -1px rgb(245 158 11 / 45%);
+      @utility boton-cta-hero {
+        --glow-min: 12px;
+        --glow-max: 16px;
+        --glow-spread-min: -1px;
+        --glow-spread-max: 0px;
+
+        @media (min-width: 768px) {
+          --glow-min: 16px;
+          --glow-max: 24px;
+          --glow-spread-min: -2px;
+          --glow-spread-max: 1px;
         }
 
-        50% {
-          box-shadow: 0 0 16px 0px rgb(245 158 11 / 65%);
-        }
-      }
-
-      @media (min-width: 768px) {
-        @keyframes pulse-glow {
-          0%,
-          100% {
-            box-shadow: 0 0 16px -2px rgb(245 158 11 / 45%);
-          }
-
-          50% {
-            box-shadow: 0 0 24px 1px rgb(245 158 11 / 65%);
-          }
-        }
-      }
-
-      @keyframes btn-shimmer {
-        0% {
-          transform: translateX(-150%) skewX(-20deg);
-        }
-
-        30%,
-        100% {
-          transform: translateX(250%) skewX(-20deg);
-        }
-      }
-
-      @utility btn-cta-hero {
         position: relative;
         overflow: hidden;
         animation: pulse-glow 2.5s infinite ease-in-out;
@@ -191,213 +385,20 @@
           inset: 0;
           width: 60%;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgb(255 255 255 / 35%), transparent);
+          background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-white, #fff) 35%, transparent), transparent);
           transform: translateX(-150%) skewX(-20deg);
-          animation: btn-shimmer 3.5s infinite ease-in-out;
+          animation: boton-shimmer 3.5s infinite ease-in-out;
           pointer-events: none;
         }
       }
 
-      /* Animación suave de entrada para el modal */
-      @keyframes modal-scale-in {
-        from {
-          opacity: 0;
-          transform: scale(0.96) translateY(8px);
-        }
-
-        to {
-          opacity: 1;
-          transform: scale(1) translateY(0);
-        }
-      }
-
-      .animate-modal-in {
-        animation: modal-scale-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-
-      /* Animación suave de salida para el modal */
-      @keyframes modal-scale-out {
-        from {
-          opacity: 1;
-          transform: scale(1) translateY(0);
-        }
-
-        to {
-          opacity: 0;
-          transform: scale(0.96) translateY(8px);
-        }
-      }
-
-      /* Utilidad global para microinteracción táctil / clic */
-      @utility presionar {
-        @apply transition-transform active:scale-95;
-      }
-
-      /* ==========================================================================
-         Estilos CSS para Vistas de Estado (Vista 1 y Vista 3)
-         Estandarizados con Tokens Tailwind v4 y @apply (Móvil y MD)
-         ========================================================================== */
-
-      .pantalla-estado {
-        @apply flex-1 flex-col relative z-50 w-full;
-      }
-
-      .pantalla-estado:not(.hidden) {
-        @apply flex;
-      }
-
-      .encabezado-pantalla-estado {
-        @apply w-full flex items-center justify-center pt-4 px-4 md:pt-6 md:px-6 shrink-0 relative z-10;
-      }
-
-      .logo-superior-pantalla {
-        @apply inline-flex items-center justify-center cursor-pointer;
-      }
-
-      .logo-superior-pantalla img {
-        @apply h-10 md:h-12 w-auto object-contain;
-      }
-
-      .cuerpo-pantalla-estado {
-        @apply flex-1 w-full flex items-center justify-center p-8 md:p-6 relative z-10;
-      }
-
-      .tarjeta-estado {
-        @apply max-w-sm w-full bg-brand-dark-secondary text-white rounded-2xl md:rounded-3xl p-6 md:p-8 border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col items-center text-center;
-      }
-
-      .caja-icono-estado {
-        @apply size-14 md:size-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-5 shrink-0;
-      }
-
-      .caja-icono-estado i {
-        @apply text-7 md:text-8;
-      }
-
-      .titulo-estado {
-        @apply font-heading font-bold text-2xl md:text-3xl uppercase text-white mb-2 text-center text-balance !leading-[1.15];
-      }
-
-      .subtitulo-estado {
-        @apply font-sans font-medium text-base md:text-lg text-terciario text-center text-balance !leading-snug;
-      }
-
-      /* Vista 1: Carga (Azul EDUMIN Resplandeciente) */
-      .tema-estado-carga .caja-icono-estado {
-        @apply bg-blue-950/60 inset-ring inset-ring-blue-700/60 text-blue-400;
-      }
-
-      /* Vista 3: Expirado (Ámbar Dorado Resplandeciente) */
-      .tema-estado-expirado .caja-icono-estado {
-        @apply bg-amber-950/60 inset-ring inset-ring-amber-700/60 text-amber-400;
-      }
-
-      /* ==========================================================================
-         Estilos CSS para Vistas de Aviso en Catálogo (Canjeado y Vacío)
-         ========================================================================== */
-
-      .tarjeta-aviso {
-        @apply card-neo w-full text-center flex flex-col items-center justify-center gap-5 md:gap-6;
-      }
-
-      .caja-icono-aviso {
-        @apply size-16 md:size-20 rounded-full flex items-center justify-center shrink-0 inset-ring;
-      }
-
-      .icono-aviso {
-        @apply text-8 md:text-10;
-      }
-
-      .cabecera-texto-aviso {
-        @apply flex flex-col gap-2 max-w-2xl mx-auto;
-      }
-
-      .titulo-aviso {
-        @apply font-heading text-2xl md:text-3xl font-bold text-principal uppercase text-balance !leading-[1.15];
-      }
-
-      .subtitulo-aviso {
-        @apply text-secundario text-base md:text-lg font-medium text-balance !leading-snug;
-      }
-
-      /* ==========================================================================
-         Estilos CSS para la Barra de Características Generales del Curso
-         ========================================================================== */
-
-      .tarjeta-caracteristica {
-        @apply bg-brand-card-bg border border-terciario min-w-0;
-        @apply -mt-px first:mt-0 xs:mt-0;
-        @apply max-xs:first:rounded-t-lg max-xs:last:rounded-b-lg xs:rounded-lg sm:rounded-lg md:rounded-xl;
-        @apply p-3 md:p-4;
-        @apply flex flex-row xs:flex-col md:flex-row items-center justify-start xs:justify-center md:justify-start gap-3 xs:gap-2 md:gap-3;
-        @apply text-left xs:text-center md:text-left;
-      }
-
-      .caja-icono-caracteristica {
-        @apply size-8 md:size-10 shrink-0;
-        @apply rounded-md md:rounded-lg;
-        @apply flex items-center justify-center;
-        @apply text-5 md:text-6;
-      }
-
-      .caja-textos-caracteristica {
-        @apply flex flex-row xs:flex-col items-center justify-between xs:justify-center md:items-start;
-        @apply gap-2 xs:gap-0.5 uppercase font-heading;
-        @apply min-w-0 flex-1 xs:w-full md:flex-1 max-w-full;
-      }
-
-      .etiqueta-caracteristica {
-        @apply hidden 2xs:inline-block shrink min-w-0 max-w-full truncate;
-        @apply font-semibold text-sm md:text-base !leading-none text-secundario;
-      }
-
-      .detalle-caracteristica {
-        @apply shrink-0 min-w-0 max-w-full truncate text-right xs:text-center md:text-left;
-        @apply font-bold text-sm md:text-base !leading-none text-principal;
-      }
-
-      /* ==========================================================================
-         Estilos CSS para el Footer General Compartido (Tailwind v4 @apply)
-         ========================================================================== */
-
-      .footer-bloque {
-        @apply flex flex-col items-center md:items-start gap-2;
-      }
-
-      .footer-etiqueta {
-        @apply text-xs font-sans font-bold uppercase;
-      }
-
-      .footer-icono {
-        @apply text-4 md:text-5;
-      }
-
-      /* Botón base tipo píldora (Web y WhatsApp) */
-      .footer-btn-pildora {
-        @apply h-9 shrink-0 inline-flex items-center gap-2 text-xs font-sans font-bold uppercase px-3 rounded-lg inset-ring presionar;
-      }
-
-      .footer-btn-web {
-        @apply text-blue-400 bg-blue-950/60 hover:bg-blue-900/80 inset-ring-blue-700/60;
-      }
-
-      .footer-btn-whatsapp {
-        @apply text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 inset-ring-emerald-700/60;
-      }
-
-      /* Botones cuadrados de Redes Sociales */
-      .footer-btn-social {
-        @apply size-9 shrink-0 inline-flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/15 inset-ring inset-ring-white/10 presionar;
-      }
-
-      /* Ocultar barra de desplazamiento manteniendo el scroll táctil fluido */
       @utility no-scrollbar {
-        -ms-overflow-style: none; /* IE y Edge */
-        scrollbar-width: none; /* Firefox */
-        -webkit-overflow-scrolling: touch; /* Scroll inercial en iOS */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
 
         &::-webkit-scrollbar {
-          display: none; /* Chrome, Safari, Edge, Android */
+          display: none;
           width: 0;
           height: 0;
         }
@@ -407,67 +408,53 @@
 
   <body class="bg-brand-dark text-terciario font-sans font-medium min-h-screen min-h-svh min-h-dvh flex flex-col justify-between antialiased selection:bg-brand-blue selection:text-white">
     <div class="bg-pattern fixed inset-0 opacity-40 pointer-events-none"></div>
-    <!-- VISTA 1: Pantalla de Carga (Inicialmente Visible) -->
-    <div id="pantalla-carga" class="pantalla-estado tema-estado-carga">
+    <div id="pantalla-carga" class="pantalla-estado">
       <header class="encabezado-pantalla-estado">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
-          <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="" onerror="handleLogoError(this)" />
+          <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" onerror="handleLogoError(this)" />
         </a>
       </header>
 
       <main role="status" aria-live="polite" class="cuerpo-pantalla-estado">
         <div class="tarjeta-estado">
-          <div class="caja-icono-estado">
-            <i class="ph-bold ph-circle-notch animate-spin" aria-hidden="true"></i>
+          <div class="caja-icono-estado bg-blue-950/60 inset-ring inset-ring-blue-700/60 text-blue-400">
+            <svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+              <path d="M236,128a108,108,0,0,1-216,0c0-42.52,24.73-81.34,63-98.9a12,12,0,1,1,10,21.8C62.8,64.22,44,94.31,44,128a84,84,0,0,0,168,0c0-33.69-18.8-63.78-49-77.1a12,12,0,1,1,10-21.8C211.27,46.66,236,85.48,236,128Z"></path>
+            </svg>
           </div>
-          <h1 class="titulo-estado">VERIFICANDO TU ENLACE DE REGALO…</h1>
-          <p class="subtitulo-estado">Por favor, espera un momento mientras validamos la vigencia de tu beneficio de cumpleaños.</p>
+          <h1>VERIFICANDO TU ENLACE DE REGALO…</h1>
+          <p>Por favor, espera un momento mientras validamos la vigencia de tu beneficio de cumpleaños.</p>
         </div>
       </main>
     </div>
 
-    <!-- VISTA 2: Selección de Curso (Inicialmente Oculta) -->
     <div id="pantalla-cursos" class="hidden flex-col justify-between min-h-screen min-h-svh min-h-dvh relative">
       <div id="cintilloCumpleanos" class="fixed inset-x-0 top-0 z-50 h-10 overflow-hidden bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-principal font-heading font-bold text-lg !leading-none flex items-center uppercase shadow-sm select-none border-b border-amber-600/20">
         <div class="cintillo-fade-mask w-full h-full overflow-hidden flex items-center">
-          <div class="animate-marquee flex items-center h-full"></div>
+          <div class="animate-cintillo flex items-center h-full"></div>
         </div>
       </div>
 
       <div id="seccionHero" class="min-h-screen min-h-svh min-h-dvh pt-10 flex flex-col relative">
-        <!-- Hero Section -->
         <header class="relative flex-1 flex flex-col justify-center p-4 md:p-6 lg:p-8">
-          <!-- Capa 2: Degradado de luces (debajo de textos, sobre confeti) -->
           <div class="hero-glow absolute inset-0 pointer-events-none"></div>
-
-          <!-- Capa 3: Textos y elementos del Hero -->
           <div class="max-w-5xl mx-auto text-center relative flex flex-col items-center my-auto w-full">
-            <!-- 1. EDUMIN Official Logo -->
             <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 md:mb-4 lg:mb-5 inline-block shrink-0" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
-              <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-10 md:h-12 lg:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
+              <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" class="h-10 md:h-12 lg:h-14 w-auto object-contain" onerror="handleHeroLogoError(this)" />
             </a>
-
-            <!-- Títulos del Hero con propiedades heredadas -->
-            <div class="font-heading font-bold uppercase text-white text-balance">
-              <!-- 2. Feliz Cumpleaños + Nombre -->
-              <h1 class="font-extrabold text-4xl md:text-5xl lg:text-6xl mb-1.5 md:mb-2 lg:mb-2.5 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombreEstudiante"></span><span id="nombreEstudiante" class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-fuchsia-400 to-amber-300 inline-block"></span>!</h1>
-
-              <!-- 3. H2: Beneficio Especial -->
-              <h2 class="text-2xl md:text-3xl lg:text-4xl mb-3 md:mb-4 lg:mb-5 !leading-[1.15]">Tu beneficio especial ya está disponible</h2>
+            <div class="text-balance">
+              <h1 class="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl text-white uppercase mb-1.5 md:mb-2 lg:mb-2.5 !leading-none">¡Feliz Cumpleaños<span id="prefijoNombre"></span><span id="nombreEstudiante" class="texto-degradado-cumpleanos"></span>!</h1>
+              <h2 class="font-heading font-bold text-2xl md:text-3xl lg:text-4xl text-white uppercase !leading-[1.15]">Tu beneficio especial ya está disponible</h2>
+              <p class="px-4 sm:px-0 text-terciario text-base md:text-lg lg:text-xl max-w-xl mx-auto font-medium mt-3 md:mt-4 lg:mt-5 !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
             </div>
 
-            <!-- 4. Subtítulo (Opción 3) -->
-            <p class="px-4 sm:px-0 text-terciario text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto font-medium mb-6 md:mb-7 lg:mb-8 text-balance !leading-snug [&_strong]:text-cuaternario [&_strong]:font-semibold [&_strong]:uppercase">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
-
-            <!-- 5. Botón de Acción -->
-            <button onclick="scrollToCourses()" class="btn-cta-hero bg-amber-400 hover:bg-amber-500 text-principal font-heading font-bold text-xl md:text-2xl py-4 px-6 rounded-lg md:rounded-xl presionar duration-200 !leading-none inline-flex items-center justify-center gap-3 md:gap-4 uppercase mb-6 md:mb-7 whitespace-nowrap">
-              <i class="ph-bold ph-hand-tap text-6 md:text-7"></i>
+            <button onclick="scrollToCourses()" aria-label="Elegir mi curso de regalo" class="boton-base boton-cta-hero bg-amber-400 hover:bg-amber-500 text-principal !text-xl md:!text-2xl gap-3 md:gap-4 my-7 md:my-8">
+              <i class="ph-bold ph-hand-tap !text-6 md:!text-7"></i>
               <span>ELEGIR MI CURSO <span class="hidden 2xs:inline-flex">DE REGALO</span></span>
             </button>
 
-            <!-- General Course Details Bar (Clean White Style) -->
             <div class="w-full max-w-3xl bg-white text-secundario rounded-xl md:rounded-2xl p-3 md:p-4 shadow-2xl">
-              <div id="heroCaracteristicas" class="flex flex-col xs:grid xs:grid-cols-3 xs:gap-2 md:gap-3"></div>
+              <div id="heroBeneficios" class="flex flex-col xs:grid xs:grid-cols-3 xs:gap-2 md:gap-3"></div>
             </div>
           </div>
         </header>
@@ -484,7 +471,7 @@
           </div>
 
           <!-- Search & Category Filters Box -->
-          <div id="cajaFiltrosYBusqueda" class="card-neo mb-5 md:mb-6">
+          <div id="cajaFiltrosYBusqueda" class="tarjeta-neo mb-5 md:mb-6">
             <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center justify-between pb-0 md:pb-4 border-b-0 md:border-b border-terciario">
               <!-- Search Input Wrapper (Flexbox Layout a la derecha en desktop, primero en móvil) -->
               <label for="inputBusqueda" id="wrapperBusqueda" class="w-full md:w-auto md:flex-1 md:max-w-md flex items-center gap-2.5 px-4 py-2.5 bg-white border border-terciario hover:border-slate-400 focus-within:border-amber-400 focus-within:hover:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-lg md:rounded-xl transition-all shadow-sm group order-1 md:order-2 cursor-text">
@@ -492,8 +479,8 @@
 
                 <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="min-w-0 flex-1 w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 !leading-none text-base font-sans font-medium placeholder:text-slate-400 text-principal truncate placeholder:truncate" />
 
-                <button type="button" id="btnLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden relative size-5 flex items-center justify-center shrink-0 presionar cursor-pointer text-slate-400 hover:text-secundario group/btn">
-                  <span class="absolute -inset-1.5 rounded-full bg-transparent group-hover/btn:bg-slate-300 group-active/btn:bg-slate-300 transition-all pointer-events-none"></span>
+                <button type="button" id="botonLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden relative size-5 flex items-center justify-center shrink-0 efecto-presionar cursor-pointer text-slate-400 hover:text-secundario group/boton">
+                  <span class="absolute -inset-1.5 rounded-full bg-transparent group-hover/boton:bg-slate-300 group-active/boton:bg-slate-300 transition-all pointer-events-none"></span>
                   <i class="relative z-10 ph-bold ph-x text-4"></i>
                 </button>
               </label>
@@ -518,7 +505,7 @@
               <!-- Mobile-Only Toggle Controls (Opción B) -->
               <div class="flex sm:hidden items-center justify-between gap-5 w-full">
                 <span class="hidden 2xs:inline-block text-xs !leading-none font-sans font-bold uppercase text-principal select-none shrink-0">Categoría:</span>
-                <button type="button" id="btnToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="font-sans font-semibold text-white bg-brand-blue hover:bg-brand-blue-dark px-3.5 rounded-full !leading-none text-xs flex items-center justify-center gap-2 cursor-pointer presionar min-w-0 max-w-full">
+                <button type="button" id="botonToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="font-sans font-semibold text-white bg-brand-blue hover:bg-brand-blue-dark px-3.5 rounded-full !leading-none text-xs flex items-center justify-center gap-2 cursor-pointer efecto-presionar min-w-0 max-w-full">
                   <span id="insigniaCategoriaActiva" class="truncate py-2.5 min-w-0">Todos</span>
                   <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 transition-transform duration-200 shrink-0"></i>
                 </button>
@@ -553,8 +540,8 @@
               </div>
 
               <div class="cabecera-texto-aviso">
-                <h3 class="titulo-aviso">¡YA REGISTRASTE TU CURSO!</h3>
-                <p class="subtitulo-aviso">Tu beneficio de cumpleaños ha sido registrado con éxito. Te notificaremos cuando tu curso esté disponible. Revisa los detalles de tu elección a continuación.</p>
+                <h3>¡YA REGISTRASTE TU CURSO!</h3>
+                <p>Tu beneficio de cumpleaños ha sido registrado con éxito. Te notificaremos cuando tu curso esté disponible. Revisa los detalles de tu elección a continuación.</p>
               </div>
 
               <!-- Selected Course Card Box (Tarjeta limpia con insignias de la grilla) -->
@@ -570,8 +557,8 @@
 
                 <!-- Fila dedicada independiente para el Botón de WhatsApp (Tamaño Auto) -->
                 <div class="pt-3 border-t border-slate-100 flex items-center justify-center sm:justify-end">
-                  <button onclick="handleSendWhatsApp()" class="font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white presionar shadow-md cursor-pointer whitespace-nowrap">
-                    <i class="ph-bold ph-whatsapp-logo text-6 md:text-7 shrink-0"></i>
+                  <button onclick="handleSendWhatsApp()" class="boton-base shadow-md bg-emerald-600 hover:bg-emerald-700 text-white">
+                    <i class="ph-bold ph-whatsapp-logo"></i>
                     <span>Confirmar por WhatsApp</span>
                   </button>
                 </div>
@@ -586,11 +573,11 @@
                 <i class="ph-bold ph-ghost icono-aviso"></i>
               </div>
               <div class="cabecera-texto-aviso">
-                <h3 class="titulo-aviso">NO ENCONTRAMOS RESULTADOS</h3>
-                <p class="subtitulo-aviso">Intenta con otra palabra o restablece la lista completa de cursos.</p>
+                <h3>NO ENCONTRAMOS RESULTADOS</h3>
+                <p>Intenta con otra palabra o restablece la lista completa de cursos.</p>
               </div>
-              <button onclick="resetFilters()" class="py-4 px-6 rounded-lg md:rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none presionar cursor-pointer whitespace-nowrap shadow-md bg-brand-blue hover:bg-brand-blue-dark text-white shrink-0">
-                <i class="ph-bold ph-arrows-counter-clockwise text-5 md:text-6 shrink-0"></i>
+              <button onclick="resetFilters()" class="boton-base shadow-md bg-brand-blue hover:bg-brand-blue-dark text-white shrink-0">
+                <i class="ph-bold ph-arrows-counter-clockwise"></i>
                 <span>Ver todos los cursos</span>
               </button>
             </div>
@@ -612,12 +599,12 @@
             <!-- Content Container -->
             <div class="relative z-10">
               <div class="flex items-center justify-between gap-4 mb-6">
-                <div class="inline-flex items-center gap-2 bg-amber-400 text-principal font-heading font-bold text-xs md:text-sm px-3 py-1.5 rounded-full uppercase !leading-none select-none">
-                  <i class="ph-bold ph-gift text-4 md:text-5 shrink-0"></i>
+                <div class="insignia-base !py-1.5 rounded-full gap-2 bg-amber-400 text-principal">
+                  <i class="ph-bold ph-gift"></i>
                   <span>Selección de Curso</span>
                 </div>
 
-                <button type="button" id="btnCerrarModal" onclick="closeModal()" aria-label="Cerrar" class="size-8 md:size-9 shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors presionar cursor-pointer">
+                <button type="button" id="botonCerrarModal" onclick="closeModal()" aria-label="Cerrar modal" title="Cerrar" class="size-8 md:size-9 shrink-0 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors efecto-presionar cursor-pointer">
                   <i class="ph-bold ph-x text-4 md:text-5"></i>
                 </button>
               </div>
@@ -637,22 +624,22 @@
     <!-- Cierre de VISTA 2: #pantalla-cursos -->
 
     <!-- VISTA 3: Enlace Expirado (Inicialmente Oculta) -->
-    <div id="pantalla-expirado" class="pantalla-estado tema-estado-expirado hidden">
+    <div id="pantalla-expirado" class="pantalla-estado hidden">
       <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
       <header class="encabezado-pantalla-estado">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
-          <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="" onerror="handleLogoError(this)" />
+          <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" onerror="handleLogoError(this)" />
         </a>
       </header>
 
       <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
       <main role="alert" class="cuerpo-pantalla-estado">
         <div class="tarjeta-estado">
-          <div class="caja-icono-estado">
+          <div class="caja-icono-estado bg-amber-950/60 inset-ring inset-ring-amber-700/60 text-amber-400">
             <i class="ph-bold ph-clock-countdown" aria-hidden="true"></i>
           </div>
-          <h1 class="titulo-estado">¡TU ENLACE EXPIRÓ O NO ES VÁLIDO!</h1>
-          <p class="subtitulo-estado">El plazo límite para reclamar tu curso ha finalizado o el enlace ingresado ya no está disponible.</p>
+          <h1>¡TU ENLACE EXPIRÓ O NO ES VÁLIDO!</h1>
+          <p>El plazo límite para reclamar tu curso ha finalizado o el enlace ingresado ya no está disponible.</p>
         </div>
       </main>
     </div>
@@ -663,46 +650,46 @@
         <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
         <div id="footerMarcaIzquierda" class="hidden flex-col md:flex-row items-center gap-2 md:gap-4 text-center md:text-left min-w-0">
           <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer" title="Ir al sitio web de EDUMIN">
-            <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN Logo" class="h-8 object-contain" onerror="handleLogoError(this, 'footer')" />
+            <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" class="h-8 object-contain" onerror="handleLogoError(this, 'footer')" />
           </a>
           <span class="text-sm font-sans font-bold uppercase text-balance max-w-64 min-w-0 inline-block !leading-[1.15] md:pl-4 md:border-l md:border-white/15"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
         </div>
 
         <!-- Right: Website, WhatsApp & Social Media (Visible en Vistas 1, 2 y 3) -->
-        <div id="footerContactoDerecha" class="flex flex-wrap items-center justify-center gap-4 gap-y-3 md:gap-6 lg:gap-8 shrink-0">
+        <div id="footerContactoDerecha" class="footer-contacto">
           <!-- Website Block -->
-          <div class="footer-bloque">
-            <span class="footer-etiqueta">Visítanos:</span>
-            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" title="Visitar edumin.pe" class="footer-btn-pildora footer-btn-web">
-              <i class="ph-bold ph-globe footer-icono"></i>
+          <div>
+            <span>Visítanos:</span>
+            <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" title="Visitar edumin.pe" class="footer-boton-pildora text-blue-400 bg-blue-950/60 hover:bg-blue-900/80 inset-ring-blue-700/60">
+              <i class="ph-bold ph-globe"></i>
               <span>edumin.pe</span>
             </a>
           </div>
 
           <!-- WhatsApp Support Block -->
-          <div class="footer-bloque">
-            <span class="footer-etiqueta">Contáctanos:</span>
-            <a href="https://wa.me/51980694497" target="_blank" rel="noopener noreferrer" title="Contactar por WhatsApp" class="footer-btn-pildora footer-btn-whatsapp">
-              <i class="ph-bold ph-whatsapp-logo footer-icono"></i>
+          <div>
+            <span>Contáctanos:</span>
+            <a href="https://wa.me/51980694497" target="_blank" rel="noopener noreferrer" title="Contactar por WhatsApp" class="footer-boton-pildora text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 inset-ring-emerald-700/60">
+              <i class="ph-bold ph-whatsapp-logo"></i>
               <span>980 694 497</span>
             </a>
           </div>
 
           <!-- Social Media Block -->
-          <div class="footer-bloque">
-            <span class="footer-etiqueta">Síguenos en:</span>
+          <div>
+            <span>Síguenos en:</span>
             <div class="flex items-center gap-2 text-terciario">
-              <a href="https://www.instagram.com/edumin.pe/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="footer-btn-social">
-                <i class="ph-bold ph-instagram-logo footer-icono"></i>
+              <a href="https://www.instagram.com/edumin.pe/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram" class="footer-boton-social">
+                <i class="ph-bold ph-instagram-logo"></i>
               </a>
-              <a href="https://www.facebook.com/edumin.pe" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="footer-btn-social">
-                <i class="ph-bold ph-facebook-logo footer-icono"></i>
+              <a href="https://www.facebook.com/edumin.pe" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook" class="footer-boton-social">
+                <i class="ph-bold ph-facebook-logo"></i>
               </a>
-              <a href="https://www.tiktok.com/@edumin_pe" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok" class="footer-btn-social">
-                <i class="ph-bold ph-tiktok-logo footer-icono"></i>
+              <a href="https://www.tiktok.com/@edumin_pe" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok" class="footer-boton-social">
+                <i class="ph-bold ph-tiktok-logo"></i>
               </a>
-              <a href="https://www.linkedin.com/company/edumin/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="footer-btn-social">
-                <i class="ph-bold ph-linkedin-logo footer-icono"></i>
+              <a href="https://www.linkedin.com/company/edumin/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="footer-boton-social">
+                <i class="ph-bold ph-linkedin-logo"></i>
               </a>
             </div>
           </div>
@@ -718,7 +705,7 @@
       // ==========================================================================
       // ESTILOS BASE COMPARTIDOS (100% DRY)
       // ==========================================================================
-      const ESTILOS_BOTON_BASE = "py-4 px-6 rounded-lg md:rounded-xl font-heading font-bold text-base md:text-lg uppercase inline-flex items-center justify-center gap-2.5 !leading-none presionar cursor-pointer whitespace-nowrap";
+      const ESTILOS_BOTON_BASE = "boton-base";
 
       // ==========================================================================
       // CONFIGURACIÓN Y ESTILOS UNIFICADOS DEL MODAL (100% DRY)
@@ -730,9 +717,8 @@
           icono: "ph-bold text-10 md:text-12 mb-3",
           titulo: "font-heading font-bold text-lg md:text-xl uppercase text-balance mb-1",
           parrafo: "font-medium text-sm md:text-base !leading-snug text-balance",
-          tamanoIconoBoton: "text-5 md:text-6",
           botonBase: ESTILOS_BOTON_BASE,
-          colorBotonVolver: "inset-ring inset-ring-terciario text-secundario hover:bg-slate-100 shrink-0",
+          colorBotonVolver: "inset-ring inset-ring-terciario text-secundario hover:bg-slate-100 shrink-0 max-sm:!px-4",
         },
         paso1: {
           colorCaja: "bg-blue-500/5 border-blue-500/30",
@@ -786,20 +772,20 @@
             <div class="flex items-center gap-3">
               <button
                 type="button"
-                id="btnVolverModal"
+                id="botonVolverModal"
                 onclick="closeModal()"
                 aria-label="Volver"
                 title="Volver"
-                class="${estilos.botonBase} max-sm:!px-4 ${estilos.colorBotonVolver}">
-                <i class="ph-bold ph-arrow-left ${estilos.tamanoIconoBoton}"></i>
+                class="${estilos.botonBase} ${estilos.colorBotonVolver}">
+                <i class="ph-bold ph-arrow-left"></i>
                 <span class="hidden sm:inline">Volver</span>
               </button>
               <button
                 type="button"
-                id="btnRegistrarCurso"
+                id="botonRegistrarCurso"
                 onclick="handleRegisterCourse()"
                 class="${estilos.botonBase} ${paso1.colorBoton}">
-                <i class="ph-bold ${paso1.iconoBoton} ${estilos.tamanoIconoBoton}"></i>
+                <i class="ph-bold ${paso1.iconoBoton}"></i>
                 <span>${paso1.textoBoton}</span>
               </button>
             </div>
@@ -812,7 +798,7 @@
               type="button"
               onclick="handleSendWhatsApp()"
               class="${estilos.botonBase} ${paso2.colorBoton}">
-              <i class="ph-bold ${paso2.iconoBoton} ${estilos.tamanoIconoBoton}"></i>
+              <i class="ph-bold ${paso2.iconoBoton}"></i>
               <span>${paso2.textoBoton}</span>
             </button>
           `;
@@ -1252,7 +1238,7 @@
         const flexWrapper = document.getElementById("footerFlexWrapper");
 
         if (vistaId === "pantalla-cursos") {
-          initBirthdayBannerMarquee();
+          iniciarCintilloCumpleanos();
           if (marcaIzquierda) {
             marcaIzquierda.classList.remove("hidden");
             marcaIzquierda.classList.add("flex");
@@ -1347,7 +1333,7 @@
             insigniaCategoriaCursoCanjeado.className = clasesCategoria;
             const nombreCategoria = getCategoryName(claimedData.category);
             insigniaCategoriaCursoCanjeado.textContent = nombreCategoria || "";
-            insigniaCategoriaCursoCanjeado.style.display = nombreCategoria ? "inline-block" : "none";
+            insigniaCategoriaCursoCanjeado.style.display = nombreCategoria ? "inline-flex" : "none";
           }
 
           return true;
@@ -1367,10 +1353,10 @@
       // Manejo unificado de error de carga del logo (mantiene 100% el diseño original de cada vista)
       function handleLogoError(img, context) {
         if (!img) return;
-        if (context === "marquee") {
+        if (context === "cintillo") {
           img.outerHTML = '<span class="inline-flex items-center h-6 !leading-none">EDUMIN</span>';
         } else if (context === "hero") {
-          img.outerHTML = '<span class="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-white h-10 md:h-12 lg:h-14 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
+          img.outerHTML = '<span class="font-heading font-bold text-2xl md:text-3xl lg:text-4xl text-white h-10 md:h-12 lg:h-14 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
         } else if (context === "footer") {
           img.outerHTML = '<span class="font-heading font-bold text-2xl text-white h-8 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
         } else {
@@ -1383,14 +1369,31 @@
         handleLogoError(img, "hero");
       }
 
+      // Simulación de error de red en logos para pruebas de diseño (?errorlogo=1)
+      function simularErrorLogos() {
+        document.querySelectorAll("img").forEach((img) => {
+          if (img.src && img.src.includes("logo")) {
+            if (img.closest("#cintilloCumpleanos")) {
+              handleLogoError(img, "cintillo");
+            } else if (img.closest("#seccionHero")) {
+              handleHeroLogoError(img);
+            } else if (img.closest("#footerGeneral")) {
+              handleLogoError(img, "footer");
+            } else {
+              handleLogoError(img);
+            }
+          }
+        });
+      }
+
       // Generar dinámicamente el contenido del cintillo para loop infinito continuo (100% DRY & a11y)
-      function initBirthdayBannerMarquee() {
-        const marqueeTrack = document.querySelector("#cintilloCumpleanos .animate-marquee");
-        if (!marqueeTrack) return;
+      function iniciarCintilloCumpleanos() {
+        const pistaCintillo = document.querySelector("#cintilloCumpleanos .animate-cintillo");
+        if (!pistaCintillo) return;
 
         const frases = ["BENEFICIO EXCLUSIVO DE CUMPLEAÑOS", "1 CURSO GRATIS A TU ELECCIÓN", "VÁLIDO POR TIEMPO LIMITADO"];
 
-        const logoHTML = `<img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20negro.png" alt="EDUMIN" class="h-6  w-auto object-contain shrink-0" onerror="handleLogoError(this, 'marquee')" />`;
+        const logoHTML = `<img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20negro.png" alt="EDUMIN" class="h-6  w-auto object-contain shrink-0" onerror="handleLogoError(this, 'cintillo')" />`;
         const sparkleHTML = `<i class="ph-bold ph-sparkle shrink-0 text-5"></i>`;
 
         // Generar una ronda con el patrón: [LOGO] [DESTEL] [FRASE] [DESTEL]
@@ -1404,18 +1407,28 @@
         `;
 
         // Inyectar el bloque original y su clon con aria-hidden para el bucle continuo al -50%
-        marqueeTrack.innerHTML = bloqueHTML;
-        const clone = marqueeTrack.firstElementChild.cloneNode(true);
+        pistaCintillo.innerHTML = bloqueHTML;
+        const clone = pistaCintillo.firstElementChild.cloneNode(true);
         clone.setAttribute("aria-hidden", "true");
-        marqueeTrack.appendChild(clone);
+        pistaCintillo.appendChild(clone);
+
+        if (!pistaCintillo.dataset.hoverInitialized) {
+          pistaCintillo.dataset.hoverInitialized = "true";
+          pistaCintillo.addEventListener("mouseenter", () => {
+            pistaCintillo.getAnimations().forEach((anim) => (anim.playbackRate = 0.35));
+          });
+          pistaCintillo.addEventListener("mouseleave", () => {
+            pistaCintillo.getAnimations().forEach((anim) => (anim.playbackRate = 1.0));
+          });
+        }
       }
 
-      // Renderizar dinámicamente las características generales del curso en el Hero
-      function renderHeroFeatures() {
-        const container = document.getElementById("heroCaracteristicas");
+      // Renderizar dinámicamente los beneficios generales del curso en el Hero
+      function renderHeroBeneficios() {
+        const container = document.getElementById("heroBeneficios");
         if (!container) return;
 
-        const features = [
+        const beneficios = [
           {
             icon: "ph-student",
             colorClass: "bg-brand-blue/15 text-brand-blue inset-ring inset-ring-brand-blue/30",
@@ -1436,18 +1449,18 @@
           },
         ];
 
-        container.innerHTML = features
+        container.innerHTML = beneficios
           .map(
             (item) => `
-              <div class="tarjeta-caracteristica">
+              <div class="tarjeta-beneficio">
                 <!-- Columna 1: Icono -->
-                <div class="caja-icono-caracteristica ${item.colorClass}">
+                <div class="caja-icono-beneficio ${item.colorClass}">
                   <i class="ph-bold ${item.icon}"></i>
                 </div>
                 <!-- Columna 2: Etiqueta y Valor -->
-                <div class="caja-textos-caracteristica">
-                  <span class="etiqueta-caracteristica">${item.label}</span>
-                  <span class="detalle-caracteristica">${item.val}</span>
+                <div class="caja-textos-beneficio">
+                  <span>${item.label}</span>
+                  <span>${item.val}</span>
                 </div>
               </div>
             `,
@@ -1468,7 +1481,13 @@
           }
         }
 
-        // 2. Forzar vista directa (?vista=1, ?vista=2, ?vista=3)
+        // 2. Simular error de carga en logos si la URL contiene errorlogo=1 o demo=errorlogo
+        const simularError = params.has("errorlogo") || params.get("errorlogo") === "1" || params.get("demo") === "errorlogo" || params.get("vista") === "errorlogo";
+        if (simularError) {
+          setTimeout(simularErrorLogos, 0);
+        }
+
+        // 3. Forzar vista directa (?vista=1, ?vista=2, ?vista=3, ?vista=errorlogo)
         const vistaParam = params.get("vista") || params.get("view");
         const demoParam = params.get("demo");
 
@@ -1480,13 +1499,13 @@
           mostrarVista("pantalla-expirado");
           return true; // Interceptado por demo
         }
-        if (vistaParam === "2") {
+        if (vistaParam === "2" || vistaParam === "errorlogo" || demoParam === "errorlogo") {
           mostrarVista("pantalla-cursos");
           initCursosApp();
           return true; // Interceptado por demo
         }
 
-        // 3. Modo Demo 2: Vista de Curso Ya Canjeado (?demo=2 o ?vista=canjeado)
+        // 4. Modo Demo: Vista de Curso Ya Canjeado (?demo=2 o ?vista=canjeado)
         if (demoParam === "2" || demoParam === "canjeado" || vistaParam === "canjeado") {
           const cursoDemo = ALL_COURSES[0] || {
             id: 1,
@@ -1499,20 +1518,20 @@
           return true;
         }
 
-        // 4. Modo Demo 3: Vista de Búsqueda sin Resultados / Estado Vacío (?demo=3 o ?vista=vacio)
+        // 5. Modo Demo: Vista de Búsqueda sin Resultados / Estado Vacío (?demo=3 o ?vista=vacio)
         if (demoParam === "3" || demoParam === "vacio" || vistaParam === "vacio") {
           localStorage.removeItem("edumin_claimed_demo");
           mostrarVista("pantalla-cursos");
           initCursosApp();
           const inputBusqueda = document.getElementById("inputBusqueda");
-          const btnLimpiar = document.getElementById("btnLimpiarBusqueda");
+          const botonLimpiar = document.getElementById("botonLimpiarBusqueda");
           if (inputBusqueda) inputBusqueda.value = "Término sin resultados";
-          if (btnLimpiar) btnLimpiar.classList.remove("hidden");
+          if (botonLimpiar) botonLimpiar.classList.remove("hidden");
           renderCourses([]);
           return true;
         }
 
-        // 5. Forzar modo demo normal (?demo=1, ?token=demo o apertura en archivo local file://)
+        // 6. Forzar modo demo normal (?demo=1, ?token=demo o apertura en archivo local file://)
         const isLocalFile = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
         if (demoParam === "1" || token === "demo" || (!token && isLocalFile)) {
           localStorage.removeItem("edumin_claimed_demo");
@@ -1529,8 +1548,8 @@
 
       // Lógica de verificación al cargar la página
       document.addEventListener("DOMContentLoaded", () => {
-        initBirthdayBannerMarquee();
-        renderHeroFeatures();
+        iniciarCintilloCumpleanos();
+        renderHeroBeneficios();
         renderModalStep(1);
         actualizarPlaceholderBusqueda();
 
@@ -1618,7 +1637,7 @@
         const params = urlParams || new URLSearchParams(window.location.search);
         const nombreDirecto = (apiData && (apiData.nombre || apiData.estudiante || apiData.name || apiData.alumno || apiData.student)) || params.get("nombre") || params.get("estudiante") || params.get("name");
         const spanNombre = document.getElementById("nombreEstudiante");
-        const spanPrefijo = document.getElementById("prefijoNombreEstudiante");
+        const spanPrefijo = document.getElementById("prefijoNombre");
         if (spanNombre) {
           if (nombreDirecto && typeof nombreDirecto === "string" && nombreDirecto.trim()) {
             if (spanPrefijo) spanPrefijo.textContent = ", ";
@@ -1641,7 +1660,7 @@
       function initCursosApp(apiData) {
         unlockScroll();
         cargarNombreEstudiante(apiData);
-        renderHeroFeatures();
+        renderHeroBeneficios();
         actualizarPlaceholderBusqueda();
 
         // Pre-calcular índice de búsqueda sin acentos (una sola vez al iniciar)
@@ -1658,15 +1677,15 @@
 
         // Listeners de búsqueda
         const inputBusqueda = document.getElementById("inputBusqueda");
-        const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
+        const botonLimpiarBusqueda = document.getElementById("botonLimpiarBusqueda");
 
         if (inputBusqueda) {
           inputBusqueda.addEventListener("input", (e) => {
             const query = e.target.value.trim();
             if (query.length > 0) {
-              btnLimpiarBusqueda.classList.remove("hidden");
+              botonLimpiarBusqueda.classList.remove("hidden");
             } else {
-              btnLimpiarBusqueda.classList.add("hidden");
+              botonLimpiarBusqueda.classList.add("hidden");
             }
             filterCourses();
           });
@@ -1680,7 +1699,7 @@
             if (e.key === "Escape") {
               if (inputBusqueda.value !== "") {
                 inputBusqueda.value = "";
-                if (btnLimpiarBusqueda) btnLimpiarBusqueda.classList.add("hidden");
+                if (botonLimpiarBusqueda) botonLimpiarBusqueda.classList.add("hidden");
                 filterCourses();
               } else {
                 inputBusqueda.blur();
@@ -1689,11 +1708,11 @@
           });
         }
 
-        if (btnLimpiarBusqueda) {
-          btnLimpiarBusqueda.addEventListener("click", (e) => {
+        if (botonLimpiarBusqueda) {
+          botonLimpiarBusqueda.addEventListener("click", (e) => {
             e.stopPropagation();
             inputBusqueda.value = "";
-            btnLimpiarBusqueda.classList.add("hidden");
+            botonLimpiarBusqueda.classList.add("hidden");
             filterCourses();
             inputBusqueda.focus();
           });
@@ -1802,27 +1821,27 @@
         if (window.innerWidth >= 640) return;
 
         const container = document.getElementById("contenedorCategoriasMovil");
-        const textoBtn = document.getElementById("textoToggleCategorias");
-        const iconoBtn = document.getElementById("iconoToggleCategorias");
+        const textoBoton = document.getElementById("textoToggleCategorias");
+        const iconoBoton = document.getElementById("iconoToggleCategorias");
 
         if (!container) return;
 
         // Memoriza el texto del HTML para editarlo en un solo lugar
-        if (!textoToggleOriginal && textoBtn) {
-          textoToggleOriginal = textoBtn.textContent.trim();
+        if (!textoToggleOriginal && textoBoton) {
+          textoToggleOriginal = textoBoton.textContent.trim();
         }
 
         isCategoriasExpanded = !isCategoriasExpanded;
 
-        const btnToggle = document.getElementById("btnToggleCategorias");
-        if (btnToggle) {
-          btnToggle.setAttribute("aria-expanded", isCategoriasExpanded ? "true" : "false");
+        const botonToggle = document.getElementById("botonToggleCategorias");
+        if (botonToggle) {
+          botonToggle.setAttribute("aria-expanded", isCategoriasExpanded ? "true" : "false");
         }
 
         if (isCategoriasExpanded) {
           container.classList.remove("hidden");
-          if (textoBtn) textoBtn.textContent = "Cerrar";
-          if (iconoBtn) iconoBtn.classList.add("rotate-180");
+          if (textoBoton) textoBoton.textContent = "Cerrar";
+          if (iconoBoton) iconoBoton.classList.add("rotate-180");
 
           // Resetear visibilidad del degradado inferior
           const listaMovil = document.getElementById("listaCategoriasMovil");
@@ -1834,8 +1853,8 @@
           }
         } else {
           container.classList.add("hidden");
-          if (textoBtn) textoBtn.textContent = textoToggleOriginal;
-          if (iconoBtn) iconoBtn.classList.remove("rotate-180");
+          if (textoBoton) textoBoton.textContent = textoToggleOriginal;
+          if (iconoBoton) iconoBoton.classList.remove("rotate-180");
         }
       }
 
@@ -1844,10 +1863,10 @@
         if (!isCategoriasExpanded || window.innerWidth >= 640) return;
 
         const container = document.getElementById("contenedorCategoriasMovil");
-        const btnToggle = document.getElementById("btnToggleCategorias");
+        const botonToggle = document.getElementById("botonToggleCategorias");
         const badge = document.getElementById("insigniaCategoriaActiva");
 
-        const clickedInside = (container && container.contains(e.target)) || (btnToggle && btnToggle.contains(e.target)) || (badge && badge.contains(e.target));
+        const clickedInside = (container && container.contains(e.target)) || (botonToggle && botonToggle.contains(e.target)) || (badge && badge.contains(e.target));
 
         if (!clickedInside) {
           toggleCategorias();
@@ -1887,7 +1906,7 @@
         return `
           <button onclick="selectCategory('${cat}')" 
                   aria-pressed="${isActive}"
-                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs md:text-sm shrink-0 presionar flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
+                  class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs md:text-sm shrink-0 efecto-presionar flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
             <span>${catLabel}</span>
           </button>
         `;
@@ -1957,10 +1976,10 @@
 
       function resetFilters() {
         const inputBusqueda = document.getElementById("inputBusqueda");
-        const btnLimpiarBusqueda = document.getElementById("btnLimpiarBusqueda");
+        const botonLimpiarBusqueda = document.getElementById("botonLimpiarBusqueda");
 
         if (inputBusqueda) inputBusqueda.value = "";
-        if (btnLimpiarBusqueda) btnLimpiarBusqueda.classList.add("hidden");
+        if (botonLimpiarBusqueda) botonLimpiarBusqueda.classList.add("hidden");
         activeCategory = "Todos";
         renderCategories();
         renderCourses(ALL_COURSES);
@@ -1975,22 +1994,22 @@
 
       // Configuración centralizada de clases responsivas para las tarjetas de curso (en Español)
       const ESTILOS_TARJETA = {
-        contenedorTarjeta: "card-neo card-neo-interactive flex flex-col justify-between relative group overflow-hidden",
-        insigniaBase: "font-heading !leading-none text-xs md:text-sm px-3 py-2",
+        contenedorTarjeta: "tarjeta-neo tarjeta-neo-interactiva flex flex-col justify-between relative group overflow-hidden",
+        insigniaBase: "insignia-base",
         encabezadoContenedor: "flex items-center justify-between mb-3 md:mb-4 gap-3",
         get insigniaId() {
-          return `${this.insigniaBase} inline-block uppercase rounded-lg md:rounded-xl font-bold bg-brand-blue text-white whitespace-nowrap shrink-0`;
+          return `${this.insigniaBase} bg-brand-blue text-white shrink-0`;
         },
         get insigniaCategoria() {
-          return `${this.insigniaBase} rounded-lg md:rounded-xl font-semibold text-secundario bg-cuaternario inset-ring inset-ring-terciario shrink min-w-0 truncate hidden 2xs:inline-block`;
+          return `${this.insigniaBase} font-semibold text-secundario bg-cuaternario inset-ring inset-ring-terciario shrink min-w-0 truncate hidden 2xs:inline-flex`;
         },
         titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6 uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
         get insigniaSeleccionar() {
-          return `${this.insigniaBase} inline-flex items-center uppercase rounded-full font-bold gap-2 text-brand-blue bg-blue-500/15 inset-ring inset-ring-blue-500/30 group-hover:bg-amber-400 group-hover:inset-ring-amber-400 group-hover:text-principal min-w-0 transition`;
+          return `${this.insigniaBase} rounded-full gap-2 text-brand-blue bg-blue-500/15 inset-ring inset-ring-blue-500/30 group-hover:bg-amber-400 group-hover:inset-ring-amber-400 group-hover:text-principal transition`;
         },
-        iconoSeleccionar: "ph-bold ph-hand-tap text-4 md:text-5 text-brand-blue group-hover:text-principal transition shrink-0",
-        textoSeleccionar: "whitespace-nowrap transition truncate min-w-0",
+        iconoSeleccionar: "ph-bold ph-hand-tap text-brand-blue group-hover:text-principal transition",
+        textoSeleccionar: "whitespace-nowrap transition",
         iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-500 text-4 md:text-5 group-hover:translate-x-1.5 transition shrink-0 hidden 2xs:block",
       };
 
@@ -2076,21 +2095,21 @@
 
         const modalTitle = document.getElementById("modalTituloCurso");
         const modalCanje = document.getElementById("modalCanje");
-        const btnVolver = document.getElementById("btnVolverModal");
-        const btnCerrar = document.getElementById("btnCerrarModal");
+        const botonVolver = document.getElementById("botonVolverModal");
+        const botonCerrar = document.getElementById("botonCerrarModal");
 
         if (modalTitle) modalTitle.textContent = `#${selectedCourse.id} - ${formatCourseTitle(selectedCourse.title)}`;
 
         renderModalStep(1);
 
-        if (btnVolver) {
-          btnVolver.disabled = false;
-          btnVolver.classList.remove("opacity-50", "pointer-events-none");
+        if (botonVolver) {
+          botonVolver.disabled = false;
+          botonVolver.classList.remove("opacity-50", "pointer-events-none");
         }
 
-        if (btnCerrar) {
-          btnCerrar.disabled = false;
-          btnCerrar.classList.remove("opacity-50", "pointer-events-none");
+        if (botonCerrar) {
+          botonCerrar.disabled = false;
+          botonCerrar.classList.remove("opacity-50", "pointer-events-none");
         }
 
         if (modalCanje) modalCanje.classList.remove("hidden");
@@ -2098,7 +2117,7 @@
 
         // Enfoque automático en el botón de cierre al abrir
         setTimeout(() => {
-          if (btnCerrar) btnCerrar.focus();
+          if (botonCerrar) botonCerrar.focus();
         }, 50);
       }
 
@@ -2110,12 +2129,12 @@
           clearTimeout(timerResetBoton);
           timerResetBoton = null;
         }
-        const btn = document.getElementById("btnRegistrarCurso");
-        if (btn) {
-          btn.disabled = false;
-          btn.className = `${MODAL_CONFIG.estilos.botonBase} ${MODAL_CONFIG.paso1.colorBoton}`;
+        const boton = document.getElementById("botonRegistrarCurso");
+        if (boton) {
+          boton.disabled = false;
+          boton.className = `${MODAL_CONFIG.estilos.botonBase} ${MODAL_CONFIG.paso1.colorBoton}`;
           const texto = esReintento ? "REINTENTAR REGISTRO" : MODAL_CONFIG.paso1.textoBoton;
-          btn.innerHTML = `<i class="ph-bold ${MODAL_CONFIG.paso1.iconoBoton} ${MODAL_CONFIG.estilos.tamanoIconoBoton}"></i><span>${texto}</span>`;
+          boton.innerHTML = `<i class="ph-bold ${MODAL_CONFIG.paso1.iconoBoton}"></i><span>${texto}</span>`;
         }
       }
 
@@ -2149,7 +2168,7 @@
         }
       }
 
-      // Cerrar modal al presionar la tecla Escape (solo si el modal está visible y no está registrando)
+      // Cerrar modal al efecto-presionar la tecla Escape (solo si el modal está visible y no está registrando)
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
           const modalCanje = document.getElementById("modalCanje");
@@ -2174,23 +2193,23 @@
 
         isRegisteringCourse = true;
 
-        const btn = document.getElementById("btnRegistrarCurso");
-        const btnVolver = document.getElementById("btnVolverModal");
-        const btnCerrar = document.getElementById("btnCerrarModal");
+        const boton = document.getElementById("botonRegistrarCurso");
+        const botonVolver = document.getElementById("botonVolverModal");
+        const botonCerrar = document.getElementById("botonCerrarModal");
 
-        if (btn) {
-          btn.disabled = true;
-          btn.innerHTML = `<i class="ph-bold ph-circle-notch animate-spin ${MODAL_CONFIG.estilos.tamanoIconoBoton}"></i><span>REGISTRANDO CURSO…</span>`;
+        if (boton) {
+          boton.disabled = true;
+          boton.innerHTML = `<i class="ph-bold ph-circle-notch animate-spin"></i><span>REGISTRANDO CURSO…</span>`;
         }
 
         // Bloquear navegación mientras se guarda
-        if (btnVolver) {
-          btnVolver.disabled = true;
-          btnVolver.classList.add("opacity-50", "pointer-events-none");
+        if (botonVolver) {
+          botonVolver.disabled = true;
+          botonVolver.classList.add("opacity-50", "pointer-events-none");
         }
-        if (btnCerrar) {
-          btnCerrar.disabled = true;
-          btnCerrar.classList.add("opacity-50", "pointer-events-none");
+        if (botonCerrar) {
+          botonCerrar.disabled = true;
+          botonCerrar.classList.add("opacity-50", "pointer-events-none");
         }
 
         const tokenUsuario = userToken || "TOKEN-DEMO";
@@ -2233,25 +2252,25 @@
       function mostrarErrorRegistro() {
         isRegisteringCourse = false;
 
-        const btn = document.getElementById("btnRegistrarCurso");
-        const btnVolver = document.getElementById("btnVolverModal");
-        const btnCerrar = document.getElementById("btnCerrarModal");
+        const boton = document.getElementById("botonRegistrarCurso");
+        const botonVolver = document.getElementById("botonVolverModal");
+        const botonCerrar = document.getElementById("botonCerrarModal");
 
         // Habilitar de nuevo para que el alumno pueda decidir volver o reintentar
-        if (btnVolver) {
-          btnVolver.disabled = false;
-          btnVolver.classList.remove("opacity-50", "pointer-events-none");
+        if (botonVolver) {
+          botonVolver.disabled = false;
+          botonVolver.classList.remove("opacity-50", "pointer-events-none");
         }
-        if (btnCerrar) {
-          btnCerrar.disabled = false;
-          btnCerrar.classList.remove("opacity-50", "pointer-events-none");
+        if (botonCerrar) {
+          botonCerrar.disabled = false;
+          botonCerrar.classList.remove("opacity-50", "pointer-events-none");
         }
 
         // Estado de error en el botón (cambia a rojo con aviso de error y luego regresa al azul con "REINTENTAR REGISTRO")
-        if (btn) {
-          btn.disabled = false;
-          btn.className = `${MODAL_CONFIG.estilos.botonBase} ${MODAL_CONFIG.paso1.colorBotonError}`;
-          btn.innerHTML = `<i class="ph-bold ph-warning-circle ${MODAL_CONFIG.estilos.tamanoIconoBoton}"></i><span>ERROR AL REGISTRAR</span>`;
+        if (boton) {
+          boton.disabled = false;
+          boton.className = `${MODAL_CONFIG.estilos.botonBase} ${MODAL_CONFIG.paso1.colorBotonError}`;
+          boton.innerHTML = `<i class="ph-bold ph-warning-circle"></i><span>ERROR AL REGISTRAR</span>`;
 
           // Regresar automáticamente al estado azul con el texto "REINTENTAR REGISTRO" a los 2.5 segundos
           if (timerResetBoton) clearTimeout(timerResetBoton);
@@ -2269,10 +2288,10 @@
           timerResetBoton = null;
         }
 
-        const btnCerrar = document.getElementById("btnCerrarModal");
-        if (btnCerrar) {
-          btnCerrar.disabled = false;
-          btnCerrar.classList.remove("opacity-50", "pointer-events-none");
+        const botonCerrar = document.getElementById("botonCerrarModal");
+        if (botonCerrar) {
+          botonCerrar.disabled = false;
+          botonCerrar.classList.remove("opacity-50", "pointer-events-none");
         }
 
         // Guardar selección en localStorage aislada por cada token
