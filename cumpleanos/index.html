@@ -147,8 +147,8 @@
       @utility boton-base {
         @apply py-4 px-6 rounded-lg md:rounded-xl;
         @apply font-heading font-bold text-base md:text-lg uppercase !leading-none;
-        @apply inline-flex items-center justify-center gap-2.5;
-        @apply efecto-presionar cursor-pointer whitespace-nowrap select-none min-w-0 truncate shadow-md;
+        @apply inline-flex items-center justify-center gap-2.5 max-w-full;
+        @apply efecto-presionar cursor-pointer whitespace-nowrap select-none min-w-0 truncate;
         @apply transition;
 
         & > span {
@@ -161,8 +161,8 @@
       }
 
       @utility insignia-base {
-        @apply px-3 py-2 rounded-lg md:rounded-xl;
-        @apply font-heading font-bold text-xs md:text-sm !leading-none;
+        @apply px-3 py-2 rounded-lg md:rounded-xl gap-2;
+        @apply font-heading font-bold text-xs md:text-sm !leading-none uppercase;
         @apply inline-flex items-center justify-center select-none whitespace-nowrap min-w-0;
 
         & > span {
@@ -208,7 +208,7 @@
       }
 
       @utility tarjeta-estado {
-        @apply max-w-sm w-full bg-brand-dark-secondary text-white rounded-2xl md:rounded-3xl p-6 md:p-8 border-2 border-white/10 shadow-2xl relative overflow-hidden flex flex-col items-center text-center;
+        @apply max-w-sm w-full bg-brand-dark-secondary text-white rounded-2xl md:rounded-3xl p-6 md:p-8 border-2 border-white/10 relative overflow-hidden flex flex-col items-center text-center;
 
         & > h1 {
           @apply font-heading font-bold text-2xl md:text-3xl uppercase text-white mb-2 text-center text-balance !leading-[1.15];
@@ -424,7 +424,7 @@
 
             <button onclick="scrollToCourses()" aria-label="Elegir mi curso de regalo" class="boton-base boton-cta-hero bg-amber-400 hover:bg-amber-500 text-principal !text-xl md:!text-2xl gap-3 mt-6 mb-7 md:mt-7 md:mb-8">
               <i class="ph-bold ph-hand-tap !text-6 md:!text-7"></i>
-              <span>ELEGIR MI CURSO <span class="hidden 2xs:inline-flex">DE REGALO</span></span>
+              <span>ELEGIR MI CURSO <span class="hidden 2xs:inline">DE REGALO</span></span>
             </button>
 
             <div class="w-full max-w-3xl bg-white text-secundario rounded-xl md:rounded-2xl p-3 md:p-4">
@@ -434,28 +434,22 @@
         </header>
       </div>
 
-      <!-- Main Catalog Section -->
       <main id="catalogo" class="scroll-mt-10 w-full max-w-7xl mx-auto px-4 py-6 md:p-6 lg:p-8 pb-10 md:pb-14 lg:pb-20 relative z-10">
-        <!-- White Container for Search, Categories, Grid & Empty State -->
         <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl px-4 py-6 md:p-8 lg:p-10 w-full">
-          <!-- Catalog Section Heading -->
           <div class="text-center mb-5 md:mb-6">
-            <h2 class="font-heading font-extrabold text-3xl md:text-4xl !leading-[1.15] text-principal uppercase text-balance">Cursos de Alta Especialización</h2>
+            <h2 class="font-heading font-extrabold text-3xl md:text-4xl !leading-[1.15] text-principal uppercase text-balance break-words">Cursos de Alta Especia&shy;lización</h2>
             <p class="text-secundario text-base md:text-lg font-medium mt-3 max-w-2xl mx-auto text-balance !leading-snug">Revisa todos los cursos disponibles para ti, filtra por tu categoría de interés o usa el buscador para elegir el que más te guste.</p>
           </div>
 
-          <!-- Search & Category Filters Box -->
           <div id="cajaFiltrosYBusqueda" class="tarjeta-neo mb-5 md:mb-6">
-            <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch md:items-center justify-between pb-0 md:pb-4 border-b-0 md:border-b border-terciario">
-              <!-- Search Input Wrapper (Flexbox Layout a la derecha en desktop, primero en móvil) -->
-              <label for="inputBusqueda" id="wrapperBusqueda" class="w-full md:w-auto md:flex-1 md:max-w-md flex items-center gap-2.5 px-4 py-2.5 bg-white border border-terciario hover:border-slate-400 focus-within:border-amber-400 focus-within:hover:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-lg md:rounded-xl transition-all shadow-sm group order-1 md:order-2 cursor-text">
+            <div class="flex flex-col md:flex-row gap-4 md:gap-5 items-stretch md:items-center justify-between pb-0 md:pb-4 border-b-0 md:border-b border-terciario">
+              <label for="inputBusqueda" class="w-full md:w-auto md:flex-1 md:max-w-sm flex items-center gap-2.5 px-3.5 py-2.5 bg-white border border-terciario hover:border-slate-400 focus-within:border-amber-400 focus-within:hover:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 rounded-lg md:rounded-xl transition-all group order-1 md:order-2 cursor-text">
                 <i class="ph-bold ph-magnifying-glass text-slate-400 group-focus-within:text-amber-500 text-5 flex items-center justify-center shrink-0 transition-colors"></i>
 
-                <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="min-w-0 flex-1 w-full bg-transparent border-0 outline-none focus:outline-none focus:ring-0 p-0 !leading-none text-base font-sans font-medium placeholder:text-slate-400 text-principal truncate placeholder:truncate" />
+                <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="min-w-0 flex-1 w-full bg-transparent border-0 outline-none focus:ring-0 p-0 text-base font-sans font-medium placeholder:text-slate-400 text-principal truncate placeholder:truncate" />
 
-                <button type="button" id="botonLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden relative size-5 flex items-center justify-center shrink-0 efecto-presionar cursor-pointer text-slate-400 hover:text-secundario group/boton">
-                  <span class="absolute -inset-1.5 rounded-full bg-transparent group-hover/boton:bg-slate-300 group-active/boton:bg-slate-300 transition-all pointer-events-none"></span>
-                  <i class="relative z-10 ph-bold ph-x text-4"></i>
+                <button type="button" id="botonLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="hidden size-8 -my-1.5 rounded-full flex items-center justify-center shrink-0 efecto-presionar cursor-pointer text-slate-400 hover:text-principal hover:bg-slate-200 active:bg-slate-300 transition-colors">
+                  <i class="ph-bold ph-x text-4"></i>
                 </button>
               </label>
 
@@ -467,7 +461,7 @@
                 </span>
 
                 <!-- Course Counter Indicator -->
-                <div class="hidden 2xs:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:pl-4" aria-live="polite">
+                <div class="hidden 2xs:block text-xs md:text-sm !leading-none font-sans font-medium text-secundario select-none shrink-0 md:pl-4 min-w-0 md:min-w-44" aria-live="polite">
                   <span>Mostrando </span>
                   <strong id="contadorCursos" class="text-brand-blue font-bold"></strong> cursos
                 </div>
@@ -561,7 +555,7 @@
 
       <!-- Direct Confirmation Modal (2-Step Registration + WhatsApp) -->
       <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 min-h-svh min-h-dvh bg-black/60 backdrop-blur-md z-50 hidden [&:not(.hidden)]:flex items-center justify-center p-6 md:p-8 overscroll-contain">
-        <div class="rounded-2xl md:rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden my-auto animate-modal-in max-h-[90dvh] flex flex-col">
+        <div class="rounded-2xl md:rounded-3xl max-w-lg w-full overflow-hidden my-auto animate-modal-in max-h-[90dvh] flex flex-col">
           <!-- Modal Header (Hero Style with Confetti Pattern & Radial Glow) -->
           <div class="relative bg-brand-dark p-5 md:p-6 text-white shrink-0 overflow-hidden">
             <!-- Background Confetti Pattern -->
@@ -573,7 +567,7 @@
             <!-- Content Container -->
             <div class="relative z-10">
               <div class="flex items-center justify-between gap-4 mb-6">
-                <div class="insignia-base uppercase !py-1.5 rounded-full gap-2 bg-amber-400 text-principal">
+                <div class="insignia-base bg-amber-400 text-principal">
                   <i class="ph-bold ph-gift"></i>
                   <span>Selección de Curso</span>
                 </div>
@@ -583,7 +577,7 @@
                 </button>
               </div>
 
-              <h3 class="font-sans font-bold text-xl md:text-2xl text-white !leading-[1.15] uppercase text-balance line-clamp-3 overflow-hidden drop-shadow-sm" id="modalTituloCurso"></h3>
+              <h3 class="font-sans font-bold text-xl md:text-2xl text-white !leading-[1.15] uppercase text-balance line-clamp-3 overflow-hidden" id="modalTituloCurso"></h3>
             </div>
           </div>
 
@@ -630,7 +624,7 @@
         </div>
 
         <!-- Right: Website, WhatsApp & Social Media (Visible en Vistas 1, 2 y 3) -->
-        <div id="footerContactoDerecha" class="footer-contacto">
+        <div class="footer-contacto">
           <!-- Website Block -->
           <div>
             <span>Visítanos:</span>
@@ -692,7 +686,7 @@
           titulo: "font-heading font-bold text-lg md:text-xl uppercase text-balance mb-1",
           parrafo: "font-medium text-sm md:text-base !leading-snug text-balance",
           botonBase: ESTILOS_BOTON_BASE,
-          colorBotonVolver: "inset-ring inset-ring-terciario text-secundario hover:bg-slate-100 shrink-0 max-sm:!px-4 !shadow-none",
+          colorBotonVolver: "inset-ring inset-ring-terciario text-secundario hover:bg-slate-100 shrink-0 max-sm:!px-4",
         },
         paso1: {
           colorCaja: "bg-blue-500/5 border-blue-500/30",
@@ -1540,7 +1534,7 @@
         iniciarCintilloCumpleanos();
         renderHeroBeneficios();
         renderModalStep(1);
-        actualizarPlaceholderBusqueda();
+        initPlaceholderBusqueda();
 
         urlParams = new URLSearchParams(window.location.search);
         userToken = urlParams.get("token");
@@ -1638,19 +1632,29 @@
         }
       }
 
-      function actualizarPlaceholderBusqueda() {
+      let placeholderIniciado = false;
+      function initPlaceholderBusqueda() {
         const inputBusqueda = document.getElementById("inputBusqueda");
-        if (!inputBusqueda) return;
-        inputBusqueda.placeholder = window.innerWidth < 330 ? "Buscar…" : "Buscar por curso…";
+        if (!inputBusqueda || placeholderIniciado) return;
+        placeholderIniciado = true;
+        const bp2xs = getComputedStyle(document.documentElement).getPropertyValue("--breakpoint-2xs").trim() || "22rem";
+        const mql = window.matchMedia(`(max-width: ${bp2xs})`);
+        const update = (e) => {
+          inputBusqueda.placeholder = e.matches ? "Buscar…" : "Buscar por curso…";
+        };
+        mql.addEventListener("change", update);
+        update(mql);
       }
 
-      window.addEventListener("resize", actualizarPlaceholderBusqueda);
+      function actualizarPlaceholderBusqueda() {
+        initPlaceholderBusqueda();
+      }
 
       function initCursosApp(apiData) {
         unlockScroll();
         cargarNombreEstudiante(apiData);
         renderHeroBeneficios();
-        actualizarPlaceholderBusqueda();
+        initPlaceholderBusqueda();
 
         // Pre-calcular índice de búsqueda sin acentos (una sola vez al iniciar)
         ALL_COURSES.forEach((course) => {
@@ -1804,32 +1808,24 @@
       }
 
       let isCategoriasExpanded = false;
-      let textoToggleOriginal = "";
 
       function toggleCategorias() {
         if (window.innerWidth >= 640) return;
 
         const container = document.getElementById("contenedorCategoriasMovil");
-        const textoBoton = document.getElementById("textoToggleCategorias");
         const iconoBoton = document.getElementById("iconoToggleCategorias");
+        const botonToggle = document.getElementById("botonToggleCategorias");
 
         if (!container) return;
 
-        // Memoriza el texto del HTML para editarlo en un solo lugar
-        if (!textoToggleOriginal && textoBoton) {
-          textoToggleOriginal = textoBoton.textContent.trim();
-        }
-
         isCategoriasExpanded = !isCategoriasExpanded;
 
-        const botonToggle = document.getElementById("botonToggleCategorias");
         if (botonToggle) {
           botonToggle.setAttribute("aria-expanded", isCategoriasExpanded ? "true" : "false");
         }
 
         if (isCategoriasExpanded) {
           container.classList.remove("hidden");
-          if (textoBoton) textoBoton.textContent = "Cerrar";
           if (iconoBoton) iconoBoton.classList.add("rotate-180");
 
           // Resetear visibilidad del degradado inferior
@@ -1842,7 +1838,6 @@
           }
         } else {
           container.classList.add("hidden");
-          if (textoBoton) textoBoton.textContent = textoToggleOriginal;
           if (iconoBoton) iconoBoton.classList.remove("rotate-180");
         }
       }
@@ -1853,11 +1848,17 @@
 
         const container = document.getElementById("contenedorCategoriasMovil");
         const botonToggle = document.getElementById("botonToggleCategorias");
-        const badge = document.getElementById("insigniaCategoriaActiva");
 
-        const clickedInside = (container && container.contains(e.target)) || (botonToggle && botonToggle.contains(e.target)) || (badge && badge.contains(e.target));
+        const clickedInside = (container && container.contains(e.target)) || (botonToggle && botonToggle.contains(e.target));
 
         if (!clickedInside) {
+          toggleCategorias();
+        }
+      });
+
+      // Cerrar el menú flotante de categorías con Escape
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isCategoriasExpanded && window.innerWidth < 640) {
           toggleCategorias();
         }
       });
@@ -1987,7 +1988,7 @@
         insigniaBase: "insignia-base",
         encabezadoContenedor: "flex items-center justify-between mb-3 md:mb-4 gap-3",
         get insigniaId() {
-          return `${this.insigniaBase} uppercase bg-brand-blue text-white shrink-0`;
+          return `${this.insigniaBase} bg-brand-blue text-white shrink-0`;
         },
         get insigniaCategoria() {
           return `${this.insigniaBase} normal-case font-semibold text-secundario bg-cuaternario inset-ring inset-ring-terciario shrink min-w-0 truncate hidden 2xs:inline-flex`;
@@ -1995,7 +1996,7 @@
         titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6 uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
         get insigniaSeleccionar() {
-          return `${this.insigniaBase} uppercase rounded-full gap-2 text-brand-blue bg-blue-500/15 inset-ring inset-ring-blue-500/30 group-hover:bg-amber-400 group-hover:inset-ring-amber-400 group-hover:text-principal transition`;
+          return `${this.insigniaBase}  rounded-full  text-brand-blue bg-blue-500/15 inset-ring inset-ring-blue-500/30 group-hover:bg-amber-400 group-hover:inset-ring-amber-400 group-hover:text-principal transition`;
         },
         iconoSeleccionar: "ph-bold ph-hand-tap text-brand-blue group-hover:text-principal transition",
         textoSeleccionar: "whitespace-nowrap transition",
