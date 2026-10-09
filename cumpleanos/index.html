@@ -37,9 +37,13 @@
           var t = p.get("token");
           if (t && t !== "demo") {
             var url = "https://script.google.com/macros/s/AKfycbwFibwSnti14GeBPiO06VomGLKjt1N3LRRr8st6t0eLkwLeQC3JJ8IWbf8CqJ-xa1F4/exec?token=" + encodeURIComponent(t.trim());
-            window._earlyTokenPromise = fetch(url).then(function (r) {
-              return r.text();
-            });
+            window._earlyTokenPromise = fetch(url)
+              .then(function (r) {
+                return r.text();
+              })
+              .catch(function () {
+                return null;
+              });
           }
         } catch (e) {}
 
@@ -1565,8 +1569,60 @@
            FIN DE SECCIÓN DE PRUEBAS / MODO DEMO
            ========================================================================== */
 
+      // Petición con límite de tiempo (timeout) para evitar bloqueos por lentitud o arranque en frío de Google Apps Script
+      function pedirTokenConTimeout(url, ms) {
+        if (!("AbortController" in window)) {
+          return fetch(url)
+            .then((r) => r.text())
+            .then((t) => {
+              try {
+                return t ? JSON.parse(t) : null;
+              } catch (e) {
+                return null;
+              }
+            })
+            .catch(() => null);
+        }
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), ms);
+        return fetch(url, { signal: ctrl.signal })
+          .then((res) => res.text())
+          .then((text) => {
+            clearTimeout(t);
+            try {
+              return text ? JSON.parse(text) : null;
+            } catch (e) {
+              return null;
+            }
+          })
+          .catch(() => {
+            clearTimeout(t);
+            return null;
+          });
+      }
+
+      // Evalúa la respuesta de la petición anticipada del <head> con tiempo límite de seguridad
+      function parsearEarlyPromise(promesa, ms) {
+        return new Promise((resolve) => {
+          const timer = setTimeout(() => resolve(null), ms);
+          promesa
+            .then((text) => {
+              clearTimeout(timer);
+              try {
+                resolve(text ? JSON.parse(text) : null);
+              } catch (e) {
+                resolve(null);
+              }
+            })
+            .catch(() => {
+              clearTimeout(timer);
+              resolve(null);
+            });
+        });
+      }
+
       // Lógica de verificación al cargar la página
-      document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         iniciarCintilloCumpleanos();
         renderHeroBeneficios();
         renderModalStep(1);
@@ -1624,43 +1680,44 @@
         }
 
         const fetchUrl = `${APPS_SCRIPT_URL}?token=${encodeURIComponent(userToken)}`;
-        const tokenPromise = window._earlyTokenPromise || fetch(fetchUrl).then((res) => res.text());
 
-        tokenPromise
-          .then((text) => {
-            let data = {};
-            try {
-              data = JSON.parse(text);
-            } catch (e) {
-              console.warn("Apps Script respuesta no-JSON:", text);
-            }
+        // Intento 1: usar la petición anticipada del <head> o lanzar una nueva con límite de 7.5s
+        let data = null;
+        if (window._earlyTokenPromise) {
+          data = await parsearEarlyPromise(window._earlyTokenPromise, 7500);
+        } else {
+          data = await pedirTokenConTimeout(fetchUrl, 7500);
+        }
 
-            console.log("Resultado de Verificación de Token en Apps Script:", data);
+        // Si el Intento 1 no retornó un token válido (por cold start de Google Apps Script, corte de conexión o timeout),
+        // se ejecuta un 2do intento automático. Dado que el 1er intento ya despertó a los servidores de Google,
+        // este segundo intento responderá casi de inmediato.
+        if (!isTokenValido(data)) {
+          console.warn("Intento 1 de verificación no concluyó con éxito. Ejecutando 2do intento automático...");
+          data = await pedirTokenConTimeout(fetchUrl, 6500);
+        }
 
-            if (isTokenValido(data)) {
-              localStorage.setItem(tokenKey, JSON.stringify(data));
-              if (!cargadoDesdeCache) {
-                asegurarFuentesCargadas().then(() => {
-                  mostrarVista("pantalla-cursos");
-                  initCursosApp(data);
-                });
-              } else {
-                // Si ya fue mostrado previamente desde la caché, actualizar solo datos dinámicos sin re-renderizar la grilla
-                cargarNombreEstudiante(data);
-                checkClaimedState(data);
-              }
-            } else {
-              localStorage.removeItem(tokenKey);
-              mostrarVista("pantalla-expirado");
-            }
-          })
-          .catch((err) => {
-            console.error("Error en la conexión con Apps Script:", err);
-            // FALLBACK SEGURO: Si no se cargó con caché válida, mandar a Vista 3 (no abrir cursos por error)
-            if (!cargadoDesdeCache) {
-              mostrarVista("pantalla-expirado");
-            }
-          });
+        console.log("Resultado de Verificación de Token en Apps Script:", data);
+
+        if (isTokenValido(data)) {
+          localStorage.setItem(tokenKey, JSON.stringify(data));
+          if (!cargadoDesdeCache) {
+            asegurarFuentesCargadas().then(() => {
+              mostrarVista("pantalla-cursos");
+              initCursosApp(data);
+            });
+          } else {
+            // Si ya fue mostrado previamente desde la caché, actualizar solo datos dinámicos sin re-renderizar la grilla
+            cargarNombreEstudiante(data);
+            checkClaimedState(data);
+          }
+        } else {
+          // Solo si tras el reintento definitivo no es válido Y no estaba cargado previamente de caché
+          if (!cargadoDesdeCache) {
+            localStorage.removeItem(tokenKey);
+            mostrarVista("pantalla-expirado");
+          }
+        }
       });
 
       // Cargar nombre personalizado del estudiante desde el token (API) o URL
