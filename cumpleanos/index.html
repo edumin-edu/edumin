@@ -9,27 +9,12 @@
     <link rel="icon" type="image/png" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
     <link rel="apple-touch-icon" href="https://www.edumin.pe/icon.png?icon.3w1v6vfpp897a.png" />
 
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-
-    <!-- Carga inmediata y prioritaria de iconos Phosphor Bold (Preload de la fuente woff2 + CSS directo) -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/Phosphor-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" />
-
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3/dist/index.global.js"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
+    <!-- 1. Prioridad absoluta: Conexión inmediata y disparo anticipado a Google Apps Script en el milisegundo 0 -->
     <link rel="dns-prefetch" href="https://script.google.com" />
     <link rel="preconnect" href="https://script.google.com" crossorigin />
     <link rel="dns-prefetch" href="https://script.googleusercontent.com" />
     <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin />
 
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Disparo anticipado de validación de token y precarga de fuentes en paralelo -->
     <script>
       (function () {
         try {
@@ -59,6 +44,22 @@
         }
       })();
     </script>
+
+    <!-- 2. Recursos externos y estilos -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+    <!-- Carga inmediata y prioritaria de iconos Phosphor Bold (Preload de la fuente woff2 + CSS directo) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/Phosphor-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3/dist/index.global.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
