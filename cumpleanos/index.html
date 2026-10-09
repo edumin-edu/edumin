@@ -1689,11 +1689,12 @@
           data = await pedirTokenConTimeout(fetchUrl, 7500);
         }
 
-        // Si el Intento 1 no retornó un token válido (por cold start de Google Apps Script, corte de conexión o timeout),
+        // Si el Intento 1 falló por timeout, corte de red o error de servidor de Google (data es null):
         // se ejecuta un 2do intento automático. Dado que el 1er intento ya despertó a los servidores de Google,
         // este segundo intento responderá casi de inmediato.
-        if (!isTokenValido(data)) {
-          console.warn("Intento 1 de verificación no concluyó con éxito. Ejecutando 2do intento automático...");
+        // Si Google ya respondió explícitamente (sea true o false), no se reintenta y se procesa directamente.
+        if (data === null) {
+          console.warn("Intento 1 no obtuvo respuesta de Google (timeout o error). Ejecutando 2do intento...");
           data = await pedirTokenConTimeout(fetchUrl, 6500);
         }
 
