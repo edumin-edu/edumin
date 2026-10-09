@@ -53,7 +53,7 @@
         --breakpoint-xs: 32rem;
 
         --font-sans: "Barlow Semi Condensed", sans-serif;
-        --font-heading: "Barlow Condensed", sans-serif;
+        --font-condensed: "Barlow Condensed", sans-serif;
 
         --color-principal: var(--color-slate-950);
         --color-secundario: var(--color-slate-700);
@@ -146,7 +146,7 @@
 
       @utility boton-base {
         @apply rounded-lg px-6 py-4 md:rounded-xl;
-        @apply font-heading text-base !leading-none font-bold uppercase md:text-lg;
+        @apply font-condensed text-base !leading-none font-bold uppercase md:text-lg;
         @apply inline-flex max-w-full items-center justify-center gap-2.5;
         @apply efecto-presionar min-w-0 cursor-pointer truncate whitespace-nowrap select-none;
         @apply transition;
@@ -162,15 +162,28 @@
 
       @utility insignia-base {
         @apply gap-2 rounded-lg px-3 py-2 md:rounded-xl;
-        @apply font-heading text-xs !leading-none font-bold uppercase md:text-sm;
+        @apply font-condensed text-xs !leading-none font-bold uppercase md:text-sm;
         @apply inline-flex min-w-0 items-center justify-center whitespace-nowrap select-none;
 
         & > span {
           @apply min-w-0 truncate;
         }
+      }
+
+      @utility insignia-regalo {
+        @apply insignia-base text-principal bg-amber-400;
 
         & > i {
           @apply text-4 md:text-5 shrink-0;
+        }
+      }
+
+      @utility insignia-seleccion {
+        @apply insignia-base text-brand-blue rounded-full bg-blue-500/15 inset-ring inset-ring-blue-500/30 transition;
+        @apply group-hover:text-principal group-hover:bg-amber-400 group-hover:inset-ring-amber-400;
+
+        & > i {
+          @apply text-4 md:text-5 shrink-0 transition;
         }
       }
 
@@ -205,12 +218,12 @@
         }
       }
 
-      /* Layout y Componentes de Pantallas de Estado (Carga y Expirado) */
-      @utility pantalla-estado {
+      /* Layout y Componentes de Pantallas de Vista (Carga y Expirado) */
+      @utility pantalla-vista {
         @apply relative z-50 flex w-full flex-1 flex-col;
       }
 
-      @utility encabezado-pantalla-estado {
+      @utility encabezado-pantalla-vista {
         @apply relative z-10 flex w-full shrink-0 items-center justify-center px-4 pt-4 md:px-6 md:pt-6;
       }
 
@@ -222,23 +235,23 @@
         }
       }
 
-      @utility cuerpo-pantalla-estado {
+      @utility cuerpo-pantalla-vista {
         @apply relative z-10 flex w-full flex-1 items-center justify-center p-8 md:p-6;
       }
 
-      @utility tarjeta-estado {
+      @utility tarjeta-vista {
         @apply bg-brand-dark-secondary relative flex w-full max-w-sm flex-col items-center overflow-hidden rounded-2xl border-2 border-white/10 p-6 text-center text-white md:rounded-3xl md:p-8;
 
         & > h1 {
-          @apply font-heading mb-2 text-center text-2xl !leading-[1.15] font-bold text-balance text-white uppercase md:text-3xl;
+          @apply font-condensed mb-2 text-2xl !leading-[1.15] font-bold text-balance uppercase md:text-3xl;
         }
 
         & > p {
-          @apply text-terciario text-center font-sans text-base !leading-snug font-medium text-balance md:text-lg;
+          @apply text-terciario font-sans text-base !leading-snug font-medium text-balance md:text-lg;
         }
       }
 
-      @utility caja-icono-estado {
+      @utility caja-icono-vista {
         @apply mb-5 flex size-14 shrink-0 items-center justify-center rounded-xl md:size-16 md:rounded-2xl;
 
         & > i {
@@ -250,11 +263,12 @@
         }
       }
 
-      @utility tarjeta-aviso {
-        @apply tarjeta-neo flex w-full flex-col items-center justify-center gap-5 text-center md:gap-6;
+      /* Layout y Componentes de Estados del Catálogo (Vacío y Canjeado) */
+      @utility contenedor-estado {
+        @apply mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-5 text-center md:gap-6;
       }
 
-      @utility caja-icono-aviso {
+      @utility caja-icono-estado {
         @apply flex size-16 shrink-0 items-center justify-center rounded-full inset-ring md:size-20;
 
         & > i {
@@ -262,11 +276,11 @@
         }
       }
 
-      @utility cabecera-texto-aviso {
-        @apply mx-auto flex max-w-2xl flex-col gap-2;
+      @utility cabecera-texto-estado {
+        @apply flex w-full flex-col gap-2;
 
         & > h3 {
-          @apply font-heading text-principal text-2xl !leading-[1.15] font-bold text-balance uppercase md:text-3xl;
+          @apply font-condensed text-principal text-2xl !leading-[1.15] font-bold text-balance uppercase md:text-3xl;
         }
 
         & > p {
@@ -294,8 +308,8 @@
 
       @utility caja-textos-beneficio {
         @apply xs:flex-col xs:justify-center flex flex-row items-center justify-between md:items-start;
-        @apply xs:gap-0.5 font-heading gap-2 uppercase;
-        @apply xs:w-full max-w-full min-w-0 flex-1 md:flex-1;
+        @apply xs:gap-0.5 font-condensed gap-2 uppercase;
+        @apply xs:w-full max-w-full min-w-0 flex-1;
 
         & > span:first-child {
           @apply 2xs:inline-block hidden max-w-full min-w-0 shrink truncate;
@@ -353,9 +367,7 @@
       }
 
       @utility hero-glow {
-        background:
-          radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--color-brand-blue) 38%, transparent) 0%, transparent 65%), radial-gradient(circle at 50% 32%, color-mix(in srgb, var(--color-pink-500) 18%, transparent) 0%, transparent 55%),
-          radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--color-amber-500) 22%, transparent) 0%, transparent 50%);
+        background: radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--color-brand-blue) 38%, transparent) 0%, transparent 65%), radial-gradient(circle at 50% 32%, color-mix(in srgb, var(--color-pink-500) 18%, transparent) 0%, transparent 55%), radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--color-amber-500) 22%, transparent) 0%, transparent 50%);
         -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
         mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
       }
@@ -403,16 +415,16 @@
 
   <body class="bg-brand-dark text-terciario selection:bg-brand-blue flex min-h-dvh min-h-screen min-h-svh flex-col justify-between font-sans font-medium antialiased selection:text-white">
     <div class="bg-pattern pointer-events-none fixed inset-0 opacity-40"></div>
-    <div id="pantalla-carga" class="pantalla-estado">
-      <header class="encabezado-pantalla-estado">
+    <div id="pantalla-carga" class="pantalla-vista">
+      <header class="encabezado-pantalla-vista">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
           <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" onerror="handleLogoError(this)" />
         </a>
       </header>
 
-      <main role="status" aria-live="polite" class="cuerpo-pantalla-estado">
-        <div class="tarjeta-estado">
-          <div class="caja-icono-estado bg-blue-950/60 text-blue-400 inset-ring inset-ring-blue-700/60">
+      <main role="status" aria-live="polite" class="cuerpo-pantalla-vista">
+        <div class="tarjeta-vista">
+          <div class="caja-icono-vista bg-blue-950/60 text-blue-400 inset-ring inset-ring-blue-700/60">
             <svg class="animate-spin" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
               <path d="M236,128a108,108,0,0,1-216,0c0-42.52,24.73-81.34,63-98.9a12,12,0,1,1,10,21.8C62.8,64.22,44,94.31,44,128a84,84,0,0,0,168,0c0-33.69-18.8-63.78-49-77.1a12,12,0,1,1,10-21.8C211.27,46.66,236,85.48,236,128Z"></path>
             </svg>
@@ -424,10 +436,7 @@
     </div>
 
     <div id="pantalla-cursos" class="relative hidden min-h-dvh min-h-screen min-h-svh flex-col justify-between">
-      <div
-        id="cintilloCumpleanos"
-        class="text-principal font-heading fixed inset-x-0 top-0 z-50 flex h-10 items-center overflow-hidden border-b border-amber-600/20 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-lg !leading-none font-bold whitespace-nowrap uppercase shadow-sm select-none"
-      >
+      <div id="cintilloCumpleanos" class="text-principal font-condensed fixed inset-x-0 top-0 z-50 flex h-10 items-center overflow-hidden border-b border-amber-600/20 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-lg !leading-none font-bold whitespace-nowrap uppercase shadow-sm select-none">
         <div class="cintillo-fade-mask flex h-full w-full items-center overflow-hidden">
           <div class="animate-cintillo flex h-full items-center"></div>
         </div>
@@ -440,18 +449,16 @@
             <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="mb-3 inline-block shrink-0 select-none md:mb-4 lg:mb-5" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
               <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" class="h-10 w-auto object-contain md:h-12 lg:h-14" onerror="handleHeroLogoError(this)" />
             </a>
-            <div class="font-heading text-balance text-white uppercase">
+            <div class="font-condensed text-balance text-white uppercase">
               <h1 class="mb-2 text-4xl !leading-none font-extrabold md:mb-2.5 md:text-5xl lg:mb-3 lg:text-6xl">¡Feliz Cumpleaños<span id="prefijoNombre"></span><span id="nombreEstudiante" class="texto-degradado-cumpleanos"></span>!</h1>
               <h2 class="text-2xl !leading-[1.15] font-bold md:text-3xl lg:text-4xl">Tu beneficio especial ya está disponible</h2>
             </div>
 
-            <div class="flex w-full max-w-full flex-col items-center px-4 sm:px-0">
-              <p class="text-terciario [&_strong]:text-cuaternario mx-auto mt-3 max-w-xl text-base !leading-snug font-medium text-balance md:mt-4 md:text-lg lg:mt-5 lg:text-xl [&_strong]:font-semibold">
-                De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.
-              </p>
+            <div class="mx-auto flex w-full max-w-xl flex-col items-center px-4 sm:px-0">
+              <p class="text-terciario [&_strong]:text-cuaternario mt-3 text-base !leading-snug font-medium text-balance md:mt-4 md:text-lg lg:mt-5 lg:text-xl [&_strong]:font-semibold">De parte de todo el equipo de <strong>EDUMIN</strong>, queremos celebrar este día tan especial regalándote <strong>1 CURSO DE ALTA ESPECIALIZACIÓN</strong>. Tú decides cuál quieres llevar para seguir impulsando tu carrera profesional.</p>
               <button onclick="scrollToCourses()" aria-label="Elegir mi curso de regalo" class="boton-base boton-cta-hero text-principal mt-6 mb-7 gap-3 bg-amber-400 !text-xl hover:bg-amber-500 md:mt-7 md:mb-8 md:!text-2xl">
                 <i class="ph-bold ph-hand-tap !text-6 md:!text-7"></i>
-                <span>ELEGIR MI CURSO <span class="2xs:inline hidden">DE REGALO</span></span>
+                <span>ELEGIR MI CURSO <span class="xs:inline hidden">DE REGALO</span></span>
               </button>
             </div>
 
@@ -464,146 +471,104 @@
 
       <main id="catalogo" class="relative z-10 mx-auto w-full max-w-7xl scroll-mt-10 px-4 py-6 pb-10 md:p-6 md:pb-14 lg:p-8 lg:pb-20">
         <div class="w-full rounded-xl bg-white px-4 py-6 md:rounded-2xl md:p-8 lg:rounded-3xl lg:p-10">
-          <div class="mb-5 text-center md:mb-6">
-            <h2 class="font-heading text-principal text-3xl !leading-[1.15] font-extrabold text-balance break-words uppercase md:text-4xl">Cursos de Alta Especia&shy;lización</h2>
-            <p class="text-secundario mx-auto mt-3 max-w-2xl text-base !leading-snug font-medium text-balance md:text-lg">
-              Revisa todos los cursos disponibles para ti, filtra por tu categoría de interés o usa el buscador para elegir el que más te guste.
-            </p>
-          </div>
-
-          <div id="cajaFiltrosYBusqueda" class="tarjeta-neo mb-5 md:mb-6">
-            <div class="border-terciario flex flex-col items-stretch justify-between gap-4 border-b-0 pb-0 md:flex-row md:items-center md:gap-5 md:border-b md:pb-4">
-              <label
-                for="inputBusqueda"
-                class="border-terciario group order-1 flex w-full cursor-text items-center gap-2.5 rounded-lg border bg-white px-3.5 py-2.5 transition-all focus-within:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 hover:border-slate-400 focus-within:hover:border-amber-400 md:order-2 md:w-auto md:max-w-sm md:flex-1 md:rounded-xl"
-              >
-                <i class="ph-bold ph-magnifying-glass text-5 flex shrink-0 items-center justify-center text-slate-400 transition-colors group-focus-within:text-amber-500"></i>
-                <input
-                  type="text"
-                  id="inputBusqueda"
-                  enterkeyhint="search"
-                  placeholder="Buscar por curso…"
-                  aria-label="Buscar por curso"
-                  class="text-principal w-full min-w-0 flex-1 truncate border-0 bg-transparent p-0 font-sans text-base font-medium outline-none placeholder:truncate placeholder:text-slate-400 focus:ring-0"
-                />
-                <button
-                  type="button"
-                  id="botonLimpiarBusqueda"
-                  aria-label="Limpiar campo de búsqueda"
-                  title="Limpiar campo de búsqueda"
-                  class="efecto-presionar -m-2 flex hidden size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-500 transition-colors select-none hover:bg-amber-500/15 hover:text-amber-500"
-                >
-                  <i class="ph-bold ph-x text-4"></i>
-                </button>
-              </label>
-
-              <div class="border-terciario md:divide-terciario order-2 flex shrink-0 flex-wrap items-center justify-between gap-4 border-t pt-4 md:order-1 md:flex-nowrap md:justify-start md:gap-0 md:divide-x md:border-t-0 md:pt-0">
-                <span class="text-principal inline-flex shrink-0 items-center gap-2 font-sans text-xs !leading-none font-bold uppercase md:pr-4 md:text-sm">
-                  <i class="ph-bold ph-funnel text-brand-blue text-4 md:text-5 shrink-0"></i>
-                  <span>Filtrar<span class="hidden sm:inline"> por categoría</span></span>
-                </span>
-
-                <div class="2xs:block text-secundario hidden min-w-0 shrink-0 font-sans text-xs !leading-none font-medium md:min-w-44 md:pl-4 md:text-sm" aria-live="polite">
-                  <span>Mostrando </span>
-                  <strong id="contadorCursos" class="text-brand-blue font-bold"></strong>
-                  cursos
-                </div>
-              </div>
+          <!-- 1. SECCIÓN CATÁLOGO Y EXPLORACIÓN (Se oculta completa cuando el curso está canjeado) -->
+          <div id="seccionCatalogoExploracion" class="w-full">
+            <div id="encabezadoCatalogo" class="mx-auto mb-5 max-w-xl text-center md:mb-6">
+              <h2 class="font-condensed text-principal text-3xl !leading-[1.15] font-extrabold text-balance break-words uppercase md:text-4xl">Cursos de Alta Especia&shy;lización</h2>
+              <p class="text-secundario mt-3 text-base !leading-snug font-medium text-balance md:text-lg">Revisa todos los cursos disponibles para ti, filtra por tu categoría de interés o usa el buscador para elegir el que más te guste.</p>
             </div>
 
-            <div class="relative mt-3 md:mt-4">
-              <div class="flex w-full items-center justify-between gap-5 sm:hidden">
-                <span class="2xs:inline-block text-principal hidden shrink-0 font-sans text-xs !leading-none font-bold uppercase">Categoría:</span>
-                <button
-                  type="button"
-                  id="botonToggleCategorias"
-                  onclick="toggleCategorias()"
-                  aria-expanded="false"
-                  aria-controls="contenedorCategoriasMovil"
-                  aria-haspopup="listbox"
-                  class="bg-brand-blue hover:bg-brand-blue-dark efecto-presionar flex max-w-full cursor-pointer items-center gap-2 rounded-full px-3.5 font-sans text-xs !leading-none font-semibold text-white select-none"
-                >
-                  <span id="insigniaCategoriaActiva" class="min-w-0 truncate py-2.5">Todos</span>
-                  <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 shrink-0 transition-transform"></i>
-                </button>
-              </div>
+            <div id="cajaFiltrosYBusqueda" class="tarjeta-neo mb-5 md:mb-6">
+              <div class="border-terciario flex flex-col items-stretch justify-between gap-4 border-b-0 pb-0 md:flex-row md:items-center md:gap-5 md:border-b md:pb-4">
+                <label for="inputBusqueda" class="border-terciario group order-1 flex w-full cursor-text items-center gap-2.5 rounded-lg border bg-white px-3.5 py-2.5 transition-all focus-within:border-amber-400 focus-within:ring-4 focus-within:ring-amber-400/25 hover:border-slate-400 focus-within:hover:border-amber-400 md:order-2 md:w-auto md:max-w-sm md:flex-1 md:rounded-xl">
+                  <i class="ph-bold ph-magnifying-glass text-5 flex shrink-0 items-center justify-center text-slate-400 transition-colors group-focus-within:text-amber-500"></i>
+                  <input type="text" id="inputBusqueda" enterkeyhint="search" placeholder="Buscar por curso…" aria-label="Buscar por curso" class="text-principal w-full min-w-0 flex-1 truncate border-0 bg-transparent p-0 font-sans text-base font-medium outline-none placeholder:truncate placeholder:text-slate-400 focus:ring-0" />
+                  <button type="button" id="botonLimpiarBusqueda" aria-label="Limpiar campo de búsqueda" title="Limpiar campo de búsqueda" class="efecto-presionar -m-2 flex hidden size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-500 transition-colors select-none hover:bg-amber-500/15 hover:text-amber-500">
+                    <i class="ph-bold ph-x text-4"></i>
+                  </button>
+                </label>
 
-              <div id="contenedorCategoriasMovil" class="border-brand-dark absolute top-full right-0 z-30 mt-2 hidden w-60 overflow-hidden rounded-2xl border-2 bg-white shadow-2xl sm:hidden">
-                <div id="listaCategoriasMovil" class="divide-terciario no-scrollbar max-h-[40vh] divide-y overflow-y-auto"></div>
-                <div id="fadeCategoriasMovil" class="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-white to-transparent transition-opacity"></div>
-              </div>
+                <div class="border-terciario md:divide-terciario order-2 flex shrink-0 flex-wrap items-center justify-between gap-4 border-t pt-4 md:order-1 md:flex-nowrap md:justify-start md:gap-0 md:divide-x md:border-t-0 md:pt-0">
+                  <span class="text-principal inline-flex shrink-0 items-center gap-2 font-sans text-xs !leading-none font-bold uppercase md:pr-4 md:text-sm">
+                    <i class="ph-bold ph-funnel text-brand-blue text-4 md:text-5 shrink-0"></i>
+                    <span>Filtrar<span class="hidden sm:inline"> por categoría</span></span>
+                  </span>
 
-              <div id="contenedorCategoriasDesktop" class="hidden flex-wrap items-center gap-x-2 gap-y-2.5 sm:flex"></div>
-            </div>
-          </div>
-
-          <!-- Courses Grid -->
-          <div id="grillaCursos" class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-            <!-- Courses injected via Javascript -->
-          </div>
-
-          <!-- Claimed Course Single Gift Card State -->
-          <div id="estadoCanjeado" class="hidden w-full">
-            <div class="tarjeta-aviso">
-              <div class="caja-icono-aviso bg-amber-500/15 text-amber-600 inset-ring-amber-500/30">
-                <i class="ph-bold ph-confetti icono-aviso"></i>
-              </div>
-
-              <div class="cabecera-texto-aviso">
-                <h3>¡YA REGISTRASTE TU CURSO!</h3>
-                <p>Tu beneficio de cumpleaños ha sido registrado con éxito. Te notificaremos cuando tu curso esté disponible. Revisa los detalles de tu elección a continuación.</p>
-              </div>
-
-              <!-- Selected Course Card Box (Tarjeta limpia con insignias de la grilla) -->
-              <div class="mx-auto w-full max-w-2xl space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm md:p-6">
-                <!-- Badges de curso y categoría poblados dinámicamente desde ESTILOS_TARJETA -->
-                <div class="flex min-w-0 flex-wrap items-center gap-2">
-                  <span id="insigniaNumeroCursoCanjeado"></span>
-                  <span id="insigniaCategoriaCursoCanjeado"></span>
+                  <div class="2xs:block text-secundario hidden min-w-0 shrink-0 font-sans text-xs !leading-none font-medium md:min-w-44 md:pl-4 md:text-sm" aria-live="polite">
+                    <span>Mostrando </span>
+                    <strong id="contadorCursos" class="text-brand-blue font-bold"></strong>
+                    cursos
+                  </div>
                 </div>
+              </div>
 
-                <!-- Título del Curso -->
-                <h4 id="tituloCursoCanjeado" class="text-principal font-sans text-xl !leading-[1.15] font-bold text-balance uppercase md:text-2xl"></h4>
-
-                <!-- Fila dedicada independiente para el Botón de WhatsApp (Tamaño Auto) -->
-                <div id="contenedorBotonWhatsAppCanjeado" class="flex items-center justify-center border-t border-slate-100 pt-3 sm:justify-end">
-                  <button type="button" onclick="handleSendWhatsApp()" class="boton-base w-full bg-emerald-600 text-white hover:bg-emerald-700 sm:w-auto">
-                    <i class="ph-bold ph-whatsapp-logo"></i>
-                    <span>CONFIRMAR POR WHATSAPP</span>
+              <div class="relative mt-3 md:mt-4">
+                <div class="flex w-full items-center justify-between gap-5 sm:hidden">
+                  <span class="2xs:inline-block text-principal hidden shrink-0 font-sans text-xs !leading-none font-bold uppercase">Categoría:</span>
+                  <button type="button" id="botonToggleCategorias" onclick="toggleCategorias()" aria-expanded="false" aria-controls="contenedorCategoriasMovil" aria-haspopup="listbox" class="bg-brand-blue hover:bg-brand-blue-dark efecto-presionar flex max-w-full cursor-pointer items-center gap-2 rounded-full px-3.5 font-sans text-xs !leading-none font-semibold text-white select-none">
+                    <span id="insigniaCategoriaActiva" class="min-w-0 truncate py-2.5">Todos</span>
+                    <i id="iconoToggleCategorias" class="ph-bold ph-caret-down text-3 shrink-0 transition-transform"></i>
                   </button>
                 </div>
+
+                <div id="contenedorCategoriasMovil" class="border-brand-dark absolute top-full right-0 z-30 mt-2 hidden w-60 overflow-hidden rounded-2xl border-2 bg-white shadow-2xl sm:hidden">
+                  <div id="listaCategoriasMovil" class="divide-terciario no-scrollbar max-h-[40vh] divide-y overflow-y-auto"></div>
+                  <div id="fadeCategoriasMovil" class="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-white to-transparent transition-opacity"></div>
+                </div>
+
+                <div id="contenedorCategoriasDesktop" class="hidden flex-wrap items-center gap-x-2 gap-y-2.5 sm:flex"></div>
+              </div>
+            </div>
+
+            <div id="grillaCursos" class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3"></div>
+
+            <!-- Empty Search State Container (Pertenece a la búsqueda/filtros) -->
+            <div id="estadoVacio" role="status" aria-live="polite" class="hidden w-full">
+              <div class="contenedor-estado py-10 md:py-14">
+                <div class="caja-icono-estado text-brand-blue bg-blue-500/15 inset-ring-blue-500/30">
+                  <i class="ph-bold ph-ghost"></i>
+                </div>
+                <div class="cabecera-texto-estado">
+                  <h3>NO ENCONTRAMOS RESULTADOS</h3>
+                  <p>Intenta con otra palabra o restablece la lista completa de cursos.</p>
+                </div>
+                <button onclick="resetFilters()" class="boton-base bg-brand-blue hover:bg-brand-blue-dark text-white">
+                  <i class="ph-bold ph-arrows-counter-clockwise"></i>
+                  <span>Ver todos los cursos</span>
+                </button>
               </div>
             </div>
           </div>
 
-          <!-- Empty Search State Container -->
-          <div id="estadoVacio" class="hidden w-full">
-            <div class="tarjeta-aviso !py-12 md:!py-16">
-              <div class="caja-icono-aviso text-brand-blue bg-blue-500/15 inset-ring-blue-500/30">
-                <i class="ph-bold ph-ghost icono-aviso"></i>
+          <!-- 2. SECCIÓN ESTADO CANJEADO (Solo se activa si ya registró su curso) -->
+          <div id="estadoCanjeado" class="hidden w-full flex-col gap-6 py-6 md:gap-7 md:py-8">
+            <div class="contenedor-estado">
+              <div class="caja-icono-estado bg-amber-500/15 text-amber-600 inset-ring-amber-500/30">
+                <i class="ph-bold ph-confetti"></i>
               </div>
-              <div class="cabecera-texto-aviso">
-                <h3>NO ENCONTRAMOS RESULTADOS</h3>
-                <p>Intenta con otra palabra o restablece la lista completa de cursos.</p>
+              <div class="cabecera-texto-estado">
+                <h3>¡YA REGISTRASTE TU CURSO!</h3>
+                <p>Tu beneficio de cumpleaños ha sido guardado con éxito. En un plazo máximo de 1 día hábil te notificaremos cuando esté habilitado en tu plataforma educativa. Revisa los detalles de tu elección a continuación.</p>
               </div>
-              <button onclick="resetFilters()" class="boton-base bg-brand-blue hover:bg-brand-blue-dark shrink-0 text-white">
-                <i class="ph-bold ph-arrows-counter-clockwise"></i>
-                <span>Ver todos los cursos</span>
-              </button>
+            </div>
+
+            <div class="tarjeta-neo mx-auto w-full max-w-md text-left">
+              <div class="mb-3 flex min-w-0 flex-wrap items-stretch justify-between gap-3 gap-y-2 md:mb-4">
+                <span id="insigniaNumeroCursoCanjeado"></span>
+                <div class="insignia-regalo">
+                  <i class="ph-bold ph-check-fat"></i>
+                  <span>Curso registrado</span>
+                </div>
+              </div>
+              <h4 id="tituloCursoCanjeado" class="text-principal mb-5 font-sans text-xl !leading-[1.15] font-bold text-balance uppercase md:mb-6 md:text-2xl"></h4>
+              <div id="contenedorBotonWhatsAppCanjeado" class="border-terciario xs:justify-end flex items-center justify-center border-t pt-4"></div>
             </div>
           </div>
         </div>
       </main>
 
       <!-- Direct Confirmation Modal (2-Step Registration + WhatsApp) -->
-      <div
-        id="modalCanje"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modalTituloCurso"
-        onclick="if (event.target === this) closeModal();"
-        class="fixed inset-0 z-50 hidden min-h-dvh min-h-svh items-center justify-center overscroll-contain bg-black/60 p-6 backdrop-blur-md md:p-8 [&:not(.hidden)]:flex"
-      >
+      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 z-50 hidden min-h-dvh min-h-svh items-center justify-center overscroll-contain bg-black/60 p-6 backdrop-blur-md md:p-8">
         <div class="animate-modal-in my-auto flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden rounded-2xl md:rounded-3xl">
           <!-- Modal Header (Hero Style with Confetti Pattern & Radial Glow) -->
           <div class="bg-brand-dark relative shrink-0 overflow-hidden p-5 text-white md:p-6">
@@ -616,24 +581,17 @@
             <!-- Content Container -->
             <div class="relative z-10">
               <div class="mb-6 flex items-center justify-between gap-4">
-                <div class="insignia-base text-principal bg-amber-400">
+                <div class="insignia-regalo">
                   <i class="ph-bold ph-gift"></i>
                   <span>Selección de Curso</span>
                 </div>
 
-                <button
-                  type="button"
-                  id="botonCerrarModal"
-                  onclick="closeModal()"
-                  aria-label="Cerrar modal"
-                  title="Cerrar"
-                  class="efecto-presionar inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/80 transition-colors select-none hover:bg-white/20 hover:text-white md:size-9"
-                >
+                <button type="button" id="botonCerrarModal" onclick="closeModal()" aria-label="Cerrar modal" title="Cerrar" class="efecto-presionar inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/80 transition-colors select-none hover:bg-white/20 hover:text-white md:size-9">
                   <i class="ph-bold ph-x text-4 md:text-5"></i>
                 </button>
               </div>
 
-              <h3 class="line-clamp-3 overflow-hidden font-sans text-xl !leading-[1.15] font-bold text-balance text-white uppercase md:text-2xl" id="modalTituloCurso"></h3>
+              <h3 class="line-clamp-3 overflow-hidden font-sans text-xl !leading-[1.15] font-bold text-balance uppercase md:text-2xl" id="modalTituloCurso"></h3>
             </div>
           </div>
 
@@ -648,18 +606,18 @@
     <!-- Cierre de VISTA 2: #pantalla-cursos -->
 
     <!-- VISTA 3: Enlace Expirado (Inicialmente Oculta) -->
-    <div id="pantalla-expirado" class="pantalla-estado hidden">
+    <div id="pantalla-expirado" class="pantalla-vista hidden">
       <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
-      <header class="encabezado-pantalla-estado">
+      <header class="encabezado-pantalla-vista">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
           <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" onerror="handleLogoError(this)" />
         </a>
       </header>
 
       <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
-      <main role="alert" class="cuerpo-pantalla-estado">
-        <div class="tarjeta-estado">
-          <div class="caja-icono-estado bg-amber-950/60 text-amber-400 inset-ring inset-ring-amber-700/60">
+      <main role="alert" class="cuerpo-pantalla-vista">
+        <div class="tarjeta-vista">
+          <div class="caja-icono-vista bg-amber-950/60 text-amber-400 inset-ring inset-ring-amber-700/60">
             <i class="ph-bold ph-clock-countdown" aria-hidden="true"></i>
           </div>
           <h1>¡TU ENLACE EXPIRÓ O NO ES VÁLIDO!</h1>
@@ -739,10 +697,10 @@
         estilos: {
           cajaAlerta: "border rounded-xl md:rounded-2xl p-4 md:p-5 text-center flex flex-col items-center justify-center",
           icono: "ph-bold text-10 md:text-12 mb-3",
-          titulo: "font-heading font-bold text-lg md:text-xl uppercase text-balance mb-1",
+          titulo: "font-condensed font-bold text-lg md:text-xl uppercase text-balance mb-1",
           parrafo: "font-medium text-sm md:text-base !leading-snug text-balance",
           botonBase: ESTILOS_BOTON_BASE,
-          colorBotonVolver: "inset-ring inset-ring-terciario text-secundario hover:bg-slate-100 shrink-0 max-sm:!px-4",
+          colorBotonVolver: "hidden 2xs:inline-flex inset-ring inset-ring-terciario text-secundario hover:bg-slate-100 shrink-0 max-sm:!px-4",
         },
         paso1: {
           colorCaja: "bg-blue-500/5 border-blue-500/30",
@@ -763,7 +721,7 @@
           colorParrafo: "text-emerald-950",
           colorBoton: "w-full bg-emerald-600 hover:bg-emerald-700 text-white",
           titulo: "¡Curso Registrado con Éxito!",
-          parrafo: "Tu curso estará disponible en un plazo máximo de <strong>1 día hábil</strong>. Te notificaremos por correo en cuanto ya puedas ingresar.",
+          parrafo: "Tu beneficio de cumpleaños ha sido guardado con éxito. En un plazo máximo de <strong>1 día hábil</strong> te notificaremos cuando esté habilitado en tu plataforma educativa.",
           textoBoton: "CONFIRMAR POR WHATSAPP",
           iconoBoton: "ph-whatsapp-logo",
         },
@@ -787,7 +745,7 @@
       // Generador del Botón de WhatsApp unificado (100% DRY para Modal y Estado Canjeado)
       function renderBotonWhatsApp(esModal = true) {
         const { estilos, paso2 } = MODAL_CONFIG;
-        const clasesAncho = esModal ? "w-full" : "w-full sm:w-auto";
+        const clasesAncho = esModal ? "w-full" : "w-full xs:w-auto";
         const clasesColor = paso2.colorBoton.replace("w-full", "").trim();
         return `
           <button
@@ -1328,18 +1286,17 @@
           }
         }
 
-        const grillaCursos = document.getElementById("grillaCursos");
-        const searchBox = document.getElementById("cajaFiltrosYBusqueda");
-        const estadoVacio = document.getElementById("estadoVacio");
+        const seccionCatalogoExploracion = document.getElementById("seccionCatalogoExploracion");
         const estadoCanjeado = document.getElementById("estadoCanjeado");
         const tituloCursoCanjeado = document.getElementById("tituloCursoCanjeado");
         const insigniaNumeroCursoCanjeado = document.getElementById("insigniaNumeroCursoCanjeado");
-        const insigniaCategoriaCursoCanjeado = document.getElementById("insigniaCategoriaCursoCanjeado") || document.getElementById("insigniaCursoCanjeado");
 
         if (!saved) {
-          if (grillaCursos) grillaCursos.classList.remove("hidden");
-          if (searchBox) searchBox.classList.remove("hidden");
-          if (estadoCanjeado) estadoCanjeado.classList.add("hidden");
+          if (seccionCatalogoExploracion) seccionCatalogoExploracion.classList.remove("hidden");
+          if (estadoCanjeado) {
+            estadoCanjeado.classList.remove("flex");
+            estadoCanjeado.classList.add("hidden");
+          }
           return false;
         }
 
@@ -1347,12 +1304,11 @@
           const claimedData = JSON.parse(saved);
           selectedCourse = claimedData;
 
-          if (grillaCursos) grillaCursos.classList.add("hidden");
-          if (searchBox) searchBox.classList.add("hidden");
-          if (estadoVacio) estadoVacio.classList.add("hidden");
+          if (seccionCatalogoExploracion) seccionCatalogoExploracion.classList.add("hidden");
 
           if (estadoCanjeado) {
             estadoCanjeado.classList.remove("hidden");
+            estadoCanjeado.classList.add("flex");
             const contBotonWA = document.getElementById("contenedorBotonWhatsAppCanjeado");
             if (contBotonWA) {
               contBotonWA.innerHTML = renderBotonWhatsApp(false);
@@ -1367,20 +1323,14 @@
             insigniaNumeroCursoCanjeado.textContent = claimedData.id ? `Curso #${claimedData.id}` : "Curso Seleccionado";
           }
 
-          if (insigniaCategoriaCursoCanjeado) {
-            const clasesCategoria = ESTILOS_TARJETA.insigniaCategoria.replace("hidden 2xs:", "");
-            insigniaCategoriaCursoCanjeado.className = clasesCategoria;
-            const nombreCategoria = getCategoryName(claimedData.category);
-            insigniaCategoriaCursoCanjeado.textContent = nombreCategoria || "";
-            insigniaCategoriaCursoCanjeado.style.display = nombreCategoria ? "inline-flex" : "none";
-          }
-
           return true;
         } catch (e) {
           console.warn("Claimed state parse warning:", e);
-          if (grillaCursos) grillaCursos.classList.remove("hidden");
-          if (searchBox) searchBox.classList.remove("hidden");
-          if (estadoCanjeado) estadoCanjeado.classList.add("hidden");
+          if (seccionCatalogoExploracion) seccionCatalogoExploracion.classList.remove("hidden");
+          if (estadoCanjeado) {
+            estadoCanjeado.classList.remove("flex");
+            estadoCanjeado.classList.add("hidden");
+          }
           return false;
         }
       }
@@ -1395,12 +1345,12 @@
         if (context === "cintillo") {
           img.outerHTML = '<span class="inline-flex items-center h-6 !leading-none">EDUMIN</span>';
         } else if (context === "hero") {
-          img.outerHTML = '<span class="font-heading font-bold text-2xl md:text-3xl lg:text-4xl text-white h-10 md:h-12 lg:h-14 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
+          img.outerHTML = '<span class="font-condensed font-bold text-2xl md:text-3xl lg:text-4xl text-white h-10 md:h-12 lg:h-14 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
         } else if (context === "footer") {
-          img.outerHTML = '<span class="font-heading font-bold text-2xl text-white h-8 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
+          img.outerHTML = '<span class="font-condensed font-bold text-2xl text-white h-8 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
         } else {
           // Vista 1 (Pantalla de carga) y Vista 3 (Expirado): exactamente el diseño original responsivo
-          img.outerHTML = '<span class="font-heading font-bold text-2xl md:text-3xl text-white h-10 md:h-12 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
+          img.outerHTML = '<span class="font-condensed font-bold text-2xl md:text-3xl text-white h-10 md:h-12 inline-flex items-center justify-center !leading-none">EDUMIN</span>';
         }
       }
 
@@ -2051,10 +2001,8 @@
         },
         titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6 uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
-        get insigniaSeleccionar() {
-          return `${this.insigniaBase} rounded-full text-brand-blue bg-blue-500/15 inset-ring inset-ring-blue-500/30 group-hover:bg-amber-400 group-hover:inset-ring-amber-400 group-hover:text-principal transition`;
-        },
-        iconoSeleccionar: "ph-bold ph-hand-tap text-brand-blue group-hover:text-principal transition",
+        insigniaSeleccionar: "insignia-seleccion",
+        iconoSeleccionar: "ph-bold ph-hand-tap",
         textoSeleccionar: "whitespace-nowrap transition",
         iconoFlecha: "ph-bold ph-arrow-right text-brand-blue group-hover:text-amber-500 text-4 md:text-5 group-hover:translate-x-1.5 group-active:translate-x-0 transition shrink-0 hidden 2xs:block",
       };
@@ -2207,7 +2155,10 @@
           botonCerrar.classList.remove("opacity-50", "pointer-events-none");
         }
 
-        if (modalCanje) modalCanje.classList.remove("hidden");
+        if (modalCanje) {
+          modalCanje.classList.remove("hidden");
+          modalCanje.classList.add("flex");
+        }
         lockScroll();
 
         // Enfoque automático en el botón de cierre al abrir
@@ -2252,12 +2203,14 @@
           modalContainer.classList.add("animate-modal-out");
 
           setTimeout(() => {
+            modalCanje.classList.remove("flex");
             modalCanje.classList.add("hidden");
             modalContainer.classList.remove("animate-modal-out");
             modalContainer.classList.add("animate-modal-in");
             unlockScroll();
           }, 180);
         } else if (modalCanje) {
+          modalCanje.classList.remove("flex");
           modalCanje.classList.add("hidden");
           unlockScroll();
         }
