@@ -20,7 +20,9 @@
         try {
           var p = new URLSearchParams(window.location.search);
           var t = p.get("token");
-          if (t && t !== "demo") {
+          var d = p.get("demo");
+          var v = p.get("vista");
+          if (t && t !== "demo" && !d && !v) {
             var url = "https://script.google.com/macros/s/AKfycbwFibwSnti14GeBPiO06VomGLKjt1N3LRRr8st6t0eLkwLeQC3JJ8IWbf8CqJ-xa1F4/exec?token=" + encodeURIComponent(t.trim());
             window._earlyTokenPromise = fetch(url)
               .then(function (r) {
@@ -375,6 +377,7 @@
       }
 
       @utility contenedor-tarjeta-regalo {
+        @apply bg-brand-card-bg text-brand-dark border-brand-dark shadow-neo-sm md:shadow-neo border-2;
         @apply flex w-full max-w-lg flex-col overflow-hidden rounded-2xl md:rounded-3xl;
       }
 
@@ -497,7 +500,7 @@
         </header>
       </div>
 
-      <main id="catalogo" class="relative z-10 mx-auto w-full max-w-7xl scroll-mt-10 px-4 py-6 pb-10 md:p-6 md:pb-14 lg:p-8 lg:pb-20">
+      <main id="catalogo" class="relative z-10 mx-auto w-full max-w-7xl scroll-mt-10 px-4 pt-6 pb-10 md:p-6 md:pb-14 lg:p-8 lg:pb-20">
         <div id="seccionCatalogoExploracion" class="w-full rounded-xl bg-white px-4 py-6 md:rounded-2xl md:p-8 lg:rounded-3xl lg:p-10">
           <div class="cabecera-seccion">
             <h2 class="text-principal">Cursos de Alta Especia&shy;lización</h2>
@@ -566,33 +569,34 @@
         </div>
       </main>
 
-      <!-- 2. SECCIÓN ESTADO CANJEADO (Independiente al mismo nivel que el catálogo) -->
-      <section id="estadoCanjeado" role="status" aria-live="polite" class="relative z-10 mx-auto hidden w-full max-w-7xl scroll-mt-10 flex-col items-center px-4 py-6 pb-10 md:p-6 md:pb-14 lg:p-8 lg:pb-20">
-        <div class="cabecera-seccion">
-          <h2 class="text-white">¡Ya registraste tu curso!</h2>
-          <p class="text-terciario">Tu beneficio de cumpleaños ha sido guardado con éxito. Revisa los detalles de tu elección a continuación.</p>
-        </div>
-
-        <!-- Tarjeta con diseño y componentes idénticos al Modal Paso 2 (100% DRY) -->
-        <div class="contenedor-tarjeta-regalo mx-auto border-2 border-white/10 shadow-2xl ring-1 ring-white/15">
-          <!-- Header idéntico al Modal (Fondo oscuro con glow y confeti) -->
-          <div class="cabecera-tarjeta-regalo">
-            <div class="fila-cabecera-regalo">
-              <div class="flex min-w-0 items-center gap-3">
-                <span id="insigniaNumeroCursoCanjeado" class="insignia-regalo shrink-0"></span>
-                <span id="insigniaCategoriaCursoCanjeado" class="insignia-base text-cuaternario bg-white/10 font-semibold normal-case inset-ring inset-ring-white/20"></span>
-              </div>
-            </div>
-
-            <h3 class="titulo-tarjeta-regalo" id="tituloCursoCanjeado"></h3>
+      <section id="estadoCanjeado" role="status" aria-live="polite" class="relative z-10 mx-auto hidden w-full max-w-7xl scroll-mt-10 flex-col items-center px-4 pt-6 pb-10 md:p-6 md:pb-14 lg:p-8 lg:pb-20">
+        <div id="envoltorioCanjeado" class="mx-auto flex w-full max-w-xl flex-col items-center rounded-xl bg-white p-5 md:rounded-2xl md:p-8 lg:rounded-3xl">
+          <div class="cabecera-seccion">
+            <h2 class="text-principal">¡Ya registraste tu curso!</h2>
+            <p class="text-secundario">Tu beneficio de cumpleaños ha sido guardado con éxito. Revisa los detalles de tu elección a continuación.</p>
           </div>
 
-          <!-- Body idéntico al Modal Paso 2 (Inyectado con renderAlertaModal y renderBotonWhatsApp) -->
-          <div id="cuerpoEstadoCanjeado" class="bg-brand-card-bg flex flex-col gap-4 p-5 md:p-6"></div>
+          <!-- Tarjeta con diseño y componentes idénticos al Modal Paso 2 (100% DRY) -->
+          <div id="tarjetaCursoCanjeado" class="contenedor-tarjeta-regalo mx-auto">
+            <!-- Header idéntico al Modal (Fondo oscuro con glow y confeti) -->
+            <div class="cabecera-tarjeta-regalo">
+              <div class="fila-cabecera-regalo">
+                <div class="flex min-w-0 items-center gap-3">
+                  <span id="insigniaNumeroCursoCanjeado" class="insignia-regalo shrink-0"></span>
+                  <span id="insigniaCategoriaCursoCanjeado" class="insignia-base text-cuaternario bg-white/10 font-semibold normal-case inset-ring inset-ring-white/20"></span>
+                </div>
+              </div>
+
+              <h3 class="titulo-tarjeta-regalo" id="tituloCursoCanjeado"></h3>
+            </div>
+
+            <!-- Body idéntico al Modal Paso 2 (Inyectado con renderAlertaModal y renderBotonWhatsApp) -->
+            <div id="cuerpoEstadoCanjeado" class="bg-brand-card-bg flex flex-col gap-4 p-5 md:p-6"></div>
+          </div>
         </div>
       </section>
 
-      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 z-50 hidden min-h-dvh min-h-svh items-center justify-center overscroll-contain bg-black/60 p-6 pt-16 backdrop-blur-md md:p-8 md:pt-16">
+      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 z-50 hidden min-h-dvh min-h-svh items-center justify-center overscroll-contain bg-white/45 p-6 pt-16 backdrop-blur-md md:p-8 md:pt-16">
         <div class="contenedor-tarjeta-regalo animate-modal-in m-auto max-h-[90dvh]">
           <div class="cabecera-tarjeta-regalo">
             <div class="fila-cabecera-regalo">
@@ -766,10 +770,32 @@
         `;
       }
 
+      // Generador del cuerpo unificado para Modal Paso 2 y Estado Canjeado (100% DRY)
+      function renderCuerpoConfirmacion() {
+        const { estilos, paso2 } = MODAL_CONFIG;
+        return `
+          ${renderAlertaModal(paso2, estilos)}
+          ${renderBotonWhatsApp(true)}
+        `;
+      }
+
+      // Actualiza insignia de número, categoría y título formateado en Modal o Estado Canjeado (100% DRY)
+      function actualizarEncabezadoTarjeta(curso, tipo = "Modal") {
+        if (!curso) return;
+        const isModal = tipo === "Modal";
+        const badgeNumero = document.getElementById(isModal ? "insigniaNumeroCursoModal" : "insigniaNumeroCursoCanjeado");
+        const badgeCat = document.getElementById(isModal ? "insigniaCategoriaCursoModal" : "insigniaCategoriaCursoCanjeado");
+        const titulo = document.getElementById(isModal ? "modalTituloCurso" : "tituloCursoCanjeado");
+
+        if (badgeNumero) badgeNumero.textContent = curso.id ? `Curso #${curso.id}` : "Curso Registrado";
+        if (badgeCat) badgeCat.textContent = getCategoryName(curso.category);
+        if (titulo) titulo.innerHTML = formatCourseTitle(curso.title);
+      }
+
       function renderModalStep(paso = 1) {
         const container = document.getElementById("modalContenidoPaso");
         if (!container) return;
-        const { estilos, paso1, paso2 } = MODAL_CONFIG;
+        const { estilos, paso1 } = MODAL_CONFIG;
 
         if (paso === 1) {
           container.innerHTML = `
@@ -797,10 +823,7 @@
             </div>
           `;
         } else if (paso === 2) {
-          container.innerHTML = `
-            ${renderAlertaModal(paso2, estilos)}
-            ${renderBotonWhatsApp(true)}
-          `;
+          container.innerHTML = renderCuerpoConfirmacion();
         }
       }
 
@@ -810,6 +833,7 @@
       let selectedCourse = null;
       let isRegisteringCourse = false;
       let vistaActual = "pantalla-carga";
+      let esModoDemo = false;
       // ==========================================================================
       // CATÁLOGO MAESTRO DE CATEGORÍAS (ID numérico único)
       // Para cambiar una categoría a un curso solo cambia su número de category (1-9)
@@ -1297,7 +1321,6 @@
         const catalogo = document.getElementById("catalogo");
         const seccionCatalogoExploracion = document.getElementById("seccionCatalogoExploracion");
         const estadoCanjeado = document.getElementById("estadoCanjeado");
-        const tituloCursoCanjeado = document.getElementById("tituloCursoCanjeado");
 
         if (!saved) {
           if (catalogo) catalogo.classList.remove("hidden");
@@ -1321,24 +1344,10 @@
             estadoCanjeado.classList.add("flex");
             const cuerpoCanjeado = document.getElementById("cuerpoEstadoCanjeado");
             if (cuerpoCanjeado) {
-              const { estilos, paso2 } = MODAL_CONFIG;
-              cuerpoCanjeado.innerHTML = `
-                ${renderAlertaModal(paso2, estilos)}
-                ${renderBotonWhatsApp(true)}
-              `;
+              cuerpoCanjeado.innerHTML = renderCuerpoConfirmacion();
             }
           }
-          if (tituloCursoCanjeado) {
-            tituloCursoCanjeado.innerHTML = formatCourseTitle(claimedData.title);
-          }
-          const badgeCanjeado = document.getElementById("insigniaNumeroCursoCanjeado");
-          if (badgeCanjeado) {
-            badgeCanjeado.textContent = claimedData.id ? `Curso #${claimedData.id}` : "Curso Registrado";
-          }
-          const badgeCatCanjeado = document.getElementById("insigniaCategoriaCursoCanjeado");
-          if (badgeCatCanjeado) {
-            badgeCatCanjeado.textContent = getCategoryName(claimedData.category);
-          }
+          actualizarEncabezadoTarjeta(claimedData, "Canjeado");
 
           return true;
         } catch (e) {
@@ -1374,23 +1383,6 @@
 
       function handleHeroLogoError(img) {
         handleLogoError(img, "hero");
-      }
-
-      // Simulación de error de red en logos para pruebas de diseño (?errorlogo=1)
-      function simularErrorLogos() {
-        document.querySelectorAll("img").forEach((img) => {
-          if (img.src && img.src.includes("logo")) {
-            if (img.closest("#cintilloCumpleanos")) {
-              handleLogoError(img, "cintillo");
-            } else if (img.closest("#seccionHero")) {
-              handleHeroLogoError(img);
-            } else if (img.closest("#footerGeneral")) {
-              handleLogoError(img, "footer");
-            } else {
-              handleLogoError(img);
-            }
-          }
-        });
       }
 
       // Generar dinámicamente el contenido del cintillo para loop infinito continuo (100% DRY & a11y)
@@ -1487,57 +1479,80 @@
       /* ==========================================================================
            SECCIÓN DE PRUEBAS / MODO DEMO (BORRAR O DESACTIVAR AL SUBIR A PRODUCCIÓN)
            ========================================================================== */
+      function limpiarDatosDemo(token) {
+        localStorage.removeItem("edumin_claimed_demo");
+        localStorage.removeItem(getClaimKey());
+        if (token) {
+          localStorage.removeItem("edumin_claimed_" + token.trim());
+          localStorage.removeItem("edumin_val_" + token.trim());
+        }
+        selectedCourse = null;
+
+        const catalogo = document.getElementById("catalogo");
+        const seccionExploracion = document.getElementById("seccionCatalogoExploracion");
+        const estadoCanjeado = document.getElementById("estadoCanjeado");
+        if (catalogo) catalogo.classList.remove("hidden");
+        if (seccionExploracion) seccionExploracion.classList.remove("hidden");
+        if (estadoCanjeado) {
+          estadoCanjeado.classList.remove("flex");
+          estadoCanjeado.classList.add("hidden");
+        }
+      }
+
       function gestionarModoDemo(params, token) {
-        // 1. Resetear selección guardada en localStorage si la URL contiene ?reset=1
-        if (params.has("reset")) {
-          isAppIniciada = false;
-          localStorage.removeItem("edumin_claimed_demo");
-          if (token) {
-            localStorage.removeItem("edumin_claimed_" + token.trim());
-            localStorage.removeItem("edumin_val_" + token.trim());
-          }
-        }
-
-        // 2. Simular error de carga en logos si la URL contiene errorlogo=1 o demo=errorlogo
-        const simularError = params.has("errorlogo") || params.get("errorlogo") === "1" || params.get("demo") === "errorlogo" || params.get("vista") === "errorlogo";
-        if (simularError) {
-          setTimeout(simularErrorLogos, 0);
-        }
-
-        // 3. Forzar vista directa (?vista=1, ?vista=2, ?vista=3, ?vista=errorlogo)
-        const vistaParam = params.get("vista") || params.get("view");
+        const vistaParam = params.get("vista");
         const demoParam = params.get("demo");
 
+        // 1. Forzar vistas directas (?vista=1, ?vista=2, ?vista=3)
         if (vistaParam === "1") {
+          esModoDemo = true;
           mostrarVista("pantalla-carga");
-          return true; // Interceptado por demo
-        }
-        if (vistaParam === "3") {
-          mostrarVista("pantalla-expirado");
-          return true; // Interceptado por demo
-        }
-        if (vistaParam === "2" || vistaParam === "errorlogo" || demoParam === "errorlogo") {
-          mostrarVista("pantalla-cursos");
-          initCursosApp();
-          return true; // Interceptado por demo
+          return true;
         }
 
-        // 4. Modo Demo: Vista de Curso Ya Canjeado (?demo=2 o ?vista=canjeado)
-        if (demoParam === "2" || demoParam === "canjeado" || vistaParam === "canjeado") {
+        if (vistaParam === "2") {
+          esModoDemo = true;
+          limpiarDatosDemo(token);
+          mostrarVista("pantalla-cursos");
+          initCursosApp();
+          return true;
+        }
+
+        if (vistaParam === "3") {
+          esModoDemo = true;
+          mostrarVista("pantalla-expirado");
+          return true;
+        }
+
+        // 2. Modos Demo (?demo=1, ?demo=2, ?demo=3)
+        // Demo 1: Catálogo interactivo desde cero (limpia canjes previos en cada recarga)
+        if (demoParam === "1") {
+          esModoDemo = true;
+          limpiarDatosDemo(token);
+          mostrarVista("pantalla-cursos");
+          initCursosApp();
+          return true;
+        }
+
+        // Demo 2: Vista de Curso Ya Canjeado
+        if (demoParam === "2") {
+          esModoDemo = true;
           const cursoDemo = ALL_COURSES[0] || {
             id: 1,
             title: "MANEJO DE EPPS SEGÚN LA NORMA TÉCNICA PERUANA LEY 29783",
             category: 1,
           };
           localStorage.setItem("edumin_claimed_demo", JSON.stringify(cursoDemo));
+          localStorage.setItem(getClaimKey(), JSON.stringify(cursoDemo));
           mostrarVista("pantalla-cursos");
           initCursosApp();
           return true;
         }
 
-        // 5. Modo Demo: Vista de Búsqueda sin Resultados / Estado Vacío (?demo=3 o ?vista=vacio)
-        if (demoParam === "3" || demoParam === "vacio" || vistaParam === "vacio") {
-          localStorage.removeItem("edumin_claimed_demo");
+        // Demo 3: Vista de Búsqueda sin Resultados / Estado Vacío
+        if (demoParam === "3") {
+          esModoDemo = true;
+          limpiarDatosDemo(token);
           mostrarVista("pantalla-cursos");
           initCursosApp();
           const inputBusqueda = document.getElementById("inputBusqueda");
@@ -1548,16 +1563,17 @@
           return true;
         }
 
-        // 6. Forzar modo demo normal (?demo=1, ?token=demo o apertura en archivo local file://)
+        // 3. Fallback para apertura local o token=demo
         const isLocalFile = window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        if (demoParam === "1" || token === "demo" || (!token && isLocalFile)) {
-          localStorage.removeItem("edumin_claimed_demo");
+        if (token === "demo" || (!token && !vistaParam && !demoParam && isLocalFile)) {
+          esModoDemo = true;
+          limpiarDatosDemo(token);
           mostrarVista("pantalla-cursos");
           initCursosApp();
-          return true; // Interceptado por demo
+          return true;
         }
 
-        return false; // No es demo, continuar con flujo de producción normal
+        return false; // Flujo de producción normal
       }
       /* ==========================================================================
            FIN DE SECCIÓN DE PRUEBAS / MODO DEMO
@@ -1987,7 +2003,7 @@
         const estiloInactivo = "bg-cuaternario text-secundario font-semibold";
 
         return `
-          <button onclick="selectCategory('${cat}')" 
+          <button onclick="selectCategory('${cat}')"
                   aria-selected="${isActive}"
                   class="w-full px-4 text-left text-sm !leading-none font-sans select-none flex items-center justify-between gap-4 transition cursor-pointer overflow-hidden ${isActive ? estiloActivo : estiloInactivo}">
             <span class="truncate py-3.5 min-w-0 flex-1" title="${catLabel}">${catLabel}</span>
@@ -2007,7 +2023,7 @@
         const estiloInactivo = "bg-cuaternario text-secundario hover:bg-slate-200 inset-ring inset-ring-terciario font-semibold";
 
         return `
-          <button onclick="selectCategory('${cat}')" 
+          <button onclick="selectCategory('${cat}')"
                   aria-pressed="${isActive}"
                   class="px-3.5 py-2.5 !leading-none rounded-full font-sans text-xs md:text-sm shrink-0 efecto-presionar select-none flex items-center justify-center cursor-pointer ${isActive ? estiloActivo : estiloInactivo}">
             <span>${catLabel}</span>
@@ -2188,10 +2204,10 @@
         grid.innerHTML = list
           .map(
             (course) => `
-                <div data-course-id="${course.id}" 
-                     tabindex="0" 
-                     role="button" 
-                     aria-label="Seleccionar curso #${course.id}: ${course.title}" 
+                <div data-course-id="${course.id}"
+                     tabindex="0"
+                     role="button"
+                     aria-label="Seleccionar curso #${course.id}: ${course.title}"
                      class="${e.contenedorTarjeta}">
                     <div>
                         <!-- Category Badge & Course Number -->
@@ -2243,18 +2259,11 @@
           timerAutoCierrePaso2 = null;
         }
 
-        const modalTitle = document.getElementById("modalTituloCurso");
         const modalCanje = document.getElementById("modalCanje");
         const botonVolver = document.getElementById("botonVolverModal");
         const botonCerrar = document.getElementById("botonCerrarModal");
 
-        const badgeModal = document.getElementById("insigniaNumeroCursoModal");
-        if (badgeModal) badgeModal.textContent = `Curso #${selectedCourse.id}`;
-
-        const badgeCatModal = document.getElementById("insigniaCategoriaCursoModal");
-        if (badgeCatModal) badgeCatModal.textContent = getCategoryName(selectedCourse.category);
-
-        if (modalTitle) modalTitle.innerHTML = formatCourseTitle(selectedCourse.title);
+        actualizarEncabezadoTarjeta(selectedCourse, "Modal");
 
         renderModalStep(1);
 
@@ -2311,6 +2320,18 @@
         const modalCanje = document.getElementById("modalCanje");
         const modalContainer = modalCanje?.firstElementChild;
 
+        const onModalClosed = () => {
+          // Si el usuario ya completó el canje, revelamos el estado canjeado recién cuando el modal se cierra
+          const claimKey = typeof getClaimKey === "function" ? getClaimKey() : "edumin_claimed_course";
+          if (localStorage.getItem(claimKey)) {
+            checkClaimedState();
+            const estadoCanjeado = document.getElementById("estadoCanjeado");
+            if (estadoCanjeado && !estadoCanjeado.classList.contains("hidden")) {
+              estadoCanjeado.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        };
+
         if (modalCanje && !modalCanje.classList.contains("hidden") && modalContainer) {
           modalContainer.classList.remove("animate-modal-in");
           modalContainer.classList.add("animate-modal-out");
@@ -2321,11 +2342,13 @@
             modalContainer.classList.remove("animate-modal-out");
             modalContainer.classList.add("animate-modal-in");
             unlockScroll();
+            onModalClosed();
           }, 180);
         } else if (modalCanje) {
           modalCanje.classList.remove("flex");
           modalCanje.classList.add("hidden");
           unlockScroll();
+          onModalClosed();
         }
       }
 
@@ -2376,7 +2399,7 @@
         const tokenUsuario = userToken || "TOKEN-DEMO";
         const cursoSeleccionado = selectedCourse.title;
 
-        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
+        if (esModoDemo || !APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
           finalizarRegistroExitoso();
           return;
         }
@@ -2458,11 +2481,8 @@
         // Guardar selección en localStorage aislada por cada token
         localStorage.setItem(getClaimKey(), JSON.stringify(selectedCourse));
 
-        // Transición en Modal al Paso 2
+        // Transición en Modal al Paso 2 (el fondo de la web se mantiene como catálogo con su blur)
         renderModalStep(2);
-
-        // Actualizar estado de la página a canjeado con la misma tarjeta
-        checkClaimedState();
 
         // Auto-cierre automático tras 5 segundos de permanencia en el Paso 2 si el usuario no presiona WhatsApp
         if (timerAutoCierrePaso2) clearTimeout(timerAutoCierrePaso2);
