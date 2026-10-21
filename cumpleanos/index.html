@@ -182,7 +182,11 @@
       }
 
       @utility insignia-regalo {
-        @apply insignia-base text-principal bg-amber-400;
+        @apply insignia-base text-principal shrink-0 bg-amber-400;
+      }
+
+      @utility insignia-categoria-regalo {
+        @apply insignia-base text-cuaternario 2xs:inline-flex hidden shrink truncate bg-white/10 font-semibold normal-case inset-ring inset-ring-white/20;
       }
 
       @utility insignia-seleccion {
@@ -276,27 +280,6 @@
 
         & > p {
           @apply font-sans text-base !leading-snug font-medium md:text-lg;
-        }
-      }
-
-      /* Layout y Componentes de Estados del Catálogo (Vacío y Canjeado) */
-      @utility contenedor-estado {
-        @apply xs:px-0 mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-5 px-4 py-8 text-center md:gap-6 md:py-10;
-      }
-
-      @utility caja-icono-estado {
-        @apply text-8 md:text-10 flex size-16 shrink-0 items-center justify-center rounded-full inset-ring md:size-20;
-      }
-
-      @utility cabecera-texto-estado {
-        @apply flex w-full flex-col gap-2 text-balance;
-
-        & > h3 {
-          @apply font-condensed text-principal text-2xl !leading-[1.15] font-bold uppercase md:text-3xl;
-        }
-
-        & > p {
-          @apply text-secundario text-base !leading-snug font-medium md:text-lg;
         }
       }
 
@@ -396,11 +379,15 @@
       }
 
       @utility fila-cabecera-regalo {
-        @apply mb-6 flex items-center justify-between gap-4;
+        @apply mb-6 flex min-w-0 items-center gap-3;
       }
 
       @utility titulo-tarjeta-regalo {
         @apply line-clamp-3 overflow-hidden font-sans text-xl !leading-[1.15] font-bold text-balance text-white uppercase md:text-2xl;
+      }
+
+      @utility cuerpo-tarjeta-regalo {
+        @apply bg-brand-card-bg flex flex-col gap-4 p-5 md:p-6;
       }
 
       @utility cintillo-fade-mask {
@@ -552,13 +539,13 @@
           <div id="grillaCursos" class="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3"></div>
 
           <div id="estadoVacio" role="status" aria-live="polite" class="hidden w-full">
-            <div class="contenedor-estado">
-              <div class="caja-icono-estado text-brand-blue bg-blue-500/15 inset-ring-blue-500/30">
+            <div class="xs:px-0 mx-auto flex w-full max-w-xl flex-col items-center justify-center gap-5 px-4 py-8 text-center md:gap-6 md:py-10">
+              <div class="text-8 md:text-10 text-brand-blue flex size-16 shrink-0 items-center justify-center rounded-full bg-blue-500/15 inset-ring inset-ring-blue-500/30 md:size-20">
                 <i class="ph-bold ph-ghost"></i>
               </div>
-              <div class="cabecera-texto-estado">
-                <h3>NO ENCONTRAMOS RESULTADOS</h3>
-                <p>Intenta con otra palabra o restablece la lista completa de cursos.</p>
+              <div class="flex w-full flex-col gap-2 text-balance">
+                <h3 class="font-condensed text-principal text-2xl !leading-[1.15] font-bold uppercase md:text-3xl">No encontramos resultados</h3>
+                <p class="text-secundario text-base !leading-snug font-medium md:text-lg">Intenta con otra palabra o restablece la lista completa de cursos.</p>
               </div>
               <button onclick="resetFilters()" class="boton-base bg-brand-blue hover:bg-brand-blue-dark text-white">
                 <i class="ph-bold ph-arrows-counter-clockwise"></i>
@@ -570,63 +557,49 @@
       </main>
 
       <section id="estadoCanjeado" role="status" aria-live="polite" class="relative z-10 mx-auto hidden w-full max-w-7xl scroll-mt-10 flex-col items-center px-4 pt-6 pb-10 md:p-6 md:pb-14 lg:p-8 lg:pb-20">
-        <div id="envoltorioCanjeado" class="mx-auto flex w-full max-w-xl flex-col items-center rounded-xl bg-white p-5 md:rounded-2xl md:p-8 lg:rounded-3xl">
+        <div id="envoltorioCanjeado" class="mx-auto flex w-full max-w-2xl flex-col items-center rounded-xl bg-white px-4 py-6 md:rounded-2xl md:p-8 lg:rounded-3xl lg:p-10">
           <div class="cabecera-seccion">
-            <h2 class="text-principal">¡Ya registraste tu curso!</h2>
-            <p class="text-secundario">Tu beneficio de cumpleaños ha sido guardado con éxito. Revisa los detalles de tu elección a continuación.</p>
+            <h2 class="text-principal">Felicidades por tu elección</h2>
+            <p class="text-secundario">Tu beneficio de cumpleaños ha sido guardado con éxito. Revisa los detalles a continuación.</p>
           </div>
 
-          <!-- Tarjeta con diseño y componentes idénticos al Modal Paso 2 (100% DRY) -->
           <div id="tarjetaCursoCanjeado" class="contenedor-tarjeta-regalo mx-auto">
-            <!-- Header idéntico al Modal (Fondo oscuro con glow y confeti) -->
             <div class="cabecera-tarjeta-regalo">
               <div class="fila-cabecera-regalo">
-                <div class="flex min-w-0 items-center gap-3">
-                  <span id="insigniaNumeroCursoCanjeado" class="insignia-regalo shrink-0"></span>
-                  <span id="insigniaCategoriaCursoCanjeado" class="insignia-base text-cuaternario bg-white/10 font-semibold normal-case inset-ring inset-ring-white/20"></span>
-                </div>
+                <span id="insigniaNumeroCursoCanjeado" class="insignia-regalo"></span>
+                <span id="insigniaCategoriaCursoCanjeado" class="insignia-categoria-regalo"></span>
               </div>
-
               <h3 class="titulo-tarjeta-regalo" id="tituloCursoCanjeado"></h3>
             </div>
-
-            <!-- Body idéntico al Modal Paso 2 (Inyectado con renderAlertaModal y renderBotonWhatsApp) -->
-            <div id="cuerpoEstadoCanjeado" class="bg-brand-card-bg flex flex-col gap-4 p-5 md:p-6"></div>
+            <div id="cuerpoEstadoCanjeado" class="cuerpo-tarjeta-regalo"></div>
           </div>
         </div>
       </section>
 
-      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 z-50 hidden min-h-dvh min-h-svh items-center justify-center overscroll-contain bg-white/45 p-6 pt-16 backdrop-blur-md md:p-8 md:pt-16">
+      <div id="modalCanje" role="dialog" aria-modal="true" aria-labelledby="modalTituloCurso" onclick="if (event.target === this) closeModal();" class="fixed inset-0 z-50 hidden min-h-dvh min-h-svh items-center justify-center overscroll-contain bg-white/45 p-8 pt-18 backdrop-blur-md md:p-14 md:pt-18 md:pb-8">
         <div class="contenedor-tarjeta-regalo animate-modal-in m-auto max-h-[90dvh]">
           <div class="cabecera-tarjeta-regalo">
             <div class="fila-cabecera-regalo">
-              <div class="flex min-w-0 items-center gap-3">
-                <span id="insigniaNumeroCursoModal" class="insignia-regalo shrink-0"></span>
-                <span id="insigniaCategoriaCursoModal" class="insignia-base text-cuaternario bg-white/10 font-semibold normal-case inset-ring inset-ring-white/20"></span>
-              </div>
-              <button type="button" id="botonCerrarModal" onclick="closeModal()" aria-label="Cerrar modal" title="Cerrar" class="efecto-presionar inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/80 transition-colors select-none hover:bg-white/20 hover:text-white md:size-9">
+              <span id="insigniaNumeroCursoModal" class="insignia-regalo"></span>
+              <span id="insigniaCategoriaCursoModal" class="insignia-categoria-regalo"></span>
+              <button type="button" id="botonCerrarModal" onclick="closeModal()" aria-label="Cerrar modal" title="Cerrar" class="efecto-presionar ml-auto inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/80 transition-colors select-none hover:bg-white/20 hover:text-white md:size-9">
                 <i class="ph-bold ph-x text-4 md:text-5"></i>
               </button>
             </div>
             <h3 class="titulo-tarjeta-regalo" id="modalTituloCurso"></h3>
           </div>
-          <div class="bg-brand-card-bg flex-1 overflow-y-auto overscroll-contain p-5 md:p-6">
-            <div id="modalContenidoPaso" class="flex flex-col gap-4"></div>
-          </div>
+          <div id="modalContenidoPaso" class="cuerpo-tarjeta-regalo flex-1 overflow-y-auto overscroll-contain"></div>
         </div>
       </div>
     </div>
 
-    <!-- VISTA 3: Enlace Expirado (Inicialmente Oculta) -->
     <div id="pantalla-expirado" class="pantalla-vista hidden">
-      <!-- 1. Encabezado transparente al 100% de ancho con padding y logo centrado -->
       <header class="encabezado-pantalla-vista">
         <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="logo-superior-pantalla" title="Ir al sitio web de EDUMIN" aria-label="Ir al sitio web de EDUMIN">
           <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" onerror="handleLogoError(this)" />
         </a>
       </header>
 
-      <!-- 2. Cuerpo con padding definido que contiene la tarjeta -->
       <main role="alert" class="cuerpo-pantalla-vista">
         <div class="tarjeta-vista">
           <div class="caja-icono-vista bg-amber-950/60 text-amber-400 inset-ring inset-ring-amber-700/60">
@@ -638,20 +611,16 @@
       </main>
     </div>
 
-    <!-- Footer General Compartido (Vistas 1, 2 y 3) - Estandarizado a Móvil y MD -->
     <footer id="footerGeneral" class="text-cuaternario relative z-10 w-full shrink-0 border-t border-white/10 bg-black/90 py-6 text-sm">
       <div id="footerFlexWrapper" class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-5 px-4 md:flex-row md:gap-10 md:px-6 lg:px-8">
-        <!-- Left: Brand & Subtitle (Oculto en Vistas 1 y 3, visible solo en Vista 2) -->
         <div id="footerMarcaIzquierda" class="hidden min-w-0 flex-col items-center gap-2 text-center md:flex-row md:gap-4 md:text-left">
           <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" class="inline-block shrink-0 cursor-pointer select-none" title="Ir al sitio web de EDUMIN">
             <img src="https://raw.githubusercontent.com/videoconferenciasdiplomado-alt/imagenes/main/logo/logo%20blanco.png" alt="EDUMIN" class="h-8 object-contain" onerror="handleLogoError(this, 'footer')" />
           </a>
-          <span class="inline-block max-w-64 min-w-0 font-sans text-sm !leading-[1.15] font-bold text-balance uppercase md:border-l md:border-white/15 md:pl-4"> CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO </span>
+          <span class="inline-block max-w-64 min-w-0 font-sans text-sm !leading-[1.15] font-bold text-balance uppercase md:border-l md:border-white/15 md:pl-4">CENTRO DE CAPACITACIÓN ESPECIALIZADO EN EL SECTOR MINERO</span>
         </div>
 
-        <!-- Right: Website, WhatsApp & Social Media (Visible en Vistas 1, 2 y 3) -->
         <div class="footer-contacto">
-          <!-- Website Block -->
           <div>
             <span>Visítanos:</span>
             <a href="https://www.edumin.pe/" target="_blank" rel="noopener noreferrer" title="Visitar edumin.pe" class="footer-boton-pildora bg-blue-950/60 text-blue-400 inset-ring-blue-700/60 hover:bg-blue-900/80">
@@ -660,7 +629,6 @@
             </a>
           </div>
 
-          <!-- WhatsApp Support Block -->
           <div>
             <span>Contáctanos:</span>
             <a href="https://wa.me/51980694497" target="_blank" rel="noopener noreferrer" title="Contactar por WhatsApp" class="footer-boton-pildora bg-emerald-950/60 text-emerald-400 inset-ring-emerald-700/60 hover:bg-emerald-900/80">
@@ -669,7 +637,6 @@
             </a>
           </div>
 
-          <!-- Social Media Block -->
           <div>
             <span>Síguenos en:</span>
             <div class="text-terciario flex items-center gap-2">
@@ -2114,14 +2081,9 @@
       // Configuración centralizada de clases responsivas para las tarjetas de curso (en Español)
       const ESTILOS_TARJETA = {
         contenedorTarjeta: "tarjeta-neo tarjeta-neo-interactiva tarjeta-anim-scroll flex flex-col justify-between relative group overflow-hidden",
-        insigniaBase: "insignia-base",
         encabezadoContenedor: "flex items-center justify-between mb-3 md:mb-4 gap-3",
-        get insigniaId() {
-          return `${this.insigniaBase} bg-brand-blue text-white shrink-0`;
-        },
-        get insigniaCategoria() {
-          return `${this.insigniaBase} normal-case font-semibold text-secundario bg-cuaternario inset-ring inset-ring-terciario shrink min-w-0 truncate hidden 2xs:inline-flex`;
-        },
+        insigniaId: "insignia-base bg-brand-blue text-white shrink-0",
+        insigniaCategoria: "insignia-base text-secundario bg-cuaternario font-semibold normal-case inset-ring inset-ring-terciario shrink truncate hidden 2xs:inline-flex",
         titulo: "font-sans font-bold text-principal text-lg md:text-xl !leading-[1.15] mb-5 md:mb-6 uppercase text-balance",
         pieContenedor: "pt-4 border-t border-terciario flex items-center justify-between gap-3",
         insigniaSeleccionar: "insignia-seleccion",
