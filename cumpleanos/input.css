@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-2xs: 22rem;
+  --breakpoint-xs: 32rem;
+
+  --font-sans: "Barlow Semi Condensed", sans-serif;
+  --font-condensed: "Barlow Condensed", sans-serif;
+
+  --color-principal: var(--color-slate-950);
+  --color-secundario: var(--color-slate-700);
+  --color-terciario: var(--color-slate-300);
+  --color-cuaternario: var(--color-slate-100);
+
+  --color-brand-blue: #024adf;
+  --color-brand-blue-dark: #013bb5;
+  --color-brand-dark: #1d1d1b;
+  --color-brand-dark-secondary: #121210;
+  --color-brand-card-bg: #fafafa;
+
+  /* Sombras Neobrutalistas personalizadas */
+  --shadow-neo-sm: 0 2px 0 0 var(--color-brand-dark);
+  --shadow-neo: 0 4px 0 0 var(--color-brand-dark);
+
+  --ring-amber: 0 0 0 3px var(--color-amber-500);
+  --glow-amber: 0 8px 16px -2px color-mix(in srgb, var(--color-amber-500) 20%, transparent);
+
+  --shadow-neo-press-sm: 0 0 0 0 var(--color-brand-dark);
+  --shadow-neo-press: var(--shadow-neo-sm);
+
+  --shadow-neo-focus-sm: var(--shadow-neo-sm), var(--ring-amber), 0 2px 0 3px var(--color-amber-500), var(--glow-amber);
+  --shadow-neo-focus: var(--shadow-neo), var(--ring-amber), 0 4px 0 3px var(--color-amber-500), var(--glow-amber);
+}
+
+@keyframes cintillo {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+@keyframes boton-shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  30%,
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@utility animate-cintillo {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: cintillo 25s linear infinite;
+}
+
+@utility animate-modal-in {
+  animation: modal-scale-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility animate-modal-out {
+  animation: modal-scale-out 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility text-* {
+  font-size: calc(var(--spacing) * --value(number));
+}
+
+@utility efecto-presionar {
+  @apply transition-transform active:scale-95;
+}
+
+@utility boton-base {
+  @apply rounded-lg px-6 py-4 md:rounded-xl;
+  @apply font-condensed text-base !leading-none font-bold uppercase md:text-lg;
+  @apply inline-flex max-w-full items-center justify-center gap-2.5;
+  @apply efecto-presionar min-w-0 cursor-pointer truncate whitespace-nowrap select-none;
+  @apply transition;
+
+  & > span {
+    @apply min-w-0 truncate;
+  }
+
+  & > i {
+    @apply text-5 md:text-6 shrink-0;
+  }
+}
+
+@utility insignia-base {
+  @apply gap-2 rounded-lg px-3 py-2 md:rounded-xl;
+  @apply font-condensed text-xs !leading-none font-bold uppercase md:text-sm;
+  @apply inline-flex min-w-0 items-center justify-center whitespace-nowrap select-none;
+
+  & > span {
+    @apply min-w-0 truncate;
+  }
+}
+
+@utility insignia-regalo {
+  @apply insignia-base text-principal shrink-0 bg-amber-400;
+}
+
+@utility insignia-categoria-regalo {
+  @apply insignia-base text-cuaternario 2xs:inline-flex hidden shrink truncate bg-white/10 font-semibold normal-case inset-ring inset-ring-white/20;
+}
+
+@utility insignia-seleccion {
+  @apply insignia-base text-brand-blue rounded-full bg-blue-500/15 inset-ring inset-ring-blue-500/30 transition;
+  @apply group-hover:text-principal group-hover:bg-amber-400 group-hover:inset-ring-amber-400;
+
+  & > i {
+    @apply text-4 md:text-5 shrink-0 transition;
+  }
+}
+
+@utility tarjeta-neo {
+  @apply bg-brand-card-bg text-brand-dark border-brand-dark shadow-neo-sm md:shadow-neo border-2;
+  @apply rounded-2xl p-5 md:rounded-3xl md:p-6;
+}
+
+@keyframes tarjeta-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility tarjeta-neo-interactiva {
+  @apply cursor-pointer transition select-none;
+  @apply hover:-translate-y-0.5;
+  @apply active:shadow-neo-press-sm md:active:shadow-neo-press active:translate-y-0.5;
+  @apply focus-visible:shadow-neo-focus-sm md:focus-visible:shadow-neo-focus focus-visible:-translate-y-0.5 focus-visible:outline-none;
+}
+
+@utility tarjeta-anim-scroll {
+  opacity: 0;
+
+  &.tarjeta-visible {
+    animation: tarjeta-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+/* Layout y Componentes de Pantallas de Vista (Carga y Expirado) */
+@utility pantalla-vista {
+  @apply relative z-50 flex w-full flex-1 flex-col;
+}
+
+@utility encabezado-pantalla-vista {
+  @apply relative z-10 flex w-full shrink-0 items-center justify-center px-4 pt-4 md:px-6 md:pt-6;
+}
+
+@utility logo-superior-pantalla {
+  @apply inline-flex cursor-pointer items-center justify-center select-none;
+
+  & > img {
+    @apply h-10 w-auto object-contain md:h-12;
+  }
+}
+
+@utility cuerpo-pantalla-vista {
+  @apply relative z-10 flex w-full flex-1 items-center justify-center p-8 md:p-6;
+}
+
+@utility tarjeta-vista {
+  @apply bg-brand-dark-secondary relative flex w-full max-w-sm flex-col items-center overflow-hidden rounded-2xl border-2 border-white/10 p-6 text-center text-balance text-white md:rounded-3xl md:p-8;
+
+  & > h1 {
+    @apply font-condensed mb-2 text-2xl !leading-[1.15] font-bold uppercase md:text-3xl;
+  }
+
+  & > p {
+    @apply text-terciario font-sans text-base !leading-snug font-medium md:text-lg;
+  }
+}
+
+@utility caja-icono-vista {
+  @apply text-7 md:text-8 mb-5 flex size-14 shrink-0 items-center justify-center rounded-xl md:size-16 md:rounded-2xl;
+
+  & > svg {
+    @apply size-7 md:size-8;
+  }
+}
+
+/* Cabecera Principal de Secciones (Catálogo y Estado Canjeado) */
+@utility cabecera-seccion {
+  @apply xs:px-0 mx-auto mb-5 flex w-full max-w-xl flex-col gap-3 px-4 text-center text-balance md:mb-6;
+
+  & > h2 {
+    @apply font-condensed text-3xl !leading-[1.15] font-extrabold break-words uppercase md:text-4xl;
+  }
+
+  & > p {
+    @apply font-sans text-base !leading-snug font-medium md:text-lg;
+  }
+}
+
+/* Tarjeta y Textos de Beneficios del Hero */
+@utility tarjeta-beneficio {
+  @apply bg-brand-card-bg border-terciario min-w-0 border;
+  @apply xs:mt-0 -mt-px first:mt-0;
+  @apply max-xs:first:rounded-t-lg max-xs:last:rounded-b-lg xs:rounded-lg sm:rounded-lg md:rounded-xl;
+  @apply p-3 md:p-4;
+  @apply xs:flex-col xs:justify-center xs:gap-2 flex flex-row items-center justify-start gap-3 md:flex-row md:justify-start md:gap-3;
+  @apply xs:text-center text-left md:text-left;
+}
+
+@utility caja-icono-beneficio {
+  @apply text-5 md:text-6 flex size-8 shrink-0 items-center justify-center rounded-md md:size-10 md:rounded-lg;
+}
+
+@utility caja-textos-beneficio {
+  @apply xs:flex-col xs:justify-center flex flex-row items-center justify-between md:items-start;
+  @apply xs:gap-0.5 font-condensed gap-2 text-sm !leading-none uppercase md:text-base;
+  @apply xs:w-full max-w-full min-w-0 flex-1;
+
+  & > span:first-child {
+    @apply 2xs:inline-block hidden max-w-full min-w-0 shrink truncate;
+    @apply text-secundario font-semibold;
+  }
+
+  & > span:last-child {
+    @apply xs:text-center max-w-full min-w-0 shrink-0 truncate text-right md:text-left;
+    @apply text-principal font-bold;
+  }
+}
+
+@utility footer-contacto {
+  @apply flex shrink-0 flex-wrap items-center justify-center gap-4 gap-y-3 md:gap-6 lg:gap-8;
+
+  & > div {
+    @apply flex flex-col items-center gap-2 md:items-start;
+
+    & > span {
+      @apply font-sans text-xs font-bold uppercase;
+    }
+  }
+}
+
+@utility footer-boton-pildora {
+  @apply efecto-presionar inline-flex h-9 shrink-0 items-center gap-2 rounded-lg px-3 font-sans text-xs font-semibold whitespace-nowrap uppercase inset-ring select-none;
+
+  & > i {
+    @apply text-4 md:text-5;
+  }
+}
+
+@utility footer-boton-social {
+  @apply efecto-presionar text-4 md:text-5 inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-white/5 inset-ring inset-ring-white/10 select-none hover:bg-white/15;
+}
+
+@utility bg-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg opacity='0.45'%3E%3Crect x='20' y='25' width='7' height='7' rx='1.5' transform='rotate(25 23.5 28.5)' fill='%23f59e0b'/%3E%3Crect x='75' y='18' width='12' height='5' rx='2' transform='rotate(-35 81 20.5)' fill='%23024adf'/%3E%3Ccircle cx='130' cy='35' r='3.5' fill='%23ec4899'/%3E%3Crect x='45' y='70' width='9' height='5' rx='2' transform='rotate(45 49.5 72.5)' fill='%2310b981'/%3E%3Crect x='110' y='80' width='6' height='6' rx='1.5' transform='rotate(-15 113 83)' fill='%238b5cf6'/%3E%3Ccircle cx='18' cy='115' r='3' fill='%23ffffff'/%3E%3Crect x='85' y='125' width='7' height='7' rx='1.5' transform='rotate(60 88.5 128.5)' fill='%23024adf'/%3E%3Crect x='140' y='135' width='10' height='4.5' rx='2' transform='rotate(-20 145 137.25)' fill='%23f59e0b'/%3E%3Ccircle cx='60' cy='145' r='3.5' fill='%2310b981'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+@utility texto-degradado-cumpleanos {
+  @apply inline-block empty:hidden;
+
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    background-image: linear-gradient(to right, var(--color-blue-400), var(--color-fuchsia-400), var(--color-amber-300));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@utility hero-glow {
+  background: radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--color-brand-blue) 38%, transparent) 0%, transparent 65%), radial-gradient(circle at 50% 32%, color-mix(in srgb, var(--color-pink-500) 18%, transparent) 0%, transparent 55%), radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--color-amber-500) 22%, transparent) 0%, transparent 50%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+}
+
+@utility contenedor-tarjeta-regalo {
+  @apply bg-brand-card-bg text-brand-dark border-brand-dark shadow-neo-sm md:shadow-neo border-2;
+  @apply flex w-full max-w-lg flex-col overflow-hidden rounded-2xl md:rounded-3xl;
+}
+
+@utility cabecera-tarjeta-regalo {
+  @apply bg-brand-dark relative isolate shrink-0 overflow-hidden p-5 text-white md:p-6;
+
+  &::before {
+    content: "";
+    @apply bg-pattern pointer-events-none absolute inset-0 -z-10 opacity-40;
+  }
+
+  &::after {
+    content: "";
+    @apply hero-glow pointer-events-none absolute inset-0 -z-10;
+  }
+}
+
+@utility fila-cabecera-regalo {
+  @apply mb-6 flex min-w-0 items-center gap-3;
+}
+
+@utility titulo-tarjeta-regalo {
+  @apply line-clamp-3 overflow-hidden font-sans text-xl !leading-[1.15] font-bold text-balance text-white uppercase md:text-2xl;
+}
+
+@utility cuerpo-tarjeta-regalo {
+  @apply bg-brand-card-bg flex flex-col gap-4 p-5 md:p-6;
+}
+
+@utility cintillo-fade-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 28px, black calc(100% - 28px), transparent 100%);
+
+  @media (min-width: 640px) {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 48px, black calc(100% - 48px), transparent 100%);
+  }
+}
+
+@utility boton-cta-hero {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-white, #fff) 35%, transparent), transparent);
+    transform: translateX(-150%) skewX(-20deg);
+    animation: boton-shimmer 3.5s infinite ease-in-out;
+    pointer-events: none;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
